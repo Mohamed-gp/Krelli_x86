@@ -12,13 +12,17 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-model User {
-  id String @id @unique
 
-  email        String @unique
+model User {
+  id String @id @unique @default(uuid())
+
+  email        String        @unique
   firstName    String
   lastName     String
   profileImage String?
+  password     String
+  role         String        @default("user")
+  createdAT    DateTime      @default(now())
   Home         Home[]
   Favorite     Favorite[]
   Reservation  Reservation[]
@@ -38,7 +42,7 @@ model Home {
   categoryName String?
   Favorite     Favorite[]
   Reservation  Reservation[]
-
+  listedAt     DateTime @default(now())
   addedCategory    Boolean @default(false)
   addedDescription Boolean @default(false)
   addedLoaction    Boolean @default(false)
@@ -56,7 +60,7 @@ model Favorite {
   Home   Home?   @relation(fields: [homeId], references: [id])
   homeId String?
 
-  createAt DateTime @default(now())
+  favoritedAt DateTime @default(now())
 }
 
 model Reservation {
