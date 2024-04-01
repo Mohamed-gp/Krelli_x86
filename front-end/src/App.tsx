@@ -1,9 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
 import Header from "./components/header/Header";
-import Home from "./pages/Home/Home";
-import Register from "./pages/register/Register";
-import Login from "./pages/login/Login";
-import Footer from "./components/footer/Footer";
+import Register from "./pages/Register";
 
 function App() {
   return (
@@ -15,7 +14,6 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
-        <Footer />
       </BrowserRouter>
     </>
   );

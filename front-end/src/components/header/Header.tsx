@@ -1,18 +1,16 @@
-import Nav from "../nav/Nav";
+import HeaderCenter from "./HeaderCenter";
 import HeaderLeft from "./HeaderLeft";
 import HeaderRight from "./HeaderRight";
 
 const Header = () => {
   return (
-    <>
-      <header className="py-5 bg-bgheroColor ">
-        <div className="container flex items-center justify-between">
-          <HeaderLeft />
-          <Nav />
-          <HeaderRight />
-        </div>
-      </header>
-    </>
+    <header className="bg-white">
+      <div className="container flex items-end justify-between py-6">
+        <HeaderLeft />
+        <HeaderCenter />
+        <HeaderRight />
+      </div>
+    </header>
   );
 };
 export default Header;
