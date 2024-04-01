@@ -1,6 +1,11 @@
 import Header from "../components/header/Header";
+import Hero from "../components/hero/Hero";
 
 const Home = () => {
-  return <>{/* <Header/> */}</>;
+  return (
+    <>
+      <Hero />
+    </>
+  );
 };
 export default Home;
