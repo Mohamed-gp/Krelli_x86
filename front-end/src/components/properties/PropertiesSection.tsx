@@ -3,7 +3,12 @@ import TitleHeading from "../title-heading/TitleHeading";
 import { propertiesCardsData } from "../../utils/data";
 import { FaHeart, FaStar } from "react-icons/fa6";
 
-const PropertiesSection = () => {
+interface PropertiesSectionProps {
+  firstIndex: number;
+  lastIndex : number
+}
+
+const PropertiesSection = ({firstIndex,lastIndex} : PropertiesSectionProps) => {
   return (
     <section>
       <div className="container flex flex-col py-12">
@@ -17,7 +22,7 @@ const PropertiesSection = () => {
           </Link>
         </div>
         <div className="flex flex-wrap items-center justify-between gap-3 my-6">
-          {propertiesCardsData.map((property) => {
+          {propertiesCardsData.slice(firstIndex,lastIndex).map((property) => {
             return (
               <div className="w-[240px] rounded-xl overflow-hidden">
                 <div className="img">

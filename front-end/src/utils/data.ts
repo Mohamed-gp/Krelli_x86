@@ -58,6 +58,38 @@ const propertiesCardsData = [
     title: "ESTIN Amizour, Bejaia",
     path: "properyImage4.png",
   },
+  {
+    title: "ESTIN Amizour, Bejaia",
+    path: "properyImage3.png",
+  },
+  {
+    title: "ESTIN Amizour, Bejaia",
+    path: "properyImage4.png",
+  },
+  {
+    title: "ESTIN Amizour, Bejaia",
+    path: "properyImage3.png",
+  },
+  {
+    title: "ESTIN Amizour, Bejaia",
+    path: "properyImage4.png",
+  },
+  {
+    title: "ESTIN Amizour, Bejaia",
+    path: "properyImage3.png",
+  },
+  {
+    title: "ESTIN Amizour, Bejaia",
+    path: "properyImage4.png",
+  },
+  {
+    title: "ESTIN Amizour, Bejaia",
+    path: "properyImage3.png",
+  },
+  {
+    title: "ESTIN Amizour, Bejaia",
+    path: "properyImage4.png",
+  },
 ] as const;
 
 export { featuresCardsData, propertiesCardsData };
