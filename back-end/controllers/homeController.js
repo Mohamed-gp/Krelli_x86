@@ -2,6 +2,9 @@ import prisma from "../prisma/client.js";
 import {v2 as cloudinary} from 'cloudinary';
 import multer from 'multer';
 import dotenv from 'dotenv';
+import fs from 'fs';
+import path from 'path';
+
 dotenv.config();
 
 cloudinary.config({
@@ -16,10 +19,22 @@ const storage = multer({ dest: "uploads/" });
 // the files is the input field name
 
 
+const cleanUploads = async () => {
+    const files = await fs.promises.readdir("uploads");
+    if (files.length < 5) {
+        return;
+    }
 
+    files.forEach(async (file) => {
+        await fs.promises.unlink(path.join("uploads", file));
+    });
+};
 
 
 const addHome = async (req, res) => {
+    
+    cleanUploads();//checks if the uploads folder has more than 5 files and delete them
+
 	const { title, wilaya, price, bathrooms, bedrooms, guests } = req.body;
 
 	const userId = req.user.userId;
