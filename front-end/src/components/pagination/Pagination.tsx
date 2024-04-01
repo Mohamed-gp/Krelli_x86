@@ -7,9 +7,9 @@ interface PaginationProps {
     
 }
 
-const Pagination = ({ currentPage, setcurrentPage, postsCount }) => {
+const Pagination = ({ currentPage, setcurrentPage,postsCount }) => {
   let emptyArray = [];
-  const pagesMax = Math.ceil(postsCount / 3);
+  const pagesMax = Math.ceil(postsCount / 4);
   for (let i = 1; i <= pagesMax; i++) {
     emptyArray.push(i);
   }
