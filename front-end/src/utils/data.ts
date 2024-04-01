@@ -25,6 +25,71 @@ const featuresCardsData = [
   },
 ] as const;
 
+const propertiesCardsData = [
+  {
+    title: "ESTIN Amizour, Bejaia",
+    path: "properyImage1.png",
+  },
+  {
+    title: "ESTIN Amizour, Bejaia",
+    path: "properyImage2.png",
+  },
+  {
+    title: "ESTIN Amizour, Bejaia",
+    path: "properyImage3.png",
+  },
+  {
+    title: "ESTIN Amizour, Bejaia",
+    path: "properyImage4.png",
+  },
+  {
+    title: "ESTIN Amizour, Bejaia",
+    path: "properyImage3.png",
+  },
+  {
+    title: "ESTIN Amizour, Bejaia",
+    path: "properyImage4.png",
+  },
+  {
+    title: "ESTIN Amizour, Bejaia",
+    path: "properyImage3.png",
+  },
+  {
+    title: "ESTIN Amizour, Bejaia",
+    path: "properyImage4.png",
+  },
+  {
+    title: "ESTIN Amizour, Bejaia",
+    path: "properyImage3.png",
+  },
+  {
+    title: "ESTIN Amizour, Bejaia",
+    path: "properyImage4.png",
+  },
+  {
+    title: "ESTIN Amizour, Bejaia",
+    path: "properyImage3.png",
+  },
+  {
+    title: "ESTIN Amizour, Bejaia",
+    path: "properyImage4.png",
+  },
+  {
+    title: "ESTIN Amizour, Bejaia",
+    path: "properyImage3.png",
+  },
+  {
+    title: "ESTIN Amizour, Bejaia",
+    path: "properyImage4.png",
+  },
+  {
+    title: "ESTIN Amizour, Bejaia",
+    path: "properyImage3.png",
+  },
+  {
+    title: "ESTIN Amizour, Bejaia",
+    path: "properyImage4.png",
+  },
+] as const;
 
-
-export {featuresCardsData}
+export { featuresCardsData, propertiesCardsData };

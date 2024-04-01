@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Header from "./components/header/Header";
 import Register from "./pages/Register";
+import Properties from "./pages/Properties";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/properties" element={<Properties />} />
         </Routes>
       </BrowserRouter>
     </>
