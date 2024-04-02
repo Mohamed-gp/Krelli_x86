@@ -68,3 +68,33 @@ const addHome = async (req, res) => {
 
     res.json(home);
 };
+
+const singleHome = async (req, res) => {
+    const { id } = req.params;
+    const home = await prisma.home.findUnique({
+        where: {
+            id: parseInt(id),
+        },
+        include: {
+            pictures: true,
+        },
+    });
+
+    if (!home) {
+        return res.status(404).send("Home not found");
+    }
+
+    res.json(home);
+};
+
+const allHomes = async (req, res) => {
+    if (req.user.role === "admin") {
+        const homes = await prisma.home.findMany({
+            include: {
+                pictures: true,
+            },
+        });
+        return res.json(homes);
+    }
+    
+};
