@@ -4,7 +4,6 @@ const Properties = () => {
   return (
     <>
       <PropertiesSection />
-      <PropertiesSection />
     </>
   );
 };
