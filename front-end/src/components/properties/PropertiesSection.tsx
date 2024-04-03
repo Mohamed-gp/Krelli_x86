@@ -4,8 +4,8 @@ import { propertiesCardsData } from "../../utils/data";
 import { FaHeart, FaStar } from "react-icons/fa6";
 
 interface PropertiesSectionProps {
-  firstIndex: number;
-  lastIndex : number
+  firstIndex?: number;
+  lastIndex? : number
 }
 
 const PropertiesSection = ({firstIndex,lastIndex} : PropertiesSectionProps) => {

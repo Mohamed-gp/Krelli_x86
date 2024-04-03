@@ -1,6 +1,7 @@
+import AddProperty from "../components/addProperty/AddProperty";
 import FeaturesSection from "../components/features/FeaturesSection";
-import Header from "../components/header/Header";
 import Hero from "../components/hero/Hero";
+import PhoneApp from "../components/phoneApp/PhoneApp";
 import PropertiesSection from "../components/properties/PropertiesSection";
 
 const Home = () => {
@@ -9,7 +10,8 @@ const Home = () => {
       <Hero />
       <FeaturesSection />
       <PropertiesSection />
-      
+      <PhoneApp />
+      <AddProperty />
     </>
   );
 };
