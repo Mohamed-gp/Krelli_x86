@@ -6,7 +6,7 @@ const addReservation = async (req, res) => {
     const { checkIn, checkOut } = req.body;
     const home = await prisma.home.findUnique({
         where: {
-            id: homeId,
+            id: parent(homeId),
         },
     });
     if (!home) {
@@ -30,8 +30,8 @@ const addReservation = async (req, res) => {
     }
     const reservation = await prisma.reservation.create({
         data: {
-            checkIn,
-            checkOut,
+            checkIn: new Date(checkIn),
+            checkOut: new Date(checkOut),
             userId,
             homeId,
         },
@@ -41,10 +41,10 @@ const addReservation = async (req, res) => {
 
 const deleteReservation = async (req, res) => {
     const userId = req.user.userId;
-    const {id} = req.body;
+    const {id} = req.params;
     const reservation = await prisma.reservation.findUnique({
         where: {
-            id: id,
+            id: parseInt(id),
         },
     });
     if (!reservation) {
@@ -66,7 +66,7 @@ const deleteReservation = async (req, res) => {
     }
     await prisma.reservation.delete({
         where: {
-            id: id,
+            id: parseInt(id),
         },
     });
     res.json("Reservation deleted successfully");
@@ -84,30 +84,7 @@ const allReservation = async (req, res) => {
     });
     res.json(reservations);
 };
-const homeReservations = async (req, res) => {
-    const userId = req.user.userId;
-    const { id } = req.body;
-    const home = await prisma.home.findUnique({
-        where: {
-            id: id,
-        },
-    });
-    if (!home) {
-        return res.status(404).send("Home not found");
-    }
-    if (home.userId !== userId && req.user.role !== "admin") {
-        return res.status(403).send("You are not authorized to view this reservations");
-    }
-    const reservations = await prisma.reservation.findMany({
-        where: {
-            homeId: parseInt(id),
-        },
-        include: {
-            user: true,
-        },
-    });
-    res.json(reservations);
-};
 
 
 
+export { addReservation, deleteReservation, allReservation };

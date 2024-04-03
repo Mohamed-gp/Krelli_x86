@@ -41,6 +41,8 @@ model Home {
   wilaya      String
   category    String?
   rating      Float?
+  longitude   Float
+  latitude    Float
   Favorite    Favorite[]
   Reservation Reservation[]
   listedAt    DateTime      @default(now())
@@ -62,7 +64,7 @@ model Favorite {
 }
 
 model Reservation {
-  id String @id @default(uuid())
+  id Int @id @default(autoincrement())
 
   startDate DateTime
   endDate   DateTime

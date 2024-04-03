@@ -1,73 +1,5 @@
 import prisma from "../prisma/client.js";
-import {v2 as cloudinary} from 'cloudinary';
-import multer from 'multer';
-import dotenv from 'dotenv';
-import fs from 'fs';
-import path from 'path';
 
-dotenv.config();
-
-cloudinary.config({
-	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-	api_key: process.env.CLOUDINARY_API_KEY,
-	api_secret: process.env.CLOUDINARY_API_SECRET,
-});
-
-const storage = multer({ dest: "uploads/" });
-// we should add the storage middleware to the route that will handle the file upload
-//like this: app.post("/test",storage.array('files'), async (req, res) => {....});
-// the files is the input field name
-
-
-const cleanUploads = async () => {
-    const files = await fs.promises.readdir("uploads");
-    if (files.length < 5) {
-        return;
-    }
-
-    files.forEach(async (file) => {
-        await fs.promises.unlink(path.join("uploads", file));
-    });
-};
-
-
-const addHome = async (req, res) => {
-    
-    cleanUploads();//checks if the uploads folder has more than 5 files and delete them
-
-	const { title, wilaya, price, bathrooms, bedrooms, guests } = req.body;
-
-	const userId = req.user.userId;
-
-	if (!title || !wilaya || !price || !bathrooms || !bedrooms || !guests || !req.files) {
-		return res.status(400).send("All fields are required");
-	}
-	const pictures = req.files.map((file) => {
-        return file.path;
-    });
-    const uploadedPictures = await Promise.all(pictures.map((picture) => cloudinary.uploader.upload(picture)));
-    const pictureUrls = uploadedPictures.map((picture) => picture.url);
-    console.log(pictureUrls);
-    const home = await prisma.home.create({
-        data: {
-            title,
-            wilaya,
-            price,
-            bathrooms,
-            bedrooms,
-            guests,
-            userId,
-            description: req.body.description? req.body.description : "",
-            pictures: {
-                create: pictureUrls.map((url) => ({
-                    url,
-                })),
-            },
-        },
-    });
-
-    res.json(home);
-};
 
 const singleHome = async (req, res) => {
     const { id } = req.params;
@@ -88,13 +20,73 @@ const singleHome = async (req, res) => {
 };
 
 const allHomes = async (req, res) => {
-    if (req.user.role === "admin") {
-        const homes = await prisma.home.findMany({
-            include: {
-                pictures: true,
-            },
-        });
-        return res.json(homes);
-    }
+   // to be implemented 
     
 };
+
+
+
+const homePictures = async (req, res) => {
+    const {id} = req.params;
+    const home = await prisma.home.findUnique({
+        where: {
+            id: parseInt(id),
+        },
+        include: {
+            pictures: true,
+        },
+    });
+    if (!home) {
+        return res.status(404).send("Home not found");
+    }
+    res.json(home.pictures);
+};
+
+const addReview = async (req, res) => {
+    const userId = req.user.userId;
+    const homeId = req.params;
+    const { rating, comment } = req.body;
+    const user = await prisma.user.findUnique({
+        where: {
+            id: userId,
+        },
+    });
+    if(!user){
+        return res.status(404).send("User not found");
+    }
+    const hasReserved = await prisma.reservation.findFirst({
+        where: {
+            userId,
+            homeId: parseInt(homeId),
+            status: "accepted",
+        },
+    });
+    if (!hasReserved) {
+        return res.status(400).send("You must reserve this home first");
+    }
+    const review = await prisma.review.create({
+        data: {
+            rating,
+            comment,
+            userId,
+            homeId: parseInt(homeId),
+        },
+    });
+
+    res.json(review);
+
+};
+
+const allReviews = async (req, res) => {
+    const { id } = req.params;
+    const reviews = await prisma.review.findMany({
+        where: {
+            homeId: parseInt(id),
+        },
+    });
+
+    res.json(reviews);
+};
+
+
+export {  singleHome, allHomes,  homePictures , addReview , allReviews };
