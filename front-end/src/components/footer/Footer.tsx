@@ -48,7 +48,9 @@ const Footer = () => {
             <FaInstagram />
             <FaGooglePlus />
             <FaPinterest />
-            <FaWifi className="rotate-90" />
+            <span className="rotate-45">
+              <FaWifi />
+            </span>
           </div>
         </div>
       </div>
