@@ -10,17 +10,26 @@ const HeaderCenter = () => {
           </NavLink>
         </li>
         <li>
-          <NavLink className="cursor-pointer navigation-header-link" to="/properties">
+          <NavLink
+            className="cursor-pointer navigation-header-link"
+            to="/properties"
+          >
             Find
           </NavLink>
         </li>
         <li>
-          <NavLink className="cursor-pointer navigation-header-link" to="/profile/chat/:id">
+          <NavLink
+            className="cursor-pointer navigation-header-link"
+            to="/profile/chat/:id"
+          >
             Chat
           </NavLink>
         </li>
         <li>
-          <NavLink className="cursor-pointer navigation-header-link" to="/dashBoard">
+          <NavLink
+            className="cursor-pointer navigation-header-link"
+            to="/profile/dashBoard/:id"
+          >
             DashBoard
           </NavLink>
         </li>

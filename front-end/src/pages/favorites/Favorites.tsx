@@ -1,16 +1,10 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import TitleHeading from "../title-heading/TitleHeading";
 import { propertiesCardsData } from "../../utils/data";
 import { FaHeart, FaStar } from "react-icons/fa6";
 
-import { FaTrash } from "react-icons/fa6";
-import { IoMdSend } from "react-icons/io";
 
 import LeftSideNav from "../../components/leftSideNav/LeftSideNav";
 
 const Favorites = () => {
-  const [messageInput, setmessageInput] = useState("");
   return (
     <>
       <div className=" flex    mt-12 gap-6 ">
