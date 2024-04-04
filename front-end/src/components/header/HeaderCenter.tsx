@@ -1,28 +1,28 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const HeaderCenter = () => {
   return (
     <nav>
       <ul className="flex items-center gap-4">
         <li>
-          <Link className="font-bold cursor-pointer active" to="/">
+          <NavLink className="cursor-pointer navigation-header-link" to="/">
             Home
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link className="cursor-pointer active" to="/find">
+          <NavLink className="cursor-pointer navigation-header-link" to="/properties">
             Find
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link className="cursor-pointer active" to="/chat">
+          <NavLink className="cursor-pointer navigation-header-link" to="/profile/chat/:id">
             Chat
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link className="cursor-pointer active" to="/dashBoard">
+          <NavLink className="cursor-pointer navigation-header-link" to="/dashBoard">
             DashBoard
-          </Link>
+          </NavLink>
         </li>
       </ul>
     </nav>
