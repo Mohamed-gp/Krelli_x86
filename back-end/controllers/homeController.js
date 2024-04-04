@@ -19,9 +19,29 @@ const singleHome = async (req, res) => {
     res.json(home);
 };
 
-const allHomes = async (req, res) => {
-   // to be implemented 
-    
+const searchHomes = async (req, res) => {
+
+    const { wilaya, guests, checkIn, checkOut } = req.query;
+    const homes = await prisma.home.findMany({
+        where: {
+            wilaya,
+            guests: {
+                gte: parseInt(guests),
+            },
+            reservations: {
+                none: {
+                    checkIn: {
+                        lte: new Date(checkOut),
+                    },
+                    checkOut: {
+                        gte: new Date(checkIn),
+                    },
+                },
+            },
+        },
+    });
+
+    res.json(homes);
 };
 
 
@@ -72,7 +92,23 @@ const addReview = async (req, res) => {
             homeId: parseInt(homeId),
         },
     });
-
+    //calculate the average rating of the home
+    const reviews = await prisma.review.findMany({
+        where: {
+            homeId: parseInt(homeId),
+        },
+    });
+    const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
+    const averageRating = totalRating / reviews.length;
+    await prisma.home.update({
+        where: {
+            id: parseInt(homeId),
+        },
+        data: {
+            rating: averageRating,
+        },
+    });
+    
     res.json(review);
 
 };

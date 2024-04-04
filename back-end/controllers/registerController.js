@@ -36,5 +36,4 @@ const HandelRegister =  async (req, res) => {
 	res.json(user).status(201);
 };
 
-
-export default HandelRegister;
+export default HandelRegister;		
