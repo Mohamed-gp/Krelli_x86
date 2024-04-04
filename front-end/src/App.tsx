@@ -7,6 +7,7 @@ import Properties from "./pages/properties/Properties";
 import Footer from "./components/footer/Footer";
 import Chat from "./pages/chat/Chat";
 import Favorites from "./pages/favorites/Favorites";
+import DashBoard from "./pages/dashboard/DashBoard";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/properties" element={<Properties />} />
           <Route path="/profile/chat/:id" element={<Chat />} />
           <Route path="/profile/favorites/:id" element={<Favorites />} />
+          <Route path="/profile/dashboard/:id" element={<DashBoard />} />
         </Routes>
         <Footer />
       </BrowserRouter>
