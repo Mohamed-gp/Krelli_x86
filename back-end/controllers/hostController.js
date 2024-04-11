@@ -20,7 +20,7 @@ const myHomesReservations = async (req, res) => {
             userId,
         },
         include: {
-            reservations: true,
+            Reservations: true,
         },
     });
     if (!homes) {
@@ -34,6 +34,9 @@ const myHomes = async (req, res) => {
     const homes = await prisma.home.findMany({
         where: {
             userId,
+        },
+        include: {
+            Pictures: true,
         },
     });
     if (!homes) {
@@ -100,13 +103,17 @@ const addHome = async (req, res) => {
         data: {
             title,
             wilaya,
-            price,
-            bathrooms,
-            bedrooms,
-            guests,
-            userId,
+            price : parseFloat(price),
+            bathrooms: parseInt(bathrooms),
+            bedrooms: parseInt(bedrooms),
+            guests: parseInt(guests),
+            User: {
+                connect: {
+                    id: userId,
+                },
+            },
             description: req.body.description? req.body.description : "",
-            pictures: {
+            Pictures: {
                 create: pictureUrls.map((url) => ({
                     url,
                 })),
@@ -152,5 +159,7 @@ const acceptReservation = async (req, res) => {
     });
     res.json("Reservation accepted successfully");
 };
+
+
 
 export { addHome, myHomes, myHomesReservations, singleHomeReservation , acceptReservation}

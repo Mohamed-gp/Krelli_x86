@@ -4,7 +4,7 @@ const allHomes = async (req, res) => {
     if (req.user.role === "admin") {
         const homes = await prisma.home.findMany({
             include: {
-                pictures: true,
+                Pictures: true,
             },
         });
         return res.json(homes);

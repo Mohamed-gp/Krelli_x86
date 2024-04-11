@@ -8,7 +8,7 @@ const singleHome = async (req, res) => {
             id: parseInt(id),
         },
         include: {
-            pictures: true,
+            Pictures: true,
         },
     });
 
@@ -19,23 +19,82 @@ const singleHome = async (req, res) => {
     res.json(home);
 };
 
+const addReservation = async (req, res) => {
+    
+    const userId = req.user.userId;
+    const homeId = req.params.id;
+
+    const { checkIn, checkOut } = req.body;
+    const home = await prisma.home.findUnique({
+        where: {
+            id: parseInt(homeId),
+        },
+    });
+    if (!home) {
+        return res.status(404).send("Home not found");
+    }
+    //check if the there is a reservation with the sattus accepted in the same date
+    const hasReserved = await prisma.reservation.findFirst({
+        where: {
+            homeId : parseInt(homeId),
+            status: "accepted",
+            startDate: {
+                lte: new Date(checkOut),
+            },
+            endDate: {
+                gte: new Date(checkIn),
+            },
+        },
+    });
+    if (hasReserved) {
+        return res.status(400).send("This home is already reserved in this date");
+    }
+    const reservation = await prisma.reservation.create({
+        data: {
+            startDate: new Date(checkIn),
+            endDate: new Date(checkOut),
+            User :{
+                connect : {
+                    id : userId,
+                }
+            },
+            Home : {
+                connect : {
+                    id : parseInt(homeId),
+                }
+            },
+        },
+    });
+    res.json(reservation);
+};
+
 const searchHomes = async (req, res) => {
 
-    const { wilaya, guests, checkIn, checkOut } = req.query;
+    const { wilaya, guests, checkIn, checkOut , category  } = req.query;
     const homes = await prisma.home.findMany({
         where: {
-            wilaya,
+            wilaya : wilaya ? wilaya : undefined,
             guests: {
-                gte: parseInt(guests),
+                gte: parseInt(guests) ? guests : undefined,
             },
-            reservations: {
+            category: {
+                equals: category ? category : undefined,
+            },
+            Reservations: {
                 none: {
-                    checkIn: {
-                        lte: new Date(checkOut),
+                    startDate: {
+                        lte: new Date(checkOut) ? checkOut : undefined,
                     },
-                    checkOut: {
-                        gte: new Date(checkIn),
+                    endDate: {
+                        gte: new Date(checkIn) ? checkIn : undefined,
                     },
+                },
+            },
+        },
+        include: {
+            Pictures: {
+                select: {
+                    url: true,
                 },
             },
         },
@@ -53,13 +112,13 @@ const homePictures = async (req, res) => {
             id: parseInt(id),
         },
         include: {
-            pictures: true,
+            Pictures: true,
         },
     });
     if (!home) {
         return res.status(404).send("Home not found");
     }
-    res.json(home.pictures);
+    res.json(home.Pictures);
 };
 
 const addReview = async (req, res) => {
@@ -125,4 +184,4 @@ const allReviews = async (req, res) => {
 };
 
 
-export {  singleHome, allHomes,  homePictures , addReview , allReviews };
+export {  singleHome, searchHomes ,addReservation,  homePictures , addReview , allReviews };

@@ -27,6 +27,7 @@ model User {
   Favorite     Favorite[]
   Reservation  Reservation[]
   Review       Review[]
+  Chat         Chat[]
 }
 
 model Home {
@@ -34,22 +35,22 @@ model Home {
 
   title       String
   description String?
-  guests      String
-  bedrooms    String
-  bathrooms   String
+  guests      Int
+  bedrooms    Int
+  bathrooms   Int
   price       Float
   wilaya      String
   category    String?
   rating      Float?
-  longitude   Float
-  latitude    Float
+  longitude   Float?
+  latitude    Float?
   Favorite    Favorite[]
-  Reservation Reservation[]
+  Reservations Reservation[]
   listedAt    DateTime      @default(now())
   User        User?         @relation(fields: [userId], references: [id])
   userId      String?
   Review      Review[]
-  Picture     Picture[]
+  Pictures     Picture[]
 }
 
 model Favorite {
@@ -96,6 +97,23 @@ model Picture {
   url       String
   createdAt DateTime @default(now())
 
-  Home   Home?   @relation(fields: [homeId], references: [id])
+  Home   Home? @relation(fields: [homeId], references: [id])
   homeId Int?
+}
+
+model Chat {
+  id String @id @default(uuid())
+  createdAt DateTime @default(now())
+  users     User[]
+  Messages Message[]
+}
+
+model Message {
+  id String @id @default(uuid())
+
+  message   String
+  createdAt DateTime @default(now())
+
+  Chat   Chat?   @relation(fields: [chatId], references: [id])
+  chatId String?
 }
