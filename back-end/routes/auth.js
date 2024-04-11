@@ -6,6 +6,7 @@ import multer from "multer";
 
 const storage = multer({ dest: "uploads/" });
 
+
 const router = express.Router();
 
 router.post("/addHome", storage.array("files"), registerAndAddhome);
