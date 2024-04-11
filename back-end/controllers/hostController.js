@@ -82,6 +82,7 @@ const cleanUploads = async () => {
 };
 
 
+
 const addHome = async (req, res) => {
     
     cleanUploads();//checks if the uploads folder has more than 5 files and delete them
