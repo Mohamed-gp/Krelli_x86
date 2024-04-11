@@ -1,3 +1,4 @@
+import { check } from "prisma";
 import prisma from "../prisma/client.js";
 
 
@@ -24,12 +25,23 @@ const addReservation = async (req, res) => {
     const userId = req.user.userId;
     const homeId = req.params.id;
 
-    const { checkIn, checkOut } = req.body;
+    let { checkIn, checkOut } = req.body;
+    checkIn = new Date(checkIn);
+    checkOut = new Date(checkOut);
+
+    if (checkIn > checkOut) {
+        return res.status(400).send("Check out date must be greater than check in date");
+    }
+    if (checkIn < new Date()) {
+        return res.status(400).send("Check in date must be greater than today");
+    }
+
     const home = await prisma.home.findUnique({
         where: {
             id: parseInt(homeId),
         },
     });
+
     if (!home) {
         return res.status(404).send("Home not found");
     }
@@ -39,10 +51,10 @@ const addReservation = async (req, res) => {
             homeId : parseInt(homeId),
             status: "accepted",
             startDate: {
-                lte: new Date(checkOut),
+                lte: checkOut,
             },
             endDate: {
-                gte: new Date(checkIn),
+                gte: checkIn,
             },
         },
     });
