@@ -1,6 +1,5 @@
 import express from "express";
 import dotenv from "dotenv";
-dotenv.config();
 import { jwtVerify } from "./middleware/jwtVerify.js";
 import cookieParser from "cookie-parser";
 import authRouter from "./routes/auth.js";
@@ -21,7 +20,7 @@ dotenv.config();
 
 const app = express();
 const server = createServer(app);
-const io = socketServer(server);
+
 
 app.use(originChecker);
 
@@ -35,10 +34,7 @@ app.use(express.json());
 
 app.use(cookieParser());
 
-app.use((req, res, next) => {
-	res.io = io;
-	next();
-});
+
 
 app.get("/", (req, res) => {
 	res.json("Hello World");
@@ -51,6 +47,13 @@ app.use("/auth", authRouter);
 
 app.use(jwtVerify);
 
+// added it after the jwtVerify psq lazm ykon 3ndna token
+const io = socketServer(server);
+app.use((req, res, next) => {
+	res.io = io;
+	next();
+});
+
 app.use("/host", HostRouter);
 
 app.use("/homes", HomesRouter);
@@ -60,8 +63,6 @@ app.use("/messages", MessagesRouter);
 app.use("/reservations", ReservationRouter);
 
 app.use("/admin",verifyRoles("admin"), AdminRouter);
-
-
 
 
 const PORT = process.env.PORT || 3000;

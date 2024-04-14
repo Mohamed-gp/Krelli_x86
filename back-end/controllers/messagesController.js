@@ -64,7 +64,27 @@ export const createMessage = async (req, res) => {
             }
         }
     });
+    const theOtherUsers = await prisma.chat.findUnique({
+        where: {
+            id: chatId
+        },
+        include: {
+            users: {
+                where: {
+                    NOT: {
+                        id: userId
+                    }
+                }
+            }
+        }
+    });
 
+    theOtherUsers.users.forEach((user) => {
+        if(onlineUsers[user.id]){
+            res.io.to(onlineUsers[user.id]).emit('message', message);
+        }
+    });
+    
     if(onlineUsers[userId]){
         res.io.to(onlineUsers[userId]).emit('message', message);
     }
