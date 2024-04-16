@@ -2,34 +2,45 @@ import { FaHeart } from "react-icons/fa6";
 import { IoMdChatbubbles } from "react-icons/io";
 import { MdWindow } from "react-icons/md";
 import { NavLink } from "react-router-dom";
+import { LuChevronsLeftRight } from "react-icons/lu";
+import { useEffect, useState } from "react";
 
 const LeftSideNav = () => {
+  const [open, setopen] = useState(false);
+  useEffect(() => {
+    console.log(open)
+  },[open])
   return (
-    <div className="flex flex-col rounded-xl bg-white px-6 py-6 gap-6 min-w-[250px]">
-      <NavLink
-        to="/profile/dashboard/:id"
-        className="flex gap-2 items-center py-1 pl-3    rounded-xl left-nav-link"
+    <div  className={` bg-white  px-2 py-4 gap-6  rounded-xl md:px-6 relative`}>
+      <div
+        
+        className={` relative flex flex-col   px-2 py-4 gap-6  md:min-w-[160px] duration-300`}
       >
-        <MdWindow />
-        <p>DashBoard</p>
-        <span className="absolute  left-0 h-[30px]  w-[5px]"></span>
-      </NavLink>
-      <NavLink
-        to="/profile/favorites/:id"
-        className=" flex gap-2 items-center py-1 pl-3 rounded-xl left-nav-link"
-      >
-        <FaHeart />
-        <p>Favorites</p>
-        <span className="absolute  left-0 h-[30px]  w-[5px]"></span>
-      </NavLink>
-      <NavLink
-        to="/profile/chat/:id"
-        className=" flex gap-2 items-center  left-nav-link py-1 pl-3 rounded-xl w-full "
-      >
-        <IoMdChatbubbles />
-        <p>Chat</p>
-        <span className="absolute  left-0 h-[30px]  w-[5px]"></span>
-      </NavLink>
+        <NavLink
+          to="/profile/dashboard/:id"
+          className="flex gap-2 items-center md:py-1 md:pl-3 p-2 rounded-xl left-nav-link"
+        >
+          <MdWindow />
+          <p className="md:block hidden">DashBoard</p>
+        </NavLink>
+        <NavLink
+          to="/profile/favorites/:id"
+          className=" flex gap-2 items-center md:py-1 md:pl-3 p-2 rounded-xl left-nav-link"
+        >
+          <FaHeart />
+          <p className="md:block hidden">Favorites</p>
+        </NavLink>
+        <NavLink
+          to="/profile/chat/:id"
+          className=" flex gap-2 items-center md:py-1 md:pl-3 p-2 rounded-xl left-nav-link"
+        >
+          <IoMdChatbubbles />
+          <p className="md:block hidden">Chat</p>
+        </NavLink>
+      </div>
+        {/* <div onClick={() => {setopen(prev => !prev)}} className="absolute md:-right-[22px] text-xl -right-4 p-2 rounded-full md:text-3xl top-56 font-bold bg-white cursor-pointer">
+          <LuChevronsLeftRight />
+        </div> */}
     </div>
   );
 };

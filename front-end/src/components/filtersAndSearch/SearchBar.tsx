@@ -10,12 +10,12 @@ const SearchBar = () => {
         </span>
         <input
           type="text"
-          placeholder="Search for a place"
+          placeholder="Search By Title"
           className="p-3 pl-4 text-black rounded-full focus:outline-none"
         />
-        <span className="ml-3 cursor-pointer">
+        {/* <span className="ml-3 cursor-pointer">
           <IoFilterSharp />
-        </span>
+        </span> */}
       </div>
     </div>
   );

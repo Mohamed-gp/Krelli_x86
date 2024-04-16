@@ -19,14 +19,14 @@ import LeftSideNav from "../../components/leftSideNav/LeftSideNav";
 const DashBoard = () => {
   return (
     <>
-      <div className=" flex    mt-12 gap-6 ">
+      <div className=" flex   mt-12 gap-6 ">
         {/* left side */}
         <LeftSideNav />
         {/* right side */}
         <div className="flex flex-col w-full">
           <p className="text-3xl font-bold mb-6">Statistics</p>
-          <div className="flex items-center justify-between gap-3 my-6 mx-12 ">
-            <div className="flex bg-white w-[25%] h-[140px] items-start justify-between p-4 rounded-xl">
+          <div className="flex items-center justify-between gap-3 my-6 m-2 xl:mx-12 xl:flex-row flex-col">
+            <div className="flex bg-white xl:w-[25%] w-full h-[140px] items-start justify-between p-4 rounded-xl">
               <div className="flex flex-col">
                 <p>Total Properties</p>
                 <p className="font-bold">4 Properties</p>
@@ -37,7 +37,7 @@ const DashBoard = () => {
                 </span>
               </div>
             </div>
-            <div className="flex flex-wrap bg-white w-[25%] h-[140px] items-start justify-between p-4 rounded-xl">
+            <div className="flex flex-wrap bg-white xl:w-[25%] w-full h-[140px] items-start justify-between p-4 rounded-xl">
               <div className="flex flex-col">
                 <p>Total Views</p>
                 <p className="font-bold">10293</p>
@@ -56,7 +56,7 @@ const DashBoard = () => {
                 </p>
               </div>
             </div>
-            <div className="flex flex-wrap bg-white w-[25%] h-[140px] items-start justify-between p-4 rounded-xl">
+            <div className="flex flex-wrap bg-white xl:w-[25%] w-full h-[140px] items-start justify-between p-4 rounded-xl">
               <div className="flex flex-col">
                 <p>Income</p>
                 <p className="font-bold">$89 / Night</p>
@@ -75,7 +75,7 @@ const DashBoard = () => {
                 </p>
               </div>
             </div>
-            <div className="flex flex-wrap bg-white w-[25%] h-[140px] items-start justify-between p-4 rounded-xl">
+            <div className="flex flex-wrap bg-white xl:w-[25%] w-full h-[140px] items-start justify-between p-4 rounded-xl">
               <div className="flex flex-col">
                 <p>Total Views</p>
                 <p className="font-bold">10293</p>
@@ -96,84 +96,86 @@ const DashBoard = () => {
             </div>
           </div>
           <p className="text-3xl font-bold mb-6">Properties</p>
-          <div className="bg-white rounded-xl p-6">
+          <div className="bg-white rounded-xl p-6 m-2">
             <p className="font-bold mb-4 text-xl">Deals Details</p>
-            <table className="w-full">
-              <thead>
-                <tr className="bg-[#F1F4F9] roudned-xl h-8">
-                  <td className="rounded-l-xl">Property</td>
-                  <td>State</td>
-                  <td>Date-Time</td>
-                  <td>Profit</td>
-                  <td className="rounded-r-xl">Edit</td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Property</td>
-                  <td className="h-12">
-                    <span className="bg-[#FEC53D]  font-bold text-white px-3 py-1 rounded-xl w-fit">
-                      Available
-                    </span>
-                  </td>
-                  <td>2024/23/2</td>
-                  <td>$34,295</td>
-                  <td className="flex justify-center items-center  h-12">
-                    <span className="flex w-[60px] rounded-xl gap-2 justify-center border-2 border-black px-2 py-1">
-                      <span className="text-xl">
-                        <FaTrash />
+            <div className=" overflow-x-auto w-[180px] sm:w-[500px] lg:w-[600px]  xl:w-[1000px]  mx-auto">
+              <table className="w-full rounded-xl">
+                <thead>
+                  <tr className="bg-[#F1F4F9] roudned-xl h-8">
+                    <td className="rounded-l-xl">Property</td>
+                    <td>State</td>
+                    <td>Date-Time</td>
+                    <td>Profit</td>
+                    <td className="rounded-r-xl">Edit</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Property</td>
+                    <td className="h-12">
+                      <span className="bg-[#FEC53D]  font-bold text-white px-3 py-1 rounded-xl w-fit">
+                        Available
                       </span>
-                      <p className="h-5 w-[120px] bg-black"></p>
-                      <span className="text-xl">
-                        <FaPencil />
+                    </td>
+                    <td>2024/23/2</td>
+                    <td>$34,295</td>
+                    <td className="flex justify-center items-center  h-12">
+                      <span className="flex w-[60px] rounded-xl gap-2 justify-center border-2 border-black px-2 py-1">
+                        <span className="text-xl">
+                          <FaTrash />
+                        </span>
+                        <p className="h-5 w-[120px] bg-black"></p>
+                        <span className="text-xl">
+                          <FaPencil />
+                        </span>
                       </span>
-                    </span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Property</td>
-                  <td className="h-12">
-                    <span className="bg-[#FEC53D]  font-bold text-white px-3 py-1 rounded-xl w-fit">
-                      Available
-                    </span>
-                  </td>
-                  <td>2024/23/2</td>
-                  <td>$34,295</td>
-                  <td className="flex justify-center items-center  h-12">
-                    <span className="flex w-[60px] rounded-xl gap-2 justify-center border-2 border-black px-2 py-1">
-                      <span className="text-xl">
-                        <FaTrash />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Property</td>
+                    <td className="h-12">
+                      <span className="bg-[#FEC53D]  font-bold text-white px-3 py-1 rounded-xl w-fit">
+                        Available
                       </span>
-                      <p className="h-5 w-[120px] bg-black"></p>
-                      <span className="text-xl">
-                        <FaPencil />
+                    </td>
+                    <td>2024/23/2</td>
+                    <td>$34,295</td>
+                    <td className="flex justify-center items-center  h-12">
+                      <span className="flex w-[60px] rounded-xl gap-2 justify-center border-2 border-black px-2 py-1">
+                        <span className="text-xl">
+                          <FaTrash />
+                        </span>
+                        <p className="h-5 w-[120px] bg-black"></p>
+                        <span className="text-xl">
+                          <FaPencil />
+                        </span>
                       </span>
-                    </span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Property</td>
-                  <td className="h-12">
-                    <span className="bg-[#FEC53D]  font-bold text-white px-3 py-1 rounded-xl w-fit">
-                      Available
-                    </span>
-                  </td>
-                  <td>2024/23/2</td>
-                  <td>$34,295</td>
-                  <td className="flex justify-center items-center  h-12">
-                    <span className="flex w-[60px] rounded-xl gap-2 justify-center border-2 border-black px-2 py-1">
-                      <span className="text-xl">
-                        <FaTrash />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Property</td>
+                    <td className="h-12">
+                      <span className="bg-[#FEC53D]  font-bold text-white px-3 py-1 rounded-xl w-fit">
+                        Available
                       </span>
-                      <p className="h-5 w-[120px] bg-black"></p>
-                      <span className="text-xl">
-                        <FaPencil />
+                    </td>
+                    <td>2024/23/2</td>
+                    <td>$34,295</td>
+                    <td className="flex justify-center items-center  h-12">
+                      <span className="flex w-[60px] rounded-xl gap-2 justify-center border-2 border-black px-2 py-1">
+                        <span className="text-xl">
+                          <FaTrash />
+                        </span>
+                        <p className="h-5 w-[120px] bg-black"></p>
+                        <span className="text-xl">
+                          <FaPencil />
+                        </span>
                       </span>
-                    </span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
             <div className="flex justify-end mt-12">
               <button className="flex font-bold items-center gap-2 bg-[rgba(0,182,155,0.38)] px-3 py-1 rounded-2xl">
                 <p className="text-[#00B69B] ">ADD PROPERTY</p>

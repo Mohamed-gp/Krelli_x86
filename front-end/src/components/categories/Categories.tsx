@@ -2,7 +2,8 @@ import { categories } from "../../utils/data";
 
 const Categories = () => {
   return (
-    <div className="container flex gap-6 overflow-x-auto py-2 my-3 pb-7 justify-center">
+    
+    <div className="container flex gap-6 overflow-x-auto py-2 my-3 pb-7 justify-center w-[80%]">
       {categories.map((category) => (
         <>
           <div

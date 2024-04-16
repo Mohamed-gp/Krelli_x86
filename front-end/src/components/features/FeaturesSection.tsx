@@ -10,7 +10,7 @@ const FeaturesSection = () => {
         <TitleHeading>
           minimum living cost takes care of everything
         </TitleHeading>
-        <div className="flex items-center justify-between my-6">
+        <div className="flex items-center justify-between my-6 md:flex-row flex-col">
           <div className="img">
             <img
               src={FeaturesSectionImage}

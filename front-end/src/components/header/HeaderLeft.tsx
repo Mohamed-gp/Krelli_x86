@@ -3,7 +3,7 @@ import Logo from "../../../public/Krelli LOGO 1.png";
 
 const HeaderLeft = () => {
   return (
-    <Link to="" className="w-[126px]">
+    <Link to="" className="w-[126px] z-[2]">
       <img src={Logo} alt="logg" className="" />
     </Link>
   );

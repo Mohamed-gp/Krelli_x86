@@ -2,6 +2,7 @@ import { useState } from "react";
 import {  FaTrash } from "react-icons/fa6";
 import { IoMdSend } from "react-icons/io";
 
+
 import LeftSideNav from "../../components/leftSideNav/LeftSideNav";
 
 const Chat = () => {
@@ -14,7 +15,7 @@ const Chat = () => {
         {/* right side */}
         <div>
           <p className="text-3xl font-bold mb-6">Inbox</p>
-          <div className="  flex flex-row gap-6">
+          <div className="  flex md:flex-row gap-6 flex-col">
             <div className="flex flex-col px-6 gap-6">
               <div className="flex">
                 <div className="w-[240px] flex flex-col gap-6">
@@ -81,7 +82,7 @@ const Chat = () => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col rounded-xl bg-white px-6 py-6 gap-6 flex-1 w-[700px]">
+            <div className="flex flex-col rounded-xl bg-white px-6 py-6 gap-6 flex-1 max-w-[700px] mx-4">
               <div className="flex border-b-2 justify-between">
                 <p className="">Achraf Safi</p>
                 <FaTrash />

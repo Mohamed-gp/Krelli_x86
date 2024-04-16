@@ -1,13 +1,15 @@
 import Categories from "../../components/categories/Categories";
 import SearchBar from "../../components/filtersAndSearch/SearchBar";
-import PropertiesSection from "../../components/properties/PropertiesSection";
+import PropertiesCard from "../../components/properties/PropertiesCard";
 
 const Properties = () => {
   return (
     <>
       <SearchBar />
       <Categories />
-      <PropertiesSection />
+      <div className="container flex flex-wrap items-center justify-center sm:justify-between  gap-3 my-6">
+        <PropertiesCard all={true} />
+      </div>
     </>
   );
 };
