@@ -1,4 +1,3 @@
-import { check } from "prisma";
 import prisma from "../prisma/client.js";
 
 
@@ -80,6 +79,37 @@ const addReservation = async (req, res) => {
     res.json(reservation);
 };
 
+export const createChat = async (req, res) => {
+    const userId = req.user.userId;
+    const homeId = req.params.id;
+    const home = await prisma.home.findUnique({
+        where: {
+            id: parseInt(homeId),
+        },
+        include: {
+            Pictures: {
+                select: {
+                    url: true,
+                },
+            },
+        },
+    });
+    if (!home) {
+        return res.status(404).send("Home not found");
+    }
+    const userIds = [userId, home.userId];
+
+    const chat = await prisma.chat.create({
+        data: {
+            users: {
+                connect: userIds.map((id) => ({ id }))
+            },
+            picture : home.Pictures[0].url,
+        }
+    });
+    res.json(chat);
+}
+
 const searchHomes = async (req, res) => {
 
     const { wilaya, guests, checkIn, checkOut , category  } = req.query;
@@ -116,7 +146,6 @@ const searchHomes = async (req, res) => {
 };
 
 
-
 const homePictures = async (req, res) => {
     const {id} = req.params;
     const home = await prisma.home.findUnique({
@@ -132,6 +161,7 @@ const homePictures = async (req, res) => {
     }
     res.json(home.Pictures);
 };
+
 
 const addReview = async (req, res) => {
     const userId = req.user.userId;
@@ -196,4 +226,4 @@ const allReviews = async (req, res) => {
 };
 
 
-export {  singleHome, searchHomes ,addReservation,  homePictures , addReview , allReviews };
+export {  singleHome, searchHomes ,addReservation,  homePictures , addReview , allReviews , createChat};

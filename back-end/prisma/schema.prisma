@@ -104,16 +104,15 @@ model Picture {
 model Chat {
   id String @id @default(uuid())
   createdAt DateTime @default(now())
+  picture  String?
   users     User[]
   Messages Message[]
 }
 
 model Message {
   id String @id @default(uuid())
-
   message   String
   createdAt DateTime @default(now())
-
   Chat   Chat?   @relation(fields: [chatId], references: [id])
   chatId String?
 }

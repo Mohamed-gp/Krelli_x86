@@ -33,17 +33,6 @@ export const getChat = async (req, res) => {
 }
 
 
-export const createChat = async (req, res) => {
-    const { userIds } = req.body;
-    const chat = await prisma.chat.create({
-        data: {
-            users: {
-                connect: userIds.map((id) => ({ id }))
-            }
-        }
-    });
-    res.json(chat);
-}
 
 export const createMessage = async (req, res) => {
     const { chatId } = req.params;
@@ -64,6 +53,7 @@ export const createMessage = async (req, res) => {
             }
         }
     });
+    
     const chat = await prisma.chat.findUnique({
         where: {
             id: chatId
