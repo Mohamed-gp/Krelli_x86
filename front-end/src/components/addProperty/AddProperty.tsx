@@ -16,17 +16,17 @@ const AddProperty = () => {
         <p className="text-center font-bold text-[#4561EC]">
           Add A New Property
         </p>
-        <div className="flex gap-6">
+        <div className="flex gap-6 flex-wrap">
           <AddPropertyInput data={data} setData={setData} />
           <AddPropertyInput data={data} setData={setData} />
           <AddPropertyInput data={data} setData={setData} />
         </div>
-        <div className="flex gap-6">
+        <div className="flex gap-6  flex-wrap">
           <AddPropertyInput data={data} setData={setData} />
           <AddPropertyInput data={data} setData={setData} />
           <AddPropertyInput data={data} setData={setData} />
         </div>
-        <div className="flex gap-6">
+        <div className="flex gap-6 flex-wrap">
           <AddPropertyInput data={data} setData={setData} />
           <AddPropertyInput data={data} setData={setData} />
         </div>

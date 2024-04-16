@@ -1,6 +1,6 @@
 const AddPropertyInput = ({ data, setData }) => {
   return (
-    <div className="name-input  w-[30%]">
+    <div className="name-input  md:w-[30%] w-[100%]">
       <label htmlFor="name" className="font-bold">
         Name
       </label>
@@ -11,7 +11,7 @@ const AddPropertyInput = ({ data, setData }) => {
           onChange={(e) => setData({ ...data, name: e.target.value })}
           name="name"
           id="name"
-          className="peer w-full pt-5 pb-2 px-3 border-2 text-xs  focus:outline-none rounded-md bg-[#E6E6E6]"
+          className="peer w-full pt-5 pb-2 px-3 border-2 text-xs   focus:outline-none rounded-md bg-[#E6E6E6]"
         />
         <label
           htmlFor="name"
