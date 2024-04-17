@@ -1,6 +1,6 @@
 const AddPropertyDescription = () => {
   return (
-    <div className="name-input  ">
+    <div className="name-input  " style={{width : "calc(100% - 48px)"}}>
       <label htmlFor="name" className="font-bold">
         Description
       </label>

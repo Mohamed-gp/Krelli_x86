@@ -10,11 +10,11 @@ const PropertiesSection = () => {
   return (
     <section>
       <div className="container flex flex-col py-12">
-        <div className="flex justify-between">
+        <div className="flex justify-between items-center">
           <TitleHeading>list of properties</TitleHeading>
           <Link
             to="/properties"
-            className="bg-[#4561EC] text-white px-4 py-2 rounded-xl"
+            className="bg-[#4561EC] text-white px-2 md:px-4 py-1 md:py-2 rounded-xl md:text-base text-sm"
           >
             View all properties
           </Link>

@@ -10,7 +10,7 @@ const FeaturesSection = () => {
         <TitleHeading>
           minimum living cost takes care of everything
         </TitleHeading>
-        <div className="flex items-center justify-between my-6 md:flex-row flex-col">
+        <div className="flex items-center justify-between my-6 md:flex-row flex-col ">
           <div className="img">
             <img
               src={FeaturesSectionImage}
@@ -18,15 +18,15 @@ const FeaturesSection = () => {
               className="w-[300px]"
             />
           </div>
-          <div className="flex flex-wrap justify-between w-[70%] px-6 gap-y-6 items-center">
+          <div className="flex flex-wrap justify-between w-full md:w-[70%] px-6 gap-y-6 items-center">
             {featuresCardsData.map((feature) => {
               return (
-                <>
-                  <FeaturesCard cardTitle={feature.title} cardImagePath={feature.path}/>
-                </>
+                <FeaturesCard
+                  cardTitle={feature.title}
+                  cardImagePath={feature.path}
+                />
               );
             })}
-
           </div>
         </div>
       </div>
