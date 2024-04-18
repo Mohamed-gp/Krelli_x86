@@ -2,12 +2,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { authActions } from "../../store/slices/authSlice";
 import { TbLogout } from "react-icons/tb";
+import { IRootState } from "../../store/store";
 
 
 const HeaderRight = () => {
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state : IRootState) => state.auth.user);
   const dispatch = useDispatch()
-  console.log(user,"from redux")
   return (
     <div className="lg:flex hidden items-center gap-2 w-[126px] justify-end ">
       {!user && (

@@ -1,8 +1,12 @@
+import { useEffect } from "react";
 import Categories from "../../components/categories/Categories";
 import SearchBar from "../../components/filtersAndSearch/SearchBar";
 import PropertiesCard from "../../components/properties/PropertiesCard";
 
 const Properties = () => {
+  useEffect(() => {
+    scrollTo(0,0)
+  },[])
   return (
     <>
       <SearchBar />

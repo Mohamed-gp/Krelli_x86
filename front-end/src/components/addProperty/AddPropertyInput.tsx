@@ -1,25 +1,37 @@
-const AddPropertyInput = ({ data, setData }) => {
+interface AddPropertyInputProps {
+  dataToSubmit : any,
+  setDataToSubmit : (a : any) => any,
+  inputLabel : string,
+}
+
+
+
+const AddPropertyInput = ({ dataToSubmit,setDataToSubmit ,inputLabel } : AddPropertyInputProps) => {
+  console.log(inputLabel,"this is the name of the input type")
+  console.log(dataToSubmit[inputLabel],"hello bata")
+  
+  console.log("testing",dataToSubmit)
   return (
-    <div className="name-input  md:w-[30%] w-[100%]">
-      <label htmlFor="name" className="font-bold">
-        Name
+    <div className={`name-input md:w-[30%] w-[100%] `}>
+      <label htmlFor={inputLabel} className="font-bold">
+        {inputLabel.charAt(0).toUpperCase() + inputLabel.slice(1)}
       </label>
       <div className="relative">
         <input
           type="text"
-          value={data.name}
-          onChange={(e) => setData({ ...data, name: e.target.value })}
-          name="name"
-          id="name"
+          value={dataToSubmit[inputLabel]}
+          onChange={(e) => setDataToSubmit({ ...dataToSubmit,[inputLabel] : e.target.value })}
+          name={inputLabel}
+          id={inputLabel}
           className="peer w-full pt-5 pb-2 px-3 border-2 text-xs   focus:outline-none rounded-md bg-[#E6E6E6]"
         />
         <label
           htmlFor="name"
           className={`absolute ${
-            !data.name ? "text-[13px] top-3" : "text-[10px] top-1 "
+            !dataToSubmit[inputLabel] ? "text-[13px] top-3" : "text-[10px] top-1 "
           }  peer-focus:text-[10px] peer-focus:top-1 duration-500 left-3  opacity-50`}
         >
-          Name
+          {inputLabel.charAt(0).toLocaleUpperCase() + inputLabel.slice(1)}
         </label>
       </div>
     </div>
