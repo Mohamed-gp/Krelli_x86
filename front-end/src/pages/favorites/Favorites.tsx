@@ -20,7 +20,7 @@ const Favorites = () => {
                 <div className="w-[240px] rounded-xl overflow-hidden">
                   <div className="img">
                     <img
-                      src={`../../../public/${property.path}`}
+                      src={property.path}
                       alt={property.title}
                     />
                   </div>

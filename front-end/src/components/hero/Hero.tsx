@@ -11,9 +11,11 @@ const Hero = () => {
     >
       <div className="absolute top-0 left-0 w-full h-full bg-black/50"></div>
       <div className="container relative flex items-center justify-between h-full text-white">
-        <p className="!leading-snug text-3xl  md:text-5xl w-full text-center ">
-          Rent Your House Now With Us From Any Place
-        </p>
+        <div className="flex flex-col gap-2">
+          <p className="!leading-snug text-3xl  md:text-5xl w-full text-center ">
+            Find Your Perfect Rental Home
+          </p>
+        </div>
         {/* 
         <div className="lg:flex flex-col items-center justify-center gap-4 w-[30%]  hidden">
            <iframe

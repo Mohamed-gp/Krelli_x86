@@ -3,12 +3,18 @@ import logo from "../../../public/Krelli LOGO 1.png";
 import { loginDataInterface } from "../../../interfaces/userDataInterfaces/interface";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../store/slices/authSlice";
 
 const Login = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   const [dataToSubmit, setdataToSubmit] = useState<loginDataInterface>({
     email: "",
     password: "",
   });
+  
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -17,8 +23,11 @@ const Login = () => {
         dataToSubmit
       );
       console.log(data);
-      toast.success("Login Successful");
-    } catch (error) {
+      dispatch(authActions.login({...data,password : ""}))
+      toast.success("login Successful");
+      navigate("/")
+
+    } catch (error : any) {
       console.log(error.response.data);
       toast.error(error.response.data);
     }

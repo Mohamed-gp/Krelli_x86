@@ -79,7 +79,7 @@ const addReservation = async (req, res) => {
     res.json(reservation);
 };
 
-export const createChat = async (req, res) => {
+const createChat = async (req, res) => {
     const userId = req.user.userId;
     const homeId = req.params.id;
     const home = await prisma.home.findUnique({
