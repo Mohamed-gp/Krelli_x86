@@ -7,9 +7,7 @@ import { useEffect, useState } from "react";
 
 const LeftSideNav = () => {
   const [open, setopen] = useState(false);
-  useEffect(() => {
-    console.log(open)
-  },[open])
+
   return (
     <div  className={` bg-white  px-2 py-4 gap-6  rounded-xl md:px-6 relative`}>
       <div

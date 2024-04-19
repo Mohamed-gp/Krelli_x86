@@ -3,8 +3,13 @@ import logo from "../../../public/Krelli LOGO 1.png";
 import { registerDataInterface } from "../../interfaces/userDataInterfaces/interface";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../store/slices/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [dataToSubmit, setdataToSubmit] = useState<registerDataInterface>({
     email: "",
     password: "",
@@ -13,14 +18,19 @@ const Register = () => {
   });
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(dataToSubmit);
+    if (dataToSubmit.email.trim() == "" || dataToSubmit.password.trim() == "" || dataToSubmit.firstName.trim() == "" ||  dataToSubmit.lastName.trim() == "" ) {
+      return toast.error("All Inputs Are Required")
+    }
     try {
       const { data } = await axios.post(
         "http://localhost:3000/auth/register",
         dataToSubmit
       );
       console.log(data);
-      toast.success("Login Successful");
+      dispatch(authActions.login({...data,password : ""}))
+      navigate("/")
+
+      return toast.success("Account Created Succefully")
     } catch (error) {
       console.log(error.response.data);
       toast.error(error.response.data);
@@ -63,7 +73,6 @@ const Register = () => {
                   type="text"
                   //   autoComplete="email"
                   placeholder="Enter Your First Name"
-                  required
                   className="block pl-4 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300  placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -89,7 +98,6 @@ const Register = () => {
                   type="text"
                   //   autoComplete="email"
                   placeholder="Enter Your Last Name"
-                  required
                   className="block pl-4 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -112,7 +120,6 @@ const Register = () => {
                   type="email"
                   autoComplete="email"
                   placeholder="Enter Your Email"
-                  required
                   className="block pl-4 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -149,7 +156,6 @@ const Register = () => {
                   }
                   autoComplete="current-password"
                   placeholder="Enter Your Password"
-                  required
                   className="block pl-4 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>

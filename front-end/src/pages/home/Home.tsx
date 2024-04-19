@@ -13,6 +13,6 @@ const Home = () => {
       <PhoneApp />
       <AddProperty />
     </>
-  );
+  );  
 };
 export default Home;

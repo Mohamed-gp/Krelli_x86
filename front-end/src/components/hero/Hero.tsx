@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Hero = () => {
   return (
     <section
@@ -11,9 +13,17 @@ const Hero = () => {
     >
       <div className="absolute top-0 left-0 w-full h-full bg-black/50"></div>
       <div className="container relative flex items-center justify-between h-full text-white">
-        <p className="!leading-snug text-3xl  md:text-5xl w-full text-center ">
-          Rent Your House Now With Us From Any Place
-        </p>
+        <div className="flex flex-col gap-2">
+          <p className="!leading-snug text-3xl  md:text-5xl w-full  ">
+            Find Your Perfect Rental Home
+          </p>
+          <p className="!leading-snug text-lg  md:text-1xl w-1/2  opacity-50">
+          Discover a wide range of rental properties, from cozy apartments to spacious homes, all tailored to your needs and budget.
+          </p>
+          <Link to="/properties" className="cursor-pointer  text-white px-6 py-1 rounded-xl bg-[#4561EC] duration-300 hover:scale-105 w-fit my-2">
+            Find Now
+          </Link>
+        </div>
         {/* 
         <div className="lg:flex flex-col items-center justify-center gap-4 w-[30%]  hidden">
            <iframe

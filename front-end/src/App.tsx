@@ -8,12 +8,9 @@ import Footer from "./components/footer/Footer";
 import Chat from "./pages/chat/Chat";
 import Favorites from "./pages/favorites/Favorites";
 import DashBoard from "./pages/dashboard/DashBoard";
-import { useEffect } from "react";
 
 function App() {
-  useEffect(( ) => {
-    console.log("Helo")
-  },[window])
+
   return (
     <>
       <BrowserRouter>

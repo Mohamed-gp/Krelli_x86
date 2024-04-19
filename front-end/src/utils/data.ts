@@ -36,76 +36,74 @@ const featuresCardsData = [
     path: "shield-star-line 1",
   },
   {
-    title: "Pay for what you use !",
+    title: "Pay for what you see !",
     path: "eye-2-line 1",
   },
 ] as const;
 
 const propertiesCardsData = [
   {
-    title: "ESTIN Amizour, Bejaia",
-    path: "properyImage1.png",
+    title: "Alger,Algiers",
+    path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712710442/tdia6y6xyqojxbmtwv4p.jpg",
+
   },
   {
-    title: "ESTIN Amizour, Bejaia",
-    path: "properyImage2.png",
+    title: "Alger,Algiers",
+    path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712710658/wglfisxmldoacbolyppj.jpg",
+  },
+
+  {
+    title: "Tipaza,Alger",
+    path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712710879/rnl66ibilkcy1qexokey.jpg",
   },
   {
-    title: "ESTIN Amizour, Bejaia",
-    path: "properyImage3.png",
+    title: "Alger,Algiers",
+    path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712711156/tfwqqcr9z8yuztwvxgso.jpg",
   },
   {
-    title: "ESTIN Amizour, Bejaia",
-    path: "properyImage4.png",
+    title: "Alger,Algiers",
+    path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712711246/wudphgo2a72cpqrtiqza.jpg",
   },
   {
-    title: "ESTIN Amizour, Bejaia",
-    path: "properyImage3.png",
+    title: "Alger,Algiers",
+    path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712711361/rcntezbpdgtb7biigrib.jpg",
   },
   {
-    title: "ESTIN Amizour, Bejaia",
-    path: "properyImage4.png",
+    title: "Alger,Algiers",
+    path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712711606/jrm0c6qetp4eovtf1c1r.jpg",
   },
   {
-    title: "ESTIN Amizour, Bejaia",
-    path: "properyImage3.png",
+    title: "Alger,Algiers",
+    path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712711731/lljoipblazt4q4pytsfn.jpg",
   },
   {
-    title: "ESTIN Amizour, Bejaia",
-    path: "properyImage4.png",
+    title: "Alger,Algiers",
+    path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712712220/usz5kxgfc3rze5lqs0ka.jpg",
   },
   {
-    title: "ESTIN Amizour, Bejaia",
-    path: "properyImage3.png",
+    title: "Alger,Algiers",
+    path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712712277/gaapyvsr0712uahtd4lg.jpg",
   },
   {
-    title: "ESTIN Amizour, Bejaia",
-    path: "properyImage4.png",
+    title: "Alger,Algiers",
+    path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712712321/uqdzdwg99lt2vquydzc8.jpg",
   },
-  {
-    title: "ESTIN Amizour, Bejaia",
-    path: "properyImage3.png",
-  },
-  {
-    title: "ESTIN Amizour, Bejaia",
-    path: "properyImage4.png",
-  },
-  {
-    title: "ESTIN Amizour, Bejaia",
-    path: "properyImage3.png",
-  },
-  {
-    title: "ESTIN Amizour, Bejaia",
-    path: "properyImage4.png",
-  },
-  {
-    title: "ESTIN Amizour, Bejaia",
-    path: "properyImage3.png",
-  },
-  {
-    title: "ESTIN Amizour, Bejaia",
-    path: "properyImage4.png",
-  },
+  // {
+  //   title: "Alger,Algiers",
+  //   path: "properyImage1.png",
+  // },
+  // {
+  //   title: "Alger,Algiers",
+  //   path: "properyImage2.png",
+  // },
+  // {
+  //   title: "Alger,Algiers",
+  //   path: "properyImage3.png",
+  // },
+  // {
+  //   title: "Alger,Algiers",
+  //   path: "properyImage4.png",
+  // },
 ] as const;
 
 const categories = [

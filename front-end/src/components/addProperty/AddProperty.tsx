@@ -3,9 +3,25 @@ import AddPropertyInput from "./AddPropertyInput";
 import AddPropertyDescription from "./AddPropertyDescription";
 import AddProperyPhoto from "./AddProperyPhoto";
 import AddPropertySubmit from "./AddPropertySubmit";
+import { useSelector } from "react-redux";
+import { IRootState } from "../../store/store";
 
 const AddProperty = () => {
-  const [data, setData] = useState({ name: "" });
+  const user = useSelector((state: IRootState) => state.auth.user);
+  const [dataToSubmit, setDataToSubmit] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    title: "",
+    wilaya: "",
+    price: "",
+    bathrooms: "",
+    bedrooms: "",
+    guests: "",
+    description: "",
+  });
+  //title, wilaya, price, bathrooms, bedrooms, guests
   return (
     <div className="container">
       <p className="font-bold text-center text-xl">
@@ -16,21 +32,75 @@ const AddProperty = () => {
         <p className="text-center font-bold text-[#4561EC]">
           Add A New Property
         </p>
-        <div className="flex gap-6 flex-wrap">
-          <AddPropertyInput data={data} setData={setData} />
-          <AddPropertyInput data={data} setData={setData} />
-          <AddPropertyInput data={data} setData={setData} />
-        </div>
+        {!user && (
+          <div className="flex gap-6 flex-wrap">
+            <AddPropertyInput
+              dataToSubmit={dataToSubmit}
+              setDataToSubmit={setDataToSubmit}
+              inputLabel="firstName"
+            />
+            <AddPropertyInput
+              dataToSubmit={dataToSubmit}
+              setDataToSubmit={setDataToSubmit}
+              inputLabel="lastName"
+            />
+            <AddPropertyInput
+              dataToSubmit={dataToSubmit}
+              setDataToSubmit={setDataToSubmit}
+              inputLabel="email"
+            />
+          </div>
+        )}
         <div className="flex gap-6  flex-wrap">
-          <AddPropertyInput data={data} setData={setData} />
-          <AddPropertyInput data={data} setData={setData} />
-          <AddPropertyInput data={data} setData={setData} />
+          {!user && (
+            <AddPropertyInput
+              dataToSubmit={dataToSubmit}
+              setDataToSubmit={setDataToSubmit}
+              inputLabel="password"
+            />
+          )}
+          <AddPropertyInput
+            dataToSubmit={dataToSubmit}
+            setDataToSubmit={setDataToSubmit}
+            inputLabel="title"
+          />
+          <AddPropertyInput
+            dataToSubmit={dataToSubmit}
+            setDataToSubmit={setDataToSubmit}
+            inputLabel="wilaya"
+          />
+
+          {user && (
+            <AddPropertyInput
+              dataToSubmit={dataToSubmit}
+              setDataToSubmit={setDataToSubmit}
+              inputLabel="guests"
+            />
+          )}
         </div>
         <div className="flex gap-6 flex-wrap">
-          <AddPropertyInput data={data} setData={setData} />
-          <AddPropertyInput data={data} setData={setData} />
+          <AddPropertyInput
+            dataToSubmit={dataToSubmit}
+            setDataToSubmit={setDataToSubmit}
+            inputLabel="price"
+          />
+          <AddPropertyInput
+            dataToSubmit={dataToSubmit}
+            setDataToSubmit={setDataToSubmit}
+            inputLabel="bathrooms"
+          />
+          <AddPropertyInput
+            dataToSubmit={dataToSubmit}
+            setDataToSubmit={setDataToSubmit}
+            inputLabel="bedrooms"
+          />
         </div>
-        <AddPropertyDescription />
+        <AddPropertyInput
+          dataToSubmit={dataToSubmit}
+          setDataToSubmit={setDataToSubmit}
+          inputLabel="description"
+        />
+
         <AddProperyPhoto />
         <AddPropertySubmit />
       </form>
