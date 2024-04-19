@@ -32,7 +32,6 @@ model User {
 
 model Home {
   id Int @id @default(autoincrement())
-
   title       String
   description String?
   guests      Int

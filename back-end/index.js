@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser";
 import authRouter from "./routes/auth.js";
 import originChecker from "./middleware/originChecker.js";
 import corsOptions from "./config/corsOptions.js";
-import {createServer} from "http";
+	import {createServer} from "http";
 import {socketServer} from "./socket/socket.js";
 import HostRouter from "./routes/host.js";
 import HomesRouter from "./routes/home.js";
@@ -24,10 +24,8 @@ const server = createServer(app);
 
 app.use(originChecker);
 
-// Cross Origin Resource Sharing
 app.use(cors(corsOptions));
 
-// built-in middleware to handle urlencoded form data
 app.use(express.urlencoded({ extended: false }));
 
 app.use(express.json());
@@ -42,17 +40,20 @@ app.get("/", (req, res) => {
 
 
 
+
 app.use("/auth", authRouter);
+
 
 
 app.use(jwtVerify);
 
-// added it after the jwtVerify psq lazm ykon 3ndna token
 const io = socketServer(server);
 app.use((req, res, next) => {
 	res.io = io;
 	next();
 });
+
+
 
 app.use("/host", HostRouter);
 

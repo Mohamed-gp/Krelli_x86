@@ -1,5 +1,5 @@
 import express from 'express';
-import {  singleHome , homePictures , searchHomes , addReview , allReviews, addReservation , createChat } from '../controllers/homeController.js';
+import {  singleHome , homePictures , searchHomes , addReview , allReviews, addReservation , createChat  } from '../controllers/homeController.js';
 
 const router = express.Router();
 
