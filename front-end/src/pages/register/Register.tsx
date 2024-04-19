@@ -24,7 +24,9 @@ const Register = () => {
     try {
       const { data } = await axios.post(
         "http://localhost:3000/auth/register",
-        dataToSubmit
+        dataToSubmit,{
+          withCredentials : true
+        }
       );
       console.log(data);
       dispatch(authActions.login({...data,password : ""}))

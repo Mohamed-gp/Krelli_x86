@@ -1,4 +1,20 @@
-const AddProperyPhoto = () => {
+import { useEffect } from "react";
+
+interface AddPropertyInputProps {
+  dataToSubmit: any;
+  formData: FormData;
+}
+
+const AddProperyPhoto = ({
+  dataToSubmit,
+  formData,
+}: AddPropertyInputProps) => {
+  const addImageHandler = (e) => {
+    console.log(e.target.files);
+    formData.append("files", e.target.files);
+    console.log(formData.getAll("files"))
+  };
+
   return (
     <div className="name-input  ">
       <label htmlFor="photoUploader" className="font-bold">
@@ -13,7 +29,15 @@ const AddProperyPhoto = () => {
         </p>
         <p>Supported: JPG, JPEG, PNG</p>
       </label>
-      <input type="file" name="" className="hidden" id="photoUploader" />
+
+      <input
+        type="file"
+        multiple
+        name=""
+        className="hidden"
+        id="photoUploader"
+        onChange={(e) => addImageHandler(e)}
+      />
     </div>
   );
 };

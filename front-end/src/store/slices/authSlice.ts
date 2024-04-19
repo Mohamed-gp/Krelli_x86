@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const authSlice = createSlice({
   name: "auth",
@@ -13,6 +14,7 @@ const authSlice = createSlice({
     logout(state) {
       state.user = null;
       localStorage.removeItem("user")
+      
     },
   },
 });

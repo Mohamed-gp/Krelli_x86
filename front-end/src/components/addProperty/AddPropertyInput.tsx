@@ -7,10 +7,7 @@ interface AddPropertyInputProps {
 
 
 const AddPropertyInput = ({ dataToSubmit,setDataToSubmit ,inputLabel } : AddPropertyInputProps) => {
-  console.log(inputLabel,"this is the name of the input type")
-  console.log(dataToSubmit[inputLabel],"hello bata")
-  
-  console.log("testing",dataToSubmit)
+
   return (
     <div className={`name-input md:w-[30%] w-[100%] `}>
       <label htmlFor={inputLabel} className="font-bold">

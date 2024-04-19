@@ -1,13 +1,25 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { authActions } from "../../store/slices/authSlice";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 interface HeaderCenterProps {
   open: boolean;
 }
 const HeaderCenter = ({ open }: HeaderCenterProps) => {
   const user = useSelector((state) => state.auth.user);
-
+  const dispatch = useDispatch();
+  const logoutHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const {data}= await axios.get("http://localhost:3000/auth/logout");
+      toast.success(data);
+      dispatch(authActions.logout());
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <nav
       style={
@@ -54,7 +66,7 @@ const HeaderCenter = ({ open }: HeaderCenterProps) => {
           <li className="lg:hidden">
             <span
               className="cursor-pointer navigation-header-link"
-              onClick={() => authActions.logout()}
+              onClick={(e) => logoutHandler(e)}
             >
               Logout
             </span>

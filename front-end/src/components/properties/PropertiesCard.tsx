@@ -14,7 +14,7 @@ const PropertiesCard = ({all}: PropertiesCardProps) => {
     <>
     {propertiesUsed.map((property : any) => {
       return (
-        <div className="w-[240px] rounded-xl overflow-hidden">
+        <div key={property.path} className="w-[240px] rounded-xl overflow-hidden">
           <div className="img">
             <img
               src={property.path}

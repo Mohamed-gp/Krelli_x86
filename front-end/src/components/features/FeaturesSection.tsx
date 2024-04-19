@@ -22,6 +22,7 @@ const FeaturesSection = () => {
             {featuresCardsData.map((feature) => {
               return (
                 <FeaturesCard
+                key={feature.path}
                   cardTitle={feature.title}
                   cardImagePath={feature.path}
                 />

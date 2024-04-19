@@ -6,7 +6,6 @@ import multer from "multer";
 
 const storage = multer({ dest: "uploads/" });
 
-
 const router = express.Router();
 
 router.post("/addHome", storage.array("files"), registerAndAddhome);
@@ -14,8 +13,12 @@ router.post("/login", handelLogin);
 router.post("/register", handelRegister);
 
 router.get("/logout", (req, res) => {
-	res.clearCookie("authorization");
-	res.json("Logged out");
+  res.cookie("authorization", "", {
+    httpOnly: true,
+    expires: new Date(0),
+  });
+  //   res.clearCookie("authorization");
+  res.json("Logged out");
 });
 
 export default router;

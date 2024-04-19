@@ -2,7 +2,8 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import prisma from "../prisma/client.js";
 
-const handelLogin = async (req, res) => {
+const handelLogin = async (req, res ) => {
+
 	const email = req.body.email;
 	const password = req.body.password;
 
@@ -24,7 +25,8 @@ const handelLogin = async (req, res) => {
 		process.env.TOKEN_SECRET,
 		{ expiresIn: "30d" },
 	);
-	res.cookie("authorization", token, { httpOnly: true , sameSite: 'None', secure: true });
+	
+	res.cookie("authorization", token, { httpOnly: true , sameSite: 'None', secure: false });
 	res.json(user);
 };
 

@@ -1,3 +1,4 @@
+import { FaArrowRight } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
 const Hero = () => {
@@ -18,11 +19,24 @@ const Hero = () => {
             Find Your Perfect Rental Home
           </p>
           <p className="!leading-snug text-lg  md:text-1xl w-1/2  opacity-50">
-          Discover a wide range of rental properties, from cozy apartments to spacious homes, all tailored to your needs and budget.
+            Discover a wide range of rental properties, from cozy apartments to
+            spacious homes, all tailored to your needs and budget.
           </p>
-          <Link to="/properties" className="cursor-pointer  text-white px-6 py-1 rounded-xl bg-[#4561EC] duration-300 hover:scale-105 w-fit my-2">
-            Find Now
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link
+              to="/properties"
+              className="cursor-pointer  text-white px-6 py-1 rounded-xl bg-[#4561EC] duration-300 hover:scale-105 w-fit my-2"
+            >
+              Find Now
+            </Link>
+            <Link
+              to="#find"
+              className="cursor-pointer  text-white px-6 py-1 rounded-xl bg-[#4561EC] duration-300 hover:scale-105 w-fit my-2 flex items-center gap-2"
+            >
+              <span>Rent Your House</span>
+              <FaArrowRight/>
+            </Link>
+          </div>
         </div>
         {/* 
         <div className="lg:flex flex-col items-center justify-center gap-4 w-[30%]  hidden">

@@ -67,7 +67,7 @@ const registerAndAddhome = async (req, res) => {
         },
     });
     const token = jwt.sign({ userId: user.id , role: user.role }, process.env.TOKEN_SECRET, { expiresIn: "30d" });
-	res.cookie("authorization", token, { httpOnly: true , sameSite: 'None', secure: true });
+	res.cookie("authorization", token, { httpOnly: true , sameSite: 'None', secure: false });
     res.json(home);
 };
 
