@@ -1,20 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    user: localStorage.getItem("user") != null ? JSON.parse(localStorage.getItem("user")) : null, // just a dummy data
+    user:
+      localStorage.getItem("user") == null
+        ? null
+        : JSON.parse(localStorage.getItem("user") as string) , // just a dummy data
   },
   reducers: {
     login(state, action) {
       state.user = action.payload;
-      localStorage.setItem("user",JSON.stringify(action.payload))
+      localStorage.setItem("user", JSON.stringify(action.payload));
     },
     logout(state) {
       state.user = null;
-      localStorage.removeItem("user")
-      
+      localStorage.removeItem("user");
     },
   },
 });

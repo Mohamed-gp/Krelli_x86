@@ -13,11 +13,8 @@ router.post("/login", handelLogin);
 router.post("/register", handelRegister);
 
 router.get("/logout", (req, res) => {
-  res.cookie("authorization", "", {
-    httpOnly: true,
-    expires: new Date(0),
-  });
-  //   res.clearCookie("authorization");
+
+  res.clearCookie("authorization");
   res.json("Logged out");
 });
 

@@ -13,7 +13,9 @@ const HeaderCenter = ({ open }: HeaderCenterProps) => {
   const logoutHandler = async (e) => {
     e.preventDefault();
     try {
-      const {data}= await axios.get("http://localhost:3000/auth/logout");
+      const {data}= await axios.get("http://localhost:3000/auth/logout",{
+        withCredentials: true,
+      });
       toast.success(data);
       dispatch(authActions.logout());
     } catch (error) {
