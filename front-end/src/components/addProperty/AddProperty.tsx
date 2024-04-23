@@ -4,11 +4,12 @@ import AddProperyPhoto from "./AddProperyPhoto";
 import AddPropertySubmit from "./AddPropertySubmit";
 import { useSelector } from "react-redux";
 import { IRootState } from "../../store/store";
+import axios from "axios";
 
 const AddProperty = () => {
   const user = useSelector((state: IRootState) => state.auth.user);
   const [dataToSubmit, setDataToSubmit] = useState({
-    firstName: "" ,
+    firstName: "",
     lastName: "",
     email: "",
     password: "",
@@ -20,30 +21,50 @@ const AddProperty = () => {
     guests: "",
     description: "",
   });
-  const formData= new FormData()
-  const submitHandler = (e) => {
-    e.preventDefault()
-  }
+  const formData = new FormData();
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post(
+        "http://localhost:3000/auth/addHome",
+        formData
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
-    formData.append("firstName",dataToSubmit?.firstName)
-    formData.append("lastName",dataToSubmit?.lastName)
-    formData.append("email",dataToSubmit?.email)
-    formData.append("password",dataToSubmit.password)
-    formData.append("title",dataToSubmit.title)
-    formData.append("wilaya",dataToSubmit.wilaya)
-    formData.append("price",dataToSubmit.price)
-    formData.append("bathrooms",dataToSubmit.price)
-    formData.append("bedrooms",dataToSubmit.wilaya)
-    formData.append("guests",dataToSubmit.guests)
-    formData.append("description",dataToSubmit.description)
-  },[dataToSubmit])
+    if (dataToSubmit?.firstName?.length != 0) {
+      formData.append("firstName", dataToSubmit?.firstName);
+    }
+    if (dataToSubmit?.lastName?.length != 0) {
+      formData.append("lastName", dataToSubmit?.lastName);
+    }
+    if (dataToSubmit?.email?.length != 0) {
+      formData.append("email", dataToSubmit?.email);
+    }
+    if (dataToSubmit?.password.length != 0) {
+      formData.append("password", dataToSubmit.password);
+    }
+    formData.append("title", dataToSubmit.title);
+    formData.append("wilaya", dataToSubmit.wilaya);
+    formData.append("price", dataToSubmit.price);
+    formData.append("bathrooms", dataToSubmit.bathrooms);
+    formData.append("bedrooms", dataToSubmit.bedrooms);
+    formData.append("guests", dataToSubmit.guests);
+    formData.append("description", dataToSubmit.description);
+  }, [dataToSubmit]);
   return (
-    <div className="container">
+    <div className="container" id="addProperty">
       <p className="font-bold text-center text-xl">
         Your property with us and be Confident that Your Room will be Filled
         Out!
       </p>
-      <form onSubmit={submitHandler} className="flex flex-col my-6 bg-white border-2 rounded-xl border-black py-6 px-6 gap-6">
+      <form
+        onSubmit={submitHandler}
+        className="flex flex-col my-6 bg-white border-2 rounded-xl border-black py-6 px-6 gap-6"
+      >
         <p className="text-center font-bold text-[#4561EC]">
           Add A New Property
         </p>
@@ -110,17 +131,23 @@ const AddProperty = () => {
             inputLabel="bedrooms"
           />
         </div>
-        <AddPropertyInput
-          dataToSubmit={dataToSubmit}
-          setDataToSubmit={setDataToSubmit}
-          inputLabel="description"
-        />
+        <div className="flex gap-6 flex-wrap">
+          {!user && (
+            <AddPropertyInput
+              dataToSubmit={dataToSubmit}
+              setDataToSubmit={setDataToSubmit}
+              inputLabel="guests"
+            />
+          )}
+          <AddPropertyInput
+            dataToSubmit={dataToSubmit}
+            setDataToSubmit={setDataToSubmit}
+            inputLabel="description"
+          />
 
-        <AddProperyPhoto
-          dataToSubmit={dataToSubmit}
-          // setDataToSubmit={setDataToSubmit}
-          formData={formData}
-        />
+        </div>
+
+        <AddProperyPhoto formData={formData} />
         <AddPropertySubmit />
       </form>
     </div>

@@ -28,7 +28,7 @@ model User {
   Reservation  Reservation[]
   Review       Review[]
   Chat         Chat[]
-}
+} 
 
 model Home {
   id Int @id @default(autoincrement())

@@ -1,12 +1,10 @@
 import { useEffect } from "react";
 
 interface AddPropertyInputProps {
-  dataToSubmit: any;
   formData: FormData;
 }
 
 const AddProperyPhoto = ({
-  dataToSubmit,
   formData,
 }: AddPropertyInputProps) => {
   const addImageHandler = (e) => {

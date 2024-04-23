@@ -8,6 +8,7 @@ import Footer from "./components/footer/Footer";
 import Chat from "./pages/chat/Chat";
 import Favorites from "./pages/favorites/Favorites";
 import DashBoard from "./pages/dashboard/DashBoard";
+import SingleProperty from "./pages/singleProperty/SingleProperty";
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/properties" element={<Properties />} />
+          <Route path="/properties/:id" element={<SingleProperty />} />
           <Route path="/profile/chat/:id" element={<Chat />} />
           <Route path="/profile/favorites/:id" element={<Favorites />} />
           <Route path="/profile/dashboard/:id" element={<DashBoard />} />

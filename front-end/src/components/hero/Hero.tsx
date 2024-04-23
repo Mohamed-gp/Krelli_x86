@@ -29,13 +29,13 @@ const Hero = () => {
             >
               Find Now
             </Link>
-            <Link
-              to="#find"
+            <a
+              href="#addProperty"
               className="cursor-pointer  text-white px-6 py-1 rounded-xl bg-[#4561EC] duration-300 hover:scale-105 w-fit my-2 flex items-center gap-2"
             >
               <span>Rent Your House</span>
               <FaArrowRight/>
-            </Link>
+            </a>
           </div>
         </div>
         {/* 

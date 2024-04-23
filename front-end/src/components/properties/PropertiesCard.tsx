@@ -1,6 +1,6 @@
 import { FaHeart, FaStar } from "react-icons/fa6";
 import { propertiesCardsData } from "../../utils/data";
-import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 interface PropertiesCardProps {
   all : boolean
@@ -10,11 +10,13 @@ interface PropertiesCardProps {
 const PropertiesCard = ({all}: PropertiesCardProps) => {
   
   let propertiesUsed = all ? propertiesCardsData : propertiesCardsData.slice(1,5)
+  
+  
   return (
     <>
     {propertiesUsed.map((property : any) => {
       return (
-        <div key={property.path} className="w-[240px] rounded-xl overflow-hidden">
+        <Link to="/properties/12" key={property.path} className="w-[240px] rounded-xl overflow-hidden">
           <div className="img">
             <img
               src={property.path}
@@ -47,7 +49,7 @@ const PropertiesCard = ({all}: PropertiesCardProps) => {
               </span>
             </div>
           </div>
-        </div>
+        </Link>
       );
     })}
     </>
