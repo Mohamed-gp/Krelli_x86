@@ -18,8 +18,14 @@ const SingleProperty = () => {
       key: "selection",
     },
   ]);
+  const [daysCount, setdaysCount] = useState(0);
   useEffect(() => {
-    console.log(state);
+    if (state[0].endDate) {
+      const difference: any = new Date(state[0].endDate - state[0].startDate);
+      const unixDate: any = new Date(0);
+      const dif = difference - unixDate;
+      setdaysCount(dif / 1000 / 3600 / 24);
+    }
   }, [state]);
   const data = {
     title: "Merzouga private luxury tent with bathroom shower",
@@ -133,13 +139,15 @@ const SingleProperty = () => {
         </div>
       </div>
       {/*  */}
-      <div className="flex   mt-24 gap-20">
+      <div className="flex   mt-24 gap-20 md:flex-row flex-col">
         <div className="flex flex-col ">
-          <p className="text-2xl font-bold">Tent in Merzouga, Morocco</p>
-          <div className="flex gap-2">
-            <p>9 guests</p>
-            <p>4 bedrooms</p>
-            <p>10 beds</p>
+          <p className="text-2xl font-bold">Tent in Merzouga, Tipaza</p>
+          <div className="flex gap-2 items-center">
+            <p className="opacity-50">9 guests</p>
+            <p className="w-[4px] h-[4px] bg-black rounded-full"></p>
+            <p className="opacity-50">4 bedrooms</p>
+            <p className="w-[4px] h-[4px] bg-black rounded-full"></p>
+            <p className="opacity-50">10 beds</p>
           </div>
           <div className="flex my-2">
             <span className="text-yellow-500">
@@ -162,7 +170,7 @@ const SingleProperty = () => {
             <div className="size-10 rounded-full overflow-hidden">
               <img src="../../../public/profile.jpg" alt="" />
             </div>
-            <div className="flex flex-col gap2 opacity-90">
+            <div className="flex flex-col  opacity-90">
               <p>
                 Hosted by <span className="font-bold ">Mohamed</span>
               </p>
@@ -180,14 +188,62 @@ const SingleProperty = () => {
             experience camel riding in the dunes. Don't miss the opportunity to
             witness the stunning sunset and sunrise from the camp
           </p>
+          <div className="reviews flex flex-col">
+            <p className="text-3xl font-bold">Reviews</p>
+            <div className="flex flex-col  border-y border-y-[#4561ec26] py-4  my-4">
+              <div className="flex items-center gap-2 my-3">
+                <div className="size-10 rounded-full overflow-hidden">
+                  <img src="../../../public/profile.jpg" alt="" />
+                </div>
+                <div className="flex flex-col gap2 opacity-90">
+                  <div className="flex my-2">
+                    <span className="text-yellow-500">
+                      <FaStar />
+                    </span>
+                    <span className="text-yellow-500">
+                      <FaStar />
+                    </span>
+                    <span className="text-yellow-500">
+                      <FaStar />
+                    </span>
+                    <span className="text-yellow-500">
+                      <FaStar />
+                    </span>
+                    <span className="text-yellow-500">
+                      <FaStar />
+                    </span>
+                  </div>
+                  <p>Mohamed Outerbah</p>
+                </div>
+              </div>
+              <p className="bg-white p-2 rounded-xl">
+                camping in the desert with Mohamed was a really beautiful and
+                amazing experience that we will remember forever
+              </p>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col bg-white">
+        <div className="flex flex-col bg-white p-6 rounded-xl h-fit">
+          <p className="my-2">
+            <span className="text-2xl">$47</span> night
+          </p>
           <DateRange
             editableDateInputs={true}
             onChange={(item) => setState([item.selection])}
             moveRangeOnFirstSelection={false}
             ranges={state}
           />
+          <button className="cursor-pointer mx-auto w-full   text-white px-6 py-1 rounded-xl bg-[#3d91ff] duration-300 hover:scale-105 justify-center my-2 flex items-center gap-2">
+            Reserve
+          </button>
+          <div className="flex justify-between my-2 text-2xl">
+            <p className="font-bold text-lg">Nights</p>
+            <p>${daysCount} * 47</p>
+          </div>
+          <div className="flex justify-between my-2 text-2xl">
+            <p className="font-bold">Total</p>
+            <p>${daysCount * 47}</p>
+          </div>
         </div>
       </div>
     </div>

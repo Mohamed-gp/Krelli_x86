@@ -59,7 +59,7 @@ const HeaderCenter = ({ open }: HeaderCenterProps) => {
         <li>
           <NavLink
             className="cursor-pointer navigation-header-link"
-            to="/about"
+            to="/aboutus"
           >
             About
           </NavLink>

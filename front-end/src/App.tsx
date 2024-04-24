@@ -9,6 +9,7 @@ import Chat from "./pages/chat/Chat";
 import Favorites from "./pages/favorites/Favorites";
 import DashBoard from "./pages/dashboard/DashBoard";
 import SingleProperty from "./pages/singleProperty/SingleProperty";
+import AboutUs from "./pages/aboutus/AboutUs";
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/properties" element={<Properties />} />
+          <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/properties/:id" element={<SingleProperty />} />
           <Route path="/profile/chat/:id" element={<Chat />} />
           <Route path="/profile/favorites/:id" element={<Favorites />} />

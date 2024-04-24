@@ -10,7 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.8.0",
     "@reduxjs/toolkit": "^2.2.3",
+    "@types/dom-speech-recognition": "^0.0.4",
     "axios": "^1.6.7",
     "framer-motion": "^11.1.5",
     "react": "^18.2.0",

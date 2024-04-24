@@ -29,7 +29,42 @@ export default {
 - Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
 
+
+## what i do
+add speach to text for searching property for rent 
+single home property
+understand api route in the backend to understand the flow proccess of linking 
+_learn open ai api and create   chatbot asisstance using open ai api because workers are not availble 24/7 so we need ai to answer repetetive question related to the instruction we give it to the ai bot 
+- about page 
+_redesign landing page 
+_ link some backend with frontend authentication add property(80%) just i need to send the request 
+_ we change the font of the website to apolo 
 ## todos
-_chatbot
-_font
-_spech to text 
+_refactoring : code error typescript types and types files...
+_code refactor 
+_ complete the link 
+_ complete about page
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+email : 1276b9ce1b@emailbbox.pro
+password : sendMessageToGPT
+tailwind ring class meaning
