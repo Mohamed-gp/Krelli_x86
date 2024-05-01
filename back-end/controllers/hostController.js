@@ -84,14 +84,15 @@ const cleanUploads = async () => {
 
 
 const addHome = async (req, res) => {
+    console.log(req.body)
     
     cleanUploads();//checks if the uploads folder has more than 5 files and delete them
 
-	const { title, wilaya, price, bathrooms, bedrooms, guests } = req.body;
+	const { title, wilaya, price, bathrooms, bedrooms, guests,category } = req.body;
 
 	const userId = req.user.userId;
 
-	if (!title || !wilaya || !price || !bathrooms || !bedrooms || !guests || !req.files) {
+	if (!title || !wilaya || !price || !bathrooms || !bedrooms || !guests || !req.files || !category) {
 		return res.status(400).send("All fields are required");
 	}
 	const pictures = req.files.map((file) => {
@@ -103,11 +104,12 @@ const addHome = async (req, res) => {
     const home = await prisma.home.create({
         data: {
             title,
-            wilaya,
+            wilaya : parseInt(wilaya),
             price : parseFloat(price),
             bathrooms: parseInt(bathrooms),
             bedrooms: parseInt(bedrooms),
             guests: parseInt(guests),
+            category,
             User: {
                 connect: {
                     id: userId,

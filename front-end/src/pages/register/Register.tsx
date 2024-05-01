@@ -28,14 +28,13 @@ const Register = () => {
           withCredentials : true
         }
       );
-      console.log(data);
       dispatch(authActions.login({...data,password : ""}))
       navigate("/")
 
       return toast.success("Account Created Succefully")
-    } catch (error) {
-      console.log(error.response.data);
+    } catch (error : any) {
       toast.error(error.response.data);
+      console.log(error)
     }
   };
 

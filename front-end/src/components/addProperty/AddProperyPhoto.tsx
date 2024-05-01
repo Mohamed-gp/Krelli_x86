@@ -1,18 +1,12 @@
-import { useEffect } from "react";
-
 interface AddPropertyInputProps {
-  formData: FormData;
+  dataToSubmit: any;
+  setDataToSubmit: (prev: any) => any;
 }
 
 const AddProperyPhoto = ({
-  formData,
+  dataToSubmit,
+  setDataToSubmit,
 }: AddPropertyInputProps) => {
-  const addImageHandler = (e) => {
-    console.log(e.target.files);
-    formData.append("files", e.target.files);
-    console.log(formData.getAll("files"))
-  };
-
   return (
     <div className="name-input  ">
       <label htmlFor="photoUploader" className="font-bold">
@@ -34,7 +28,12 @@ const AddProperyPhoto = ({
         name=""
         className="hidden"
         id="photoUploader"
-        onChange={(e) => addImageHandler(e)}
+        onChange={(e) => {
+          if (e.target.files != null) {
+            setDataToSubmit({...dataToSubmit,files : [...dataToSubmit.files,e.target.files]});
+            // files: [...formData.files, e.target.files[0]]
+          }
+        }}
       />
     </div>
   );

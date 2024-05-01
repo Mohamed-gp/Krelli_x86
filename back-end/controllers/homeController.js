@@ -115,7 +115,7 @@ const searchHomes = async (req, res) => {
     const { wilaya, guests, checkIn, checkOut , category  } = req.query;
     const homes = await prisma.home.findMany({
         where: {
-            wilaya : wilaya ? wilaya : undefined,
+            wilaya : parseInt(wilaya) ? parseInt(wilaya) : undefined,
             guests: {
                 gte: parseInt(guests) ? guests : undefined,
             },

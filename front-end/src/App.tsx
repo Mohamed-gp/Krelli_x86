@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Header from "./components/header/Header";
@@ -10,8 +10,17 @@ import Favorites from "./pages/favorites/Favorites";
 import DashBoard from "./pages/dashboard/DashBoard";
 import SingleProperty from "./pages/singleProperty/SingleProperty";
 import AboutUs from "./pages/aboutus/AboutUs";
+import { useSelector } from "react-redux";
+import { IRootState } from "./store/store";
+import AdminDashboard from "./pages/admin/AdminDashboard.tsx"
+import UsersTable from "./pages/admin/UsersTable.tsx";
+import CommentsTable from "./pages/admin/CommentsTable.tsx";
+import PostsTable from "./pages/admin/PostsTable.tsx";
+import CategoriesTable from "./pages/admin/CategoriesTable.tsx";
+
 
 function App() {
+  const user = useSelector((state: IRootState) => state.auth.user )
 
   return (
     <>
@@ -27,6 +36,13 @@ function App() {
           <Route path="/profile/chat/:id" element={<Chat />} />
           <Route path="/profile/favorites/:id" element={<Favorites />} />
           <Route path="/profile/dashboard/:id" element={<DashBoard />} />
+          <Route path='/admin-dashboard'>
+            <Route index element={(user?.role != "admin") ? <Navigate to="/"/> : <AdminDashboard />} />
+            <Route path='users-table' element={(user?.role != "admin") ? <Navigate to="/"/> : <UsersTable />} />
+            <Route path='comments-table' element={(user?.role != "admin") ? <Navigate to="/"/> : <CommentsTable />} />
+            <Route path='posts-table' element={(user?.role != "admin") ? <Navigate to="/"/> : <PostsTable />} />
+            <Route path='categories-table' element={(user?.role != "admin") ? <Navigate to="/"/> : <CategoriesTable/>}/>
+          </Route>
         </Routes>
         <Footer />
       </BrowserRouter>

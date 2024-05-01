@@ -17,10 +17,10 @@ const HeaderRight = () => {
       const {data} = await axios.get("http://localhost:3000/auth/logout",{
         withCredentials : true
       })
-      console.log(data)
       toast.success(data)
-    } catch (error) {
-      console.log(error) 
+    } catch (error : any) {
+      toast.error(error.message);
+      console.log(error.message)
     }
   }
   return (

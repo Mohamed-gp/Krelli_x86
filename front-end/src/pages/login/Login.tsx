@@ -1,6 +1,6 @@
 import { useState } from "react";
 import logo from "../../../public/Krelli LOGO 1.png";
-import { loginDataInterface } from "../../../interfaces/userDataInterfaces/interface";
+import { loginDataInterface } from "../../interfaces/userDataInterfaces/interface";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -25,14 +25,14 @@ const Login = () => {
           withCredentials: true
         }
       );
-      console.log(data);
       dispatch(authActions.login({...data,password : ""}))
       toast.success("login Successful");
       navigate("/")
 
     } catch (error : any) {
-      console.log(error.response.data);
       toast.error(error.response.data);
+      console.log(error)
+
     }
   };
 

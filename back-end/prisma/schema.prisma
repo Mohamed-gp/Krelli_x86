@@ -38,7 +38,7 @@ model Home {
   bedrooms    Int
   bathrooms   Int
   price       Float
-  wilaya      String
+  wilaya      Int
   category    String?
   rating      Float?
   longitude   Float?

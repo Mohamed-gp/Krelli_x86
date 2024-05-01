@@ -44,6 +44,15 @@ _refactoring : code error typescript types and types files...
 _code refactor 
 _ complete the link 
 _ complete about page
+_ infinit scroll or pagination
+_ some aos and framer motion stuff
+_joi validation
+_ strong password joi validator and suggestion
+_ dynamic adding of the category title and the image by admin and providing image 
+  <!-- {/* maybe we should add it next time dinamic category adding with image */}
+  {/* <div className="my-5">
+      <AddNewCategory />
+  </div> */} -->
 
 
 
@@ -68,3 +77,16 @@ _ complete about page
 email : 1276b9ce1b@emailbbox.pro
 password : sendMessageToGPT
 tailwind ring class meaning
+
+
+
+
+/// test account 
+email 
+mohamed@estin.dz
+pass
+mohamed@estin.dz
+first name 
+mohamed
+last name 
+outerbah

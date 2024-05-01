@@ -3,23 +3,27 @@ import { NavLink } from "react-router-dom";
 import { authActions } from "../../store/slices/authSlice";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { IRootState } from "../../store/store";
 
 interface HeaderCenterProps {
   open: boolean;
+  setopen: (prev: any) => any;
 }
-const HeaderCenter = ({ open }: HeaderCenterProps) => {
-  const user = useSelector((state) => state.auth.user);
+const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
+  const user = useSelector((state: IRootState) => state.auth.user);
   const dispatch = useDispatch();
   const logoutHandler = async (e) => {
     e.preventDefault();
     try {
-      const {data}= await axios.get("http://localhost:3000/auth/logout",{
+      const { data } = await axios.get("http://localhost:3000/auth/logout", {
         withCredentials: true,
       });
       toast.success(data);
       dispatch(authActions.logout());
-    } catch (error) {
-      console.log(error);
+      setopen(false);
+    } catch (error: any) {
+      toast.error(error.message);
+      console.log(error.message);
     }
   };
   return (
@@ -37,6 +41,16 @@ const HeaderCenter = ({ open }: HeaderCenterProps) => {
             Home
           </NavLink>
         </li>
+        {(user?.role == "admin") && (
+          <li>
+            <NavLink
+              className="cursor-pointer navigation-header-link"
+              to="/admin-dashboard"
+            >
+              Admin
+            </NavLink>
+          </li>
+        )}
 
         <li>
           <NavLink
@@ -64,6 +78,7 @@ const HeaderCenter = ({ open }: HeaderCenterProps) => {
             About
           </NavLink>
         </li>
+
         {user && (
           <li className="lg:hidden">
             <span

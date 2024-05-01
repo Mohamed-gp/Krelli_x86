@@ -106,7 +106,7 @@ const DashBoard = () => {
                     <td>State</td>
                     <td>Date-Time</td>
                     <td>Profit</td>
-                    <td className="rounded-r-xl">Edit</td>
+                    <td className="rounded-r-xl">Action</td>
                   </tr>
                 </thead>
                 <tbody>
@@ -119,16 +119,15 @@ const DashBoard = () => {
                     </td>
                     <td>2024/23/2</td>
                     <td>$34,295</td>
-                    <td className="flex justify-center items-center  h-12">
-                      <span className="flex w-[60px] rounded-xl gap-2 justify-center border-2 border-black px-2 py-1">
-                        <span className="text-xl">
-                          <FaTrash />
-                        </span>
-                        <p className="h-5 w-[120px] bg-black"></p>
-                        <span className="text-xl">
-                          <FaPencil />
-                        </span>
-                      </span>
+                    <td>
+                      <div className="flex items-center justify-center gap-2 text-white w-[260px] mx-auto">
+                        <button
+                          className="px-3 py-1 bg-red-400 rounded-xl"
+                          onClick={() => console.log("propertyDeleted")}
+                        >
+                          Delete Category
+                        </button>
+                      </div>
                     </td>
                   </tr>
                   <tr>
@@ -140,16 +139,15 @@ const DashBoard = () => {
                     </td>
                     <td>2024/23/2</td>
                     <td>$34,295</td>
-                    <td className="flex justify-center items-center  h-12">
-                      <span className="flex w-[60px] rounded-xl gap-2 justify-center border-2 border-black px-2 py-1">
-                        <span className="text-xl">
-                          <FaTrash />
-                        </span>
-                        <p className="h-5 w-[120px] bg-black"></p>
-                        <span className="text-xl">
-                          <FaPencil />
-                        </span>
-                      </span>
+                    <td>
+                      <div className="flex items-center justify-center gap-2 text-white w-[260px] mx-auto">
+                        <button
+                          className="px-3 py-1 bg-red-400 rounded-xl"
+                          onClick={() => console.log("propertyDeleted")}
+                        >
+                          Delete Category
+                        </button>
+                      </div>
                     </td>
                   </tr>
                   <tr>
@@ -161,16 +159,15 @@ const DashBoard = () => {
                     </td>
                     <td>2024/23/2</td>
                     <td>$34,295</td>
-                    <td className="flex justify-center items-center  h-12">
-                      <span className="flex w-[60px] rounded-xl gap-2 justify-center border-2 border-black px-2 py-1">
-                        <span className="text-xl">
-                          <FaTrash />
-                        </span>
-                        <p className="h-5 w-[120px] bg-black"></p>
-                        <span className="text-xl">
-                          <FaPencil />
-                        </span>
-                      </span>
+                    <td>
+                      <div className="flex items-center justify-center gap-2 text-white w-[260px] mx-auto">
+                        <button
+                          className="px-3 py-1 bg-red-400 rounded-xl"
+                          onClick={() => console.log("propertyDeleted")}
+                        >
+                          Delete Category
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 </tbody>
