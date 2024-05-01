@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { jwtVerify } from "./middleware/jwtVerify.js";
 import cookieParser from "cookie-parser";
+import geminiRouter from "./routes/gemini.js"
 import authRouter from "./routes/auth.js";
 import originChecker from "./middleware/originChecker.js";
 import corsOptions from "./config/corsOptions.js";
@@ -33,6 +34,7 @@ app.get("/", (req, res) => {
   res.json("Hello World");
 });
 
+app.use("/gemini", geminiRouter);
 app.use("/auth", authRouter);
 
 app.use(jwtVerify);

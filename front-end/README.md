@@ -53,6 +53,12 @@ _ dynamic adding of the category title and the image by admin and providing imag
   {/* <div className="my-5">
       <AddNewCategory />
   </div> */} -->
+_ i tried to add you in the github but i need a username 
+_ i remove the chat gpt api key and logic and replace it with gemeni api key and i add it in the backend not in the frontent(client side) because in the server in the documentation is more secure to put in the server and it give 60 req/hour and this is good for our project in testing mode and i can do chat with images using gemini pro vision
+_ i code to much today to catch up the last vip star 
+_ in the next week maybe am going to add select form because i found json in data have all the wilayas of algeria
+not found page
+wishlist
 
 
 
@@ -60,7 +66,11 @@ _ dynamic adding of the category title and the image by admin and providing imag
 
 
 
+<!-- krelli is an software application that help people find and manage renting houses in algeria -->
 
+
+
+<!-- i can provide cahier de charge as instruction  -->
 
 
 
@@ -90,3 +100,5 @@ first name
 mohamed
 last name 
 outerbah
+
+
