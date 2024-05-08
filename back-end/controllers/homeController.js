@@ -48,7 +48,7 @@ const addReservation = async (req, res) => {
     const hasReserved = await prisma.reservation.findFirst({
         where: {
             homeId : parseInt(homeId),
-            status: "accepted",
+            status: "paid",
             startDate: {
                 lte: checkOut,
             },

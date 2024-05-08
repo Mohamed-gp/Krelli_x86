@@ -4,13 +4,15 @@
   "description": "Bla Bla Bla",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "start": "node index.js"
   },
   "type": "module",
   "keywords": [],
   "author": "SAFI Achraf",
   "license": "MIT",
   "dependencies": {
+    "@chargily/chargily-pay": "^2.0.0",
     "@prisma/client": "^5.11.0",
     "bcrypt": "^5.1.1",
     "cloudinary": "^2.1.0",

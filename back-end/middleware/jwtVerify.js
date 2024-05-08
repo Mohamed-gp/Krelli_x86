@@ -3,7 +3,7 @@ import "dotenv/config";
 
 
 export const jwtVerify = (req, res, next) => {
-    const token = req.cookies["authorization"];
+    const token = req.cookies["authorization"] || req.headers["authorization"];
     if (!token) {
         return res.status(401).send("Access denied");
     }

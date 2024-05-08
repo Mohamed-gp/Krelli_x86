@@ -38,7 +38,8 @@ _learn open ai api and create   chatbot asisstance using open ai api because wor
 - about page 
 _redesign landing page 
 _ link some backend with frontend authentication add property(80%) just i need to send the request 
-_ we change the font of the website to apolo 
+_ we change the font of the website to apolo
+adding copy to clipboard from web api 
 ## todos
 _refactoring : code error typescript types and types files...
 _code refactor 

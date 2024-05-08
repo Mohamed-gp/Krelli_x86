@@ -48,6 +48,7 @@ app.use("/auth", authRouter);
 app.use(jwtVerify);
 
 const io = socketServer(server);
+
 app.use((req, res, next) => {
 	res.io = io;
 	next();
