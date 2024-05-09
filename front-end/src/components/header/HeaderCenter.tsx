@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { authActions } from "../../store/slices/authSlice";
-import axios from "axios";
 import toast from "react-hot-toast";
+import customAxios from "../../utils/axios";
 import { IRootState } from "../../store/store";
 
 interface HeaderCenterProps {
@@ -15,7 +15,7 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
   const logoutHandler = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.get("http://localhost:3000/auth/logout", {
+      const { data } = await customAxios.get("/auth/logout", {
         withCredentials: true,
       });
       toast.success(data);

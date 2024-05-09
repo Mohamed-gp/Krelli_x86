@@ -73,10 +73,18 @@
   font-weight: 900;
   font-style: italic;
 } */
+:root {
+  --buttonColor : #4561EC;
+}
+
+
 
 .navigation-header-link.active {
   font-weight: bold;
+  color: var(--buttonColor);
 }
+
+
 * {
   scroll-behavior: smooth;
   font-family: "Roboto", sans-serif;

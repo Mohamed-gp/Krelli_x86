@@ -39,7 +39,7 @@ const talkToGemini = async (req, res) => {
         },
       ].concat(history),
       generationConfig: {
-        maxOutputTokens: 500,
+        maxOutputTokens: 1000,
       },
     });
     const msg = message;

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { authActions } from "../../store/slices/authSlice";
 import { TbLogout } from "react-icons/tb";
 import { IRootState } from "../../store/store";
-import axios from "axios";
+import customAxios from "../../utils/axios";
 import toast from "react-hot-toast";
 import { FaUser } from "react-icons/fa6";
 
@@ -14,9 +14,7 @@ const HeaderRight = () => {
     e.preventDefault();
     try {
       dispatch(authActions.logout());
-      const { data } = await axios.get("http://localhost:3000/auth/logout", {
-        withCredentials: true,
-      });
+      const { data } = await customAxios.get("/auth/logout");
       toast.success(data);
     } catch (error: any) {
       toast.error(error.message);

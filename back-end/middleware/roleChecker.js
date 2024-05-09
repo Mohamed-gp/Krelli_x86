@@ -1,6 +1,7 @@
 export default function verifyRoles(...roles) {
 	return (req, res, next) => {
-		userRoles = req.user.role;
+        console.log(req.user.role)
+		const userRoles = req.user.role;
         if (roles.includes(userRoles)) {
             return next();
         }

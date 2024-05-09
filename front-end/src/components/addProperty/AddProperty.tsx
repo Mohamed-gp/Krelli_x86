@@ -4,7 +4,7 @@ import AddProperyPhoto from "./AddProperyPhoto";
 import AddPropertySubmit from "./AddPropertySubmit";
 import { useSelector } from "react-redux";
 import { IRootState } from "../../store/store";
-import axios from "axios";
+import customAxios from "../../utils/axios";
 import toast from "react-hot-toast";
 
 const AddProperty = () => {
@@ -58,13 +58,13 @@ const AddProperty = () => {
         console.log(`${key}: ${value}`);
       }
       const url = user
-        ? "http://localhost:3000/host/homes"
-        : "http://localhost:3000/auth/addHome";
+        ? "/host/homes"
+        : "/auth/addHome";
       console.log(url);
-      const { data } = await axios.post(url, formData,{
+      const { data } = await customAxios.post(url, formData,{
         withCredentials : true,
       });
-      url == "http://localhost:3000/host/homes" ? toast.success("property created successfuly") : toast.success("accout created and property add successfuly")
+      url == "/host/homes" ? toast.success("property created successfuly") : toast.success("accout created and property add successfuly")
       console.log(data);
     } catch (error: any) {
       console.log(error)
@@ -168,7 +168,6 @@ const AddProperty = () => {
             inputLabel="description"
           />
         </div>
-
         <AddProperyPhoto dataToSubmit={dataToSubmit} setDataToSubmit={setDataToSubmit} />
         <AddPropertySubmit />
       </form>

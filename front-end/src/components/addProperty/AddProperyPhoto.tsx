@@ -1,12 +1,32 @@
+import { useEffect, useRef } from "react";
+
+declare global {
+  interface Window {
+    cloudinary: any;
+  }
+}
+
 interface AddPropertyInputProps {
   dataToSubmit: any;
   setDataToSubmit: (prev: any) => any;
 }
 
 const AddProperyPhoto = ({
-  dataToSubmit,
   setDataToSubmit,
 }: AddPropertyInputProps) => {
+  const cloudinryRef = useRef<any>();
+  const widgetRef = useRef<any>();
+  useEffect(() => {
+    cloudinryRef.current = window.cloudinary;
+    if (cloudinryRef.current) {
+      widgetRef.current = cloudinryRef.current.createUploadWidget({
+        cloudName: "drf3vogno",
+        uploadPreset: "kbym49ai",
+      }, (error: any) => {
+        console.log(error);
+      });
+    }
+  }, []);
   return (
     <div className="name-input  ">
       <label htmlFor="photoUploader" className="font-bold">
@@ -21,8 +41,10 @@ const AddProperyPhoto = ({
         </p>
         <p>Supported: JPG, JPEG, PNG</p>
       </label>
-
-      <input
+      <button className="hidden" id="photoUploader"  onClick={() => {widgetRef.current.open()}}>
+        Upload
+      </button>
+      {/* <input
         type="file"
         multiple
         name=""
@@ -30,11 +52,11 @@ const AddProperyPhoto = ({
         id="photoUploader"
         onChange={(e) => {
           if (e.target.files != null) {
-            setDataToSubmit({...dataToSubmit,files : [...dataToSubmit.files,e.target.files]});
+            setDataToSubmit({ ...dataToSubmit, files: dataToSubmit.files });
             // files: [...formData.files, e.target.files[0]]
           }
         }}
-      />
+      /> */}
     </div>
   );
 };

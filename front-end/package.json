@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@cloudinary/react": "^1.13.0",
+    "@cloudinary/url-gen": "^1.19.0",
     "@google/generative-ai": "^0.8.0",
     "@reduxjs/toolkit": "^2.2.3",
     "@types/dom-speech-recognition": "^0.0.4",

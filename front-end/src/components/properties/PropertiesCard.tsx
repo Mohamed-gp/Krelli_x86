@@ -1,6 +1,13 @@
 import { FaHeart, FaStar } from "react-icons/fa6";
-import { propertiesCardsData } from "../../utils/data";
+// this for static data
+// import { propertiesCardsData } from "../../utils/data";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import customAxios from "../../utils/axios";
+import Properties from "../../pages/properties/Properties";
+import {propertiesCardsData} from "../../utils/data.ts"
+
+
 
 interface PropertiesCardProps {
   all : boolean
@@ -8,7 +15,23 @@ interface PropertiesCardProps {
 
 
 const PropertiesCard = ({all}: PropertiesCardProps) => {
-  
+
+  // const fetchData = async () => {
+  //   try {
+  //     const {data} = await customAxios.get("/homes")
+
+  //     setpropertiesCardsData(propertiesCardsData)
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   // fetchData()
+  // },[])
+  // useEffect(() => {
+  //   console.log(propertiesCardsData)
+  // },[propertiesCardsData])
   let propertiesUsed = all ? propertiesCardsData : propertiesCardsData.slice(1,5)
   
   

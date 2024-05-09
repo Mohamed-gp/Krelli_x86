@@ -1,7 +1,27 @@
 import { FaDoorOpen, FaPersonWalkingArrowRight } from "react-icons/fa6";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../store/slices/authSlice";
+import customAxios from "../../utils/axios";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 
 const Profile = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const logoutHandler = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch(authActions.logout());
+      const { data } = await customAxios.get("/auth/logout");
+      toast.success(data);
+      navigate("/")
+      
+    } catch (error: any) {
+      toast.error(error.message);
+      console.log(error.message);
+    }
+  };
   return (
     <div
       className="container py-16"
@@ -91,7 +111,7 @@ const Profile = () => {
         </button>
       </div>
       <div className="flex items-center justify-end">
-        <button className="flex items-center gap-4 rounded-xl bg-buttonColor px-6 py-2    text-white">
+        <button onClick={(e) => logoutHandler(e)} className="flex items-center gap-4 rounded-xl bg-buttonColor px-6 py-2    text-white">
           Logout
           <span className="text-2xl">
             <FaPersonWalkingArrowRight />

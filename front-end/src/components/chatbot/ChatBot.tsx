@@ -1,6 +1,6 @@
 import { useState } from "react";
 // import axios from "axios";
-import axios from "axios";
+import customAxios from "../../utils/axios";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../store/store";
@@ -19,7 +19,7 @@ const ChatBot = () => {
     dispatch(userActions.appendHistory(message));
     setmessage("")
     try {
-      const { data } = await axios.post("http://localhost:3000/gemini", {
+      const { data } = await customAxios.post("/gemini", {
         message,
         history,
       });
@@ -35,7 +35,7 @@ const ChatBot = () => {
     <>
       <button
         onClick={() => setismodelOpen((prev) => !prev)}
-        className="fixed !bg-[#4880ff] bottom-4 right-4 inline-flex items-center justify-center text-sm font-medium disabled:pointer-events-none disabled:opacity-50 border rounded-full w-16 h-16 m-0 cursor-pointer border-gray-200 bg-none p-0 normal-case leading-5 hover:text-gray-900"
+        className="fixed !bg-[#4880ff] bottom-4 right-4 inline-flex items-center justify-center text-sm font-medium disabled:pointer-events-none disabled:opacity-50 border rounded-full w-16 h-16 m-0 cursor-pointer border-gray-200 bg-none p-0 normal-case leading-5 hover:text-gray-900 z-10"
         type="button"
         aria-haspopup="dialog"
         aria-expanded="false"
@@ -75,7 +75,7 @@ const ChatBot = () => {
             {history?.map((input, index) => (
               <>
                 {index % 2 == 0 ? (
-                  <div className="flex gap-3 my-4 text-gray-600 text-sm flex-1">
+                  <div key={index} className="flex gap-3 my-4 text-gray-600 text-sm flex-1">
                     <span className="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8">
                       <div className="rounded-full bg-gray-100 border p-1">
                         <svg

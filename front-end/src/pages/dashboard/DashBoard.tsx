@@ -15,6 +15,7 @@ import {
 } from "react-icons/fa6";
 
 import LeftSideNav from "../../components/leftSideNav/LeftSideNav";
+import { Link } from "react-router-dom";
 
 const DashBoard = () => {
   return (
@@ -174,12 +175,12 @@ const DashBoard = () => {
               </table>
             </div>
             <div className="flex justify-end mt-12">
-              <button className="flex font-bold items-center gap-2 bg-[rgba(0,182,155,0.38)] px-3 py-1 rounded-2xl">
+              <Link to="/#addProperty" className="flex font-bold items-center gap-2 bg-[rgba(0,182,155,0.38)] px-3 py-1 rounded-2xl">
                 <p className="text-[#00B69B] ">ADD PROPERTY</p>
                 <span className="text-[#00B69B]">
                   <FaPlus />
                 </span>
-              </button>
+              </Link>
             </div>
           </div>
         </div>

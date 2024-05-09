@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const PhoneApp = () => {
   return (
-    <div className="container flex md:flex-row flex-col items-center">
+    <div className="container flex justify-center md:flex-row flex-col items-center">
       <div className="max-w-[700px]">
         <img
           src="../../../public/phoneAppAddGroup.png"

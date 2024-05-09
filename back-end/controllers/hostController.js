@@ -31,6 +31,7 @@ const myHomesReservations = async (req, res) => {
 
 const myHomes = async (req, res) => {
     const userId = req.user.userId;
+    
     const homes = await prisma.home.findMany({
         where: {
             userId,

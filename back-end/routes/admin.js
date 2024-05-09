@@ -1,9 +1,13 @@
 import express from "express";
-import  roleChecker  from "../middleware/roleChecker.js";
-import { allUsers, singleUser } from "../controllers/usersController.js";
+import {allHomes,allUsers,deleteUser,usersCount,singleUser, homesCount, reviewsCount, allReviews} from "../controllers/adminController.js"
 const userRouter = express.Router();
 
-userRouter.get("/", allUsers);
-userRouter.get("/:username", singleUser);
+userRouter.get("/users", allUsers);
+userRouter.get("/users/count", usersCount);
+userRouter.get("/user/:id", singleUser);
+userRouter.get("/homes", allHomes);
+userRouter.get("/homes/count", homesCount);
+userRouter.get("/reviews/count", reviewsCount);
+userRouter.get("/reviews", allReviews);
 
 export default userRouter;

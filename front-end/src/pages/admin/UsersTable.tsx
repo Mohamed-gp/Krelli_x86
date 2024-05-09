@@ -1,39 +1,19 @@
 import Swal from "sweetalert2";
 import AdminSideBar from "./AdminSideBar";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-// import { deleteUser, getUsers } from "../../redux/apiCalls/adminApiCall";
+import { useEffect, useState } from "react";
+import customAxios from "../../utils/axios";
 
 const UsersTable = () => {
-  const dispatch = useDispatch();
-  const users = [
-    {
-      _id: "65b63d62a003c0e4eb3ea781",
-      username: "Outerbah Mohamed",
-      email: "mohamedterba6@gmail.com",
-      profilePhoto: {
-        url : "../../../public/profile.jpg",
-        publicId: null,
-      },
-      isAdmin: true,
-    },
-    {
-      _id: "65b63d62a003c0e4eb3ea781",
-      username: "achraf safi",
-      email: "mohamedterba6@gmail.com",
-      profilePhoto: {
-        url : "../../../public/profile.jpg",
-        publicId: null,
-      },
-      isAdmin: true,
-    },
-  ];
-
-  // useEffect(() => {
-  //     dispatch(getUsers())
-  // })
-
+  const [users, setusers] = useState<any[]>([]);
+  const getAllUsersHandler = async () => {
+    try {
+      const { data } = await customAxios.get("/admin/users");
+      setusers(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const removeHandler = (userId) => {
     Swal.fire({
       title: "Are you sure to remove this user?",
@@ -60,6 +40,9 @@ const UsersTable = () => {
       }
     });
   };
+  useEffect(() => {
+    getAllUsersHandler();
+  });
   return (
     <div className="flex" style={{ minHeight: "calc(100vh - (72px +  48px))" }}>
       <AdminSideBar />
@@ -76,27 +59,34 @@ const UsersTable = () => {
               </tr>
             </thead>
             <tbody>
-              {users?.map((item, index) => (
-                <tr key={item._id}>
+              {users?.map((user, index) => (
+                <tr key={user?._id}>
                   <td>{index + 1}</td>
                   <td>
-                    <div className="flex items-center justify-start pl-4 gap-2 img min-w-[260px]">
+                    <div className="flex items-center-center justify-start pl-4 gap-2 img min-w-[260px]">
                       <img
-                        className="w-10 rounded-full"
-                        src={item.profilePhoto.url}
+                        className="w-10 h-10 rounded-full"
+                        src={
+                          user?.profileImage
+                            ? user?.profileImage
+                            : "../../../public/profile.jpg"
+                        }
                       />
-                      <span>{item?.username}</span>
+                      <div className="div flex flex-col items-start">
+                        <span>{user?.firstName}</span>
+                        <span>{user?.lastName}</span>
+                      </div>
                     </div>
                   </td>
-                  <td>{item?.email}</td>
+                  <td>{user?.email}</td>
                   <td>
-                    <div className="flex items-center justify-center gap-2 text-white w-[260px]">
+                    <div className="flex users-center justify-center gap-2 text-white w-[260px]">
                       <button className="px-3 py-1 bg-green-400 rounded-xl">
-                        <Link to={`/profile/${item._id}`}>View Profile</Link>
+                        <Link to={`/profile/${user._id}`}>View Profile</Link>
                       </button>
                       <button
                         className="px-3 py-1 bg-red-400 rounded-xl"
-                        onClick={() => removeHandler(item._id)}
+                        onClick={() => removeHandler(user._id)}
                       >
                         Delete Profile
                       </button>
