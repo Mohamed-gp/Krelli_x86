@@ -19,6 +19,7 @@ import PostsTable from "./pages/admin/PostsTable.tsx";
 import CategoriesTable from "./pages/admin/CategoriesTable.tsx";
 import Profile from "./pages/profile/Profile.tsx";
 import NotFound from "./pages/notFound/NotFound.tsx";
+import PhotosModel from "./components/photosModel/PhotosModel.tsx";
 
 function App() {
   const user = useSelector((state: IRootState) => state.auth.user);
@@ -37,6 +38,7 @@ function App() {
           <Route path="/properties" element={<Properties />} />
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/properties/:id" element={<SingleProperty />} />
+          <Route path="/properties/:id/photos" element={<PhotosModel />} />
           <Route path="/profile/:id" element={<Profile />} />
           <Route path="/profile/chat/:id" element={<Chat />} />
           <Route path="/profile/favorites/:id" element={<Favorites />} />

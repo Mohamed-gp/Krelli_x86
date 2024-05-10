@@ -29,7 +29,9 @@ const Register = () => {
     try {
       const { data } = await customAxios.post(
         "/auth/register",
-        dataToSubmit
+        dataToSubmit,{
+          withCredentials : true
+        }
       );
       dispatch(authActions.login({ ...data, password: "" }));
       navigate("/");

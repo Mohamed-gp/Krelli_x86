@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../store/store";
 import { userActions } from "../../store/slices/userSlice";
+import { FaMicrophone } from "react-icons/fa6";
 
 const ChatBot = () => {
   const dispatch = useDispatch();
@@ -17,20 +18,30 @@ const ChatBot = () => {
       return toast.error("Message musn't be empty");
     }
     dispatch(userActions.appendHistory(message));
-    setmessage("")
+    setmessage("");
     try {
       const { data } = await customAxios.post("/gemini", {
         message,
         history,
       });
-      console.log(data.message);
       dispatch(userActions.appendHistory(data.message));
     } catch (error) {
       console.log(error);
     }
   };
   const [message, setmessage] = useState("");
-  console.log(history)
+
+  const handleSpeech = (e) => {
+    const recog = new webkitSpeechRecognition();
+    recog.lang = "en-GB";
+    recog.onresult = (eve) => {
+      const transcript = eve.results[0][0].transcript
+      setmessage(transcript);
+      sendMessageToGPT(eve,transcript);
+      
+    };
+    recog.start();
+  };
   return (
     <>
       <button
@@ -75,7 +86,10 @@ const ChatBot = () => {
             {history?.map((input, index) => (
               <>
                 {index % 2 == 0 ? (
-                  <div key={index} className="flex gap-3 my-4 text-gray-600 text-sm flex-1">
+                  <div
+                    key={index}
+                    className="flex gap-3 my-4 text-gray-600 text-sm flex-1"
+                  >
                     <span className="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8">
                       <div className="rounded-full bg-gray-100 border p-1">
                         <svg
@@ -160,12 +174,20 @@ const ChatBot = () => {
           {/* <!-- Input box  --> */}
           <div className="flex items-center pt-0">
             <form className="flex items-center justify-center w-full space-x-2">
-              <input
-                className="flex h-10 w-full  rounded-md border border-[#e5e7eb] px-3 py-2 text-sm placeholder-[#6b7280] focus:outline-none  disabled:cursor-not-allowed disabled:opacity-50 text-[#030712] focus-visible:ring-offset-2"
-                placeholder="Type your message"
-                value={message}
-                onChange={(e) => setmessage(e.target.value)}
-              />
+              <div className="flex w-full">
+                <input
+                  className="flex h-10 w-full  rounded-md border border-[#e5e7eb] px-3 py-2 pr-6 text-sm placeholder-[#6b7280] focus:outline-none  disabled:cursor-not-allowed disabled:opacity-50 text-[#030712] focus-visible:ring-offset-2"
+                  placeholder="Type your message"
+                  value={message}
+                  onChange={(e) => setmessage(e.target.value)}
+                />
+                {"webkitSpeechRecognition" in window && (
+                  <FaMicrophone
+                    onClick={(e) => handleSpeech(e)}
+                    className="right-6 relative top-3 cursor-pointer"
+                  />
+                )}
+              </div>
               <button
                 onClick={(e) => sendMessageToGPT(e, message)}
                 disabled={message.trim().length == 0}

@@ -12,21 +12,11 @@ interface AddPropertyInputProps {
 }
 
 const AddProperyPhoto = ({
+  dataToSubmit,
   setDataToSubmit,
 }: AddPropertyInputProps) => {
-  const cloudinryRef = useRef<any>();
-  const widgetRef = useRef<any>();
-  useEffect(() => {
-    cloudinryRef.current = window.cloudinary;
-    if (cloudinryRef.current) {
-      widgetRef.current = cloudinryRef.current.createUploadWidget({
-        cloudName: "drf3vogno",
-        uploadPreset: "kbym49ai",
-      }, (error: any) => {
-        console.log(error);
-      });
-    }
-  }, []);
+
+
   return (
     <div className="name-input  ">
       <label htmlFor="photoUploader" className="font-bold">
@@ -41,10 +31,8 @@ const AddProperyPhoto = ({
         </p>
         <p>Supported: JPG, JPEG, PNG</p>
       </label>
-      <button className="hidden" id="photoUploader"  onClick={() => {widgetRef.current.open()}}>
-        Upload
-      </button>
-      {/* <input
+
+      <input
         type="file"
         multiple
         name=""
@@ -52,11 +40,28 @@ const AddProperyPhoto = ({
         id="photoUploader"
         onChange={(e) => {
           if (e.target.files != null) {
-            setDataToSubmit({ ...dataToSubmit, files: dataToSubmit.files });
-            // files: [...formData.files, e.target.files[0]]
+            // addImageHandler(e);
+            setDataToSubmit({ ...dataToSubmit, files: e.target.files });
           }
         }}
-      /> */}
+      />
+      <div className="flex justify-center flex-wrap gap-3 my-6">
+        {new Array(...dataToSubmit.files).map((file) => (
+          <>
+            <div className="img w-36 h-36 rounded-xl overflow-hidden">
+              <img src={URL.createObjectURL(file)} alt="" className="h-full w-full object-cover" />  
+            </div>
+          </>
+        ))}
+        {/* {dataToSubmit?.files?.forEach((file) => <div>hello</div>)} */}
+        {/* 
+        <div className="img">
+          <img src="../../../public/heroBG.png" alt="" />
+        </div>
+        <div className="img">
+          <img src="../../../public/heroBG.png" alt="" />
+      </div>*/}
+      </div>
     </div>
   );
 };

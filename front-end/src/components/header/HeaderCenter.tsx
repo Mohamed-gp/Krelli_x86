@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { authActions } from "../../store/slices/authSlice";
 import toast from "react-hot-toast";
 import customAxios from "../../utils/axios";
@@ -12,12 +12,14 @@ interface HeaderCenterProps {
 const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
   const user = useSelector((state: IRootState) => state.auth.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const logoutHandler = async (e) => {
     e.preventDefault();
     try {
       const { data } = await customAxios.get("/auth/logout", {
         withCredentials: true,
       });
+      navigate("/");
       toast.success(data);
       dispatch(authActions.logout());
       setopen(false);
@@ -41,7 +43,7 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
             Home
           </NavLink>
         </li>
-        {(user?.role == "admin") && (
+        {user?.role == "admin" && (
           <li>
             <NavLink
               className="cursor-pointer navigation-header-link"

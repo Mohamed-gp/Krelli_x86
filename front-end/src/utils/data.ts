@@ -650,4 +650,32 @@ const wilayasInfo = [
   },
 ];
 
-export { featuresCardsData, propertiesCardsData, categories ,wilayasInfo};
+const getWilayaIdByName = (name: string): string => {
+  const foundedWilaya = wilayasInfo.find(
+    (wilayaInfo) => wilayaInfo.name == name
+  );
+  if (foundedWilaya) {
+    return foundedWilaya.id;
+  } else {
+    return "";
+  }
+};
+const getWilayaNameById = (id: number): string => {
+  const foundedWilaya = wilayasInfo.find(
+    (wilayaInfo) => +wilayaInfo.id == id
+  );
+  if (foundedWilaya) {
+    return foundedWilaya.name;
+  } else {
+    return "";
+  }
+};
+
+export {
+  featuresCardsData,
+  propertiesCardsData,
+  categories,
+  wilayasInfo,
+  getWilayaIdByName,
+  getWilayaNameById
+};

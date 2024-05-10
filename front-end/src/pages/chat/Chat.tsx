@@ -1,12 +1,25 @@
-import { useState } from "react";
-import {  FaTrash } from "react-icons/fa6";
+import { useEffect, useState } from "react";
+import { FaTrash } from "react-icons/fa6";
 import { IoMdSend } from "react-icons/io";
 
-
 import LeftSideNav from "../../components/leftSideNav/LeftSideNav";
+import customAxios from "../../utils/axios";
 
 const Chat = () => {
   const [messageInput, setmessageInput] = useState("");
+  const [inbox, setinbox] = useState([]);
+  const getChats = async () => {
+    try {
+      const { data } = await customAxios.get("/messages");
+      console.log(data);
+      setinbox(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getChats();
+  }, []);
   return (
     <>
       <div className=" flex    mt-12 gap-6 ">
@@ -19,28 +32,31 @@ const Chat = () => {
             <div className="flex flex-col px-6 gap-6">
               <div className="flex">
                 <div className="w-[240px] flex flex-col gap-6">
-                  <div className="flex gap-3 items-center relative bg-white rounded-xl py-2 justify-center">
-                    <div>
-                      <img
-                        src="../../../public/profile.jpg"
-                        alt="avatar"
-                        className="w-10 h-10 object-cover rounded-full"
-                      />
+                  {inbox?.length == 0 ? <div>{inbox.length}</div> : <div>hello not zero</div>}
+                  {inbox.map((host) => (
+                    <div className="flex gap-3 items-center relative bg-white rounded-xl py-2 justify-center">
+                      <div>
+                        <img
+                          src={host?.picture ? host?.picture :  "../../../public/profile.jpg"}
+                          alt="avatar"
+                          className="w-10 h-10 object-cover rounded-full"
+                        />
+                      </div>
+                      <div className="flex flex-col">
+                        <p className="text-sm">Safi Achraf</p>
+                        <p>Property owner</p>
+                      </div>
+                      <div>
+                        <img
+                          src={host?.picture ? host?.picture :  "../../../public/profile.jpg"}
+                          className="w-10 h-10 rounded-xl object-cover"
+                          alt=""
+                        />
+                      </div>
                     </div>
-                    <div className="flex flex-col">
-                      <p className="text-sm">Safi Achraf</p>
-                      <p>Property owner</p>
-                    </div>
-                    <div>
-                      <img
-                        src="../../../public/heroBG.png"
-                        className="w-10 h-10 rounded-xl object-cover"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <div className="flex gap-3 items-center relative bg-white rounded-xl py-2 justify-center">
-                    <div>
+                  ))}
+                  {/* <div className="flex gap-3 items-center relative bg-white rounded-xl py-2 justify-center">
+                  <div>
                       <img
                         src="../../../public/profile.jpg"
                         alt="avatar"
@@ -58,8 +74,8 @@ const Chat = () => {
                         alt=""
                       />
                     </div>
-                  </div>
-                  <div className="flex gap-3 items-center relative bg-white rounded-xl py-2 justify-center">
+                  </div> */}
+                  {/* <div className="flex gap-3 items-center relative bg-white rounded-xl py-2 justify-center">
                     <div>
                       <img
                         src="../../../public/profile.jpg"
@@ -78,11 +94,11 @@ const Chat = () => {
                         alt=""
                       />
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
-            <div className="flex flex-col rounded-xl bg-white px-6 py-6 gap-6 flex-1 max-w-[700px] mx-4">
+            {/* <div className="flex flex-col rounded-xl bg-white px-6 py-6 gap-6 flex-1 max-w-[700px] mx-4">
               <div className="flex border-b-2 justify-between">
                 <p className="">Achraf Safi</p>
                 <FaTrash />
@@ -159,7 +175,7 @@ const Chat = () => {
                   <IoMdSend />
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

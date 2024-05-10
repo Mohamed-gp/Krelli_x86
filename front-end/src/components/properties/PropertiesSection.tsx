@@ -3,10 +3,11 @@ import TitleHeading from "../title-heading/TitleHeading";
 import { propertiesCardsData } from "../../utils/data";
 import { FaHeart, FaStar } from "react-icons/fa6";
 import PropertiesCard from "./PropertiesCard";
-
-
+import { useState } from "react";
 
 const PropertiesSection = () => {
+  const [houses, sethouses] = useState([]);
+
   return (
     <section>
       <div className="container flex flex-col py-12">
@@ -20,8 +21,7 @@ const PropertiesSection = () => {
           </Link>
         </div>
         <div className="flex flex-wrap items-center justify-center sm:justify-between  gap-3 my-6">
-          <PropertiesCard all={false} />
-          
+          <PropertiesCard all={false} houses={houses} sethouses={sethouses} filter={null} setfilter={null} />
         </div>
       </div>
     </section>

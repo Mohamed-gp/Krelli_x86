@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { authActions } from "../../store/slices/authSlice";
 import { TbLogout } from "react-icons/tb";
 import { IRootState } from "../../store/store";
@@ -10,12 +10,16 @@ import { FaUser } from "react-icons/fa6";
 const HeaderRight = () => {
   const user = useSelector((state: IRootState) => state.auth.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const logoutHandler = async (e) => {
     e.preventDefault();
     try {
       dispatch(authActions.logout());
       const { data } = await customAxios.get("/auth/logout");
+      navigate("/")
       toast.success(data);
+      
+      
     } catch (error: any) {
       toast.error(error.message);
       console.log(error.message);

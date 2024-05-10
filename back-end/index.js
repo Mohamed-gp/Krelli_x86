@@ -15,6 +15,7 @@ import ReservationRouter from "./routes/reservation.js";
 import AdminRouter from "./routes/admin.js";
 import verifyRoles from "./middleware/roleChecker.js";
 import cors from "cors";
+import usersRouter from "./routes/users.js";
 dotenv.config();
 
 const app = express();
@@ -45,6 +46,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/users", usersRouter);
 app.use("/host", HostRouter);
 
 app.use("/homes", HomesRouter);

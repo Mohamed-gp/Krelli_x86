@@ -1,3 +1,4 @@
+import { useState } from "react";
 import AddProperty from "../../components/addProperty/AddProperty";
 import ChatBot from "../../components/chatbot/ChatBot";
 import FeaturesSection from "../../components/features/FeaturesSection";
@@ -11,7 +12,7 @@ const Home = () => {
     <>
       <Hero />
       <FeaturesSection />
-      <PropertiesSection />
+      <PropertiesSection  />
       <PhoneApp />
       <AddProperty />
       <ChatBot/>

@@ -1,6 +1,8 @@
 import prisma from "../prisma/client.js";
 import { v2 as cloudinary } from "cloudinary";
 import dotenv from "dotenv";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken"
 
 dotenv.config();
 
@@ -15,7 +17,10 @@ const registerAndAddhome = async (req, res) => {
   const lastName = req.body.lastName;
   const email = req.body.email;
   const password = req.body.password;
-
+  if (!firstName || !lastName || !email || !password) {
+    return res.status(400).send("All fields are required");
+  }
+  console.log("this is the boyd in the server", req.body);
   const alreadyExists = await prisma.user.findFirst({
     where: {
       email,
@@ -35,10 +40,13 @@ const registerAndAddhome = async (req, res) => {
       password: hashedPassword,
     },
   });
+  user.password = null
+  const { title, wilaya, price, bathrooms, bedrooms, guests, category } =
+    req.body;
 
-  const { title, wilaya, price, bathrooms, bedrooms, guests,category } = req.body;
+  console.log("this is req.user", user.id);
 
-  const userId = req.user.userId;
+  const userId = user.id;
 
   if (
     !title ||
@@ -69,9 +77,13 @@ const registerAndAddhome = async (req, res) => {
       bathrooms: parseInt(bathrooms),
       bedrooms: parseInt(bedrooms),
       guests: parseInt(guests),
-      userId,
+      User: {
+        connect: {
+          id: userId,
+        },
+      },
       description: req.body.description ? req.body.description : "",
-      pictures: {
+      Pictures: {
         create: pictureUrls.map((url) => ({
           url,
         })),
@@ -85,10 +97,14 @@ const registerAndAddhome = async (req, res) => {
   );
   res.cookie("authorization", token, {
     httpOnly: true,
-    sameSite: "None",
+    sameSite: "strict",
     secure: false,
   });
-  res.json(home);
+
+  res.json({
+    user,
+    home
+  });
 };
 
 export default registerAndAddhome;
