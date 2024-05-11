@@ -4,8 +4,11 @@ import { MdWindow } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import { LuChevronsLeftRight } from "react-icons/lu";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { IRootState } from "../../store/store";
 
 const LeftSideNav = () => {
+  const user = useSelector((state:IRootState) => state.auth.user)
   const [open, setopen] = useState(false);
 
   return (
@@ -14,15 +17,15 @@ const LeftSideNav = () => {
         
         className={` relative flex flex-col   px-2 py-4 gap-6  md:min-w-[160px] duration-300`}
       >
-        <NavLink
+        {/* <NavLink
           to="/profile/dashboard/:id"
           className="flex gap-2 items-center md:py-1 md:pl-3 p-2 rounded-xl left-nav-link"
         >
           <MdWindow />
           <p className="md:block hidden">DashBoard</p>
-        </NavLink>
+        </NavLink> */}
         <NavLink
-          to="/profile/favorites/:id"
+          to="/profile/wishlist/:id"
           className=" flex gap-2 items-center md:py-1 md:pl-3 p-2 rounded-xl left-nav-link"
         >
           <FaHeart />

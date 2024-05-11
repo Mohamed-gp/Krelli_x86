@@ -15,7 +15,7 @@ const PropertiesSection = () => {
           <TitleHeading>list of properties</TitleHeading>
           <Link
             to="/properties"
-            className="bg-[#4561EC] text-white px-2 md:px-4 py-1 md:py-2 rounded-xl md:text-base text-sm"
+            className="bg-[#4561EC] text-white px-2 md:px-4 py-1 md:py-2  md:text-base text-sm hover:scale-[1.03] duration-300 "
           >
             View all properties
           </Link>

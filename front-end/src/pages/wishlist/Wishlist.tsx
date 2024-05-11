@@ -4,7 +4,7 @@ import { FaHeart, FaStar } from "react-icons/fa6";
 
 import LeftSideNav from "../../components/leftSideNav/LeftSideNav";
 
-const Favorites = () => {
+const Wishlist = () => {
   return (
     <>
       <div className=" flex    mt-12 gap-6 ">
@@ -12,9 +12,10 @@ const Favorites = () => {
         <LeftSideNav />
         {/* right side */}
         <div>
-          <p className="text-3xl font-bold mb-6">Favorites</p>
+          <p className="text-3xl font-bold mb-6">Wishlist</p>
 
           <div className="flex flex-wrap items-center justify-between gap-3 my-6 mx-12">
+            
             {propertiesCardsData.map((property) => {
               return (
                 <div className="w-[240px] rounded-xl overflow-hidden">
@@ -59,4 +60,4 @@ const Favorites = () => {
     </>
   );
 };
-export default Favorites;
+export default Wishlist;

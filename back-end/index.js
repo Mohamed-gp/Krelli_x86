@@ -16,6 +16,10 @@ import AdminRouter from "./routes/admin.js";
 import verifyRoles from "./middleware/roleChecker.js";
 import cors from "cors";
 import usersRouter from "./routes/users.js";
+import hpp from "hpp";
+import helmet from "helmet"
+import xss from "xss-clean";
+import rateLimiting from "express-rate-limit"
 dotenv.config();
 
 const app = express();
@@ -30,6 +34,26 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use(cookieParser());
+
+
+app.use(hpp())
+
+// security headers
+app.use(helmet())
+// prevent xss attack
+
+app.use(xss())
+
+app.use(rateLimiting({
+    windowMs : 10 * 60 * 1000 ,
+    max : 100,
+}))
+
+
+
+
+
+
 
 app.get("/", (req, res) => {
   res.json("Hello World");

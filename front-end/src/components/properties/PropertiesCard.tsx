@@ -65,47 +65,107 @@ const PropertiesCard = ({
       ) : (
         houses?.map((property: any) => {
           return (
-            <Link
-              to={`/properties/${property.id}`}
-              key={property.path}
-              className="w-[240px] rounded-xl overflow-hidden"
-            >
-              <div className="img relative">
-                <img src={property?.Pictures[0]?.url} alt={property.title} />
-                <FaHeart className="absolute top-[11px] right-3 text-xl"/>
-                
-                <BsHeart className="absolute top-3 right-3 text-xl text-white"/>
-              </div>
-              <div className="flex flex-col gap-2 px-3 py-4">
-                <div className="flex items-center justify-between gap-2">
-                  <div>
-                    <p className="font-bold">{property.title}</p>
-                    <p>${property.price}/ Night</p>
+            <>
+              <Link
+                to={`/properties/${property.id}`}
+                style={{ boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 15px" }}
+                key={property.path}
+                className="w-[240px] rounded-xl overflow-hidden bg-white property-card"
+              >
+                <div className="img relative">
+                  <div className=" img w-[240px] h-[160px] overflow-hidden">
+                    <img
+                      src={property?.Pictures[0]?.url}
+                      alt={property.title}
+                      className="hover:scale-105 duration-300"
+                    />
                   </div>
-                  <div>
-                    <p className="font-bold">{getWilayaNameById(property.wilaya)}</p>
-                    
+                  <FaHeart className="absolute top-[11px] right-3 text-xl" />
+
+                  <BsHeart className="absolute top-3 right-3 text-xl text-white" />
+                </div>
+                <div className="flex flex-col gap-2 px-3 py-4">
+                  <div className="flex items-center justify-between gap-2">
+                    <div>
+                      <p className="font-bold">{property.title}</p>
+                      <p>${property.price}/ Night</p>
+                    </div>
+                    <div>
+                      <p className="font-bold">
+                        {getWilayaNameById(property.wilaya)}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex gap-1">
+                    <span className="flex text-yellow-400">
+                      <FaStar />
+                    </span>
+                    <span className="flex text-yellow-400">
+                      <FaStar />
+                    </span>
+                    <span className="flex text-yellow-400">
+                      <FaStar />
+                    </span>
+                    <span className="flex text-yellow-400">
+                      <FaStar />
+                    </span>
+                    <span>
+                      <FaStar />
+                    </span>
                   </div>
                 </div>
-                <div className="flex gap-1">
-                  <span className="flex text-yellow-400">
-                    <FaStar />
-                  </span>
-                  <span className="flex text-yellow-400">
-                    <FaStar />
-                  </span>
-                  <span className="flex text-yellow-400">
-                    <FaStar />
-                  </span>
-                  <span className="flex text-yellow-400">
-                    <FaStar />
-                  </span>
-                  <span>
-                    <FaStar />
-                  </span>
+              </Link>
+              <Link
+                to={`/properties/${property.id}`}
+                key={property.path}
+                style={{ boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 0px" }}
+
+                className="w-[240px] rounded-xl overflow-hidden bg-white property-card duration-1000"
+              >
+                <div className="img relative">
+                  <div className="img w-[240px] h-[160px] overflow-hidden">
+                    <img
+                      src={property?.Pictures[0]?.url}
+                      alt={property.title}
+                      className="hover:scale-105 duration-300"
+                    />
+                  </div>
+                  <FaHeart className="absolute top-[11px] right-3 text-xl" />
+
+                  <BsHeart className="absolute top-3 right-3 text-xl text-white" />
                 </div>
-              </div>
-            </Link>
+                <div className="flex flex-col gap-2 px-3 py-4">
+                  <div className="flex items-center justify-between gap-2">
+                    <div>
+                      <p className="font-bold">{property.title}</p>
+                      <p>${property.price}/ Night</p>
+                    </div>
+                    <div>
+                      <p className="font-bold">
+                        {getWilayaNameById(property.wilaya)}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex gap-1">
+                    <span className="flex text-yellow-400">
+                      <FaStar />
+                    </span>
+                    <span className="flex text-yellow-400">
+                      <FaStar />
+                    </span>
+                    <span className="flex text-yellow-400">
+                      <FaStar />
+                    </span>
+                    <span className="flex text-yellow-400">
+                      <FaStar />
+                    </span>
+                    <span>
+                      <FaStar />
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            </>
           );
         })
       )}

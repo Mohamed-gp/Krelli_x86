@@ -19,7 +19,7 @@ const AddPropertyInput = ({ dataToSubmit,setDataToSubmit ,inputLabel } : AddProp
           onChange={(e) => setDataToSubmit({ ...dataToSubmit,[inputLabel] : e.target.value })}
           name={inputLabel}
           id={inputLabel}
-          className="peer w-full pt-3 pb-2 px-3 border-2 text-xs   focus:outline-none rounded-md bg-[#E6E6E6]"
+          className="peer w-full pt-3 pb-2 px-3 border-2 text-xs   focus:outline-none rounded-md bg-[#f9f9f9]"
         />
         <label
           htmlFor="name"

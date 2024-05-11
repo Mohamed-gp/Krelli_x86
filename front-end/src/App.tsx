@@ -6,7 +6,7 @@ import Register from "./pages/register/Register";
 import Properties from "./pages/properties/Properties";
 import Footer from "./components/footer/Footer";
 import Chat from "./pages/chat/Chat";
-import Favorites from "./pages/favorites/Favorites";
+import Wishlist from "./pages/wishlist/Wishlist.tsx";
 import DashBoard from "./pages/dashboard/DashBoard";
 import SingleProperty from "./pages/singleProperty/SingleProperty";
 import AboutUs from "./pages/aboutus/AboutUs.tsx";
@@ -20,6 +20,7 @@ import CategoriesTable from "./pages/admin/CategoriesTable.tsx";
 import Profile from "./pages/profile/Profile.tsx";
 import NotFound from "./pages/notFound/NotFound.tsx";
 import PhotosModel from "./components/photosModel/PhotosModel.tsx";
+import Settings from "./components/settings/Settings.tsx";
 
 function App() {
   const user = useSelector((state: IRootState) => state.auth.user);
@@ -39,9 +40,10 @@ function App() {
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/properties/:id" element={<SingleProperty />} />
           <Route path="/properties/:id/photos" element={<PhotosModel />} />
-          <Route path="/profile/:id" element={<Profile />} />
+          <Route path={`/settings/:id`} element={<Settings />} />
+          <Route path={`/profile/${user?.id}`} element={<Profile />} />
           <Route path="/profile/chat/:id" element={<Chat />} />
-          <Route path="/profile/favorites/:id" element={<Favorites />} />
+          <Route path="/wishlist/:id" element={<Wishlist />} />
           <Route path="/profile/dashboard/:id" element={<DashBoard />} />
           <Route path="/admin-dashboard">
             <Route

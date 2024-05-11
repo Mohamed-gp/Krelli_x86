@@ -17,6 +17,7 @@ const allUsers = async (req, res) => {
 };
 
 const singleUser = async (req, res) => {
+	console.log(req.body)
 	const id = req.params.id;
 	const user = await prisma.user.findUnique({
 		where: {
@@ -25,5 +26,29 @@ const singleUser = async (req, res) => {
 	});
 	res.json(user);
 };
+const editUserInfo = async (req, res) => {
+	console.log(req.body,"this is body")
+	// const {firstName,lastName,email} = req.body
+	// const file = req.file
+	// console.log("firstName",firstName)
+	// console.log("lastName",lastName)
+	// console.log("email",email)
+	// console.log("file",file)
+	// console.log()
+	// const id = req.params.id;
+	// const user = await prisma.user.findUnique({
+	// 	where: {
+	// 		id,
+	// 	},
+		
+	// });
+	// if (!user) {
+	// 	return res.status(400).json({message : "user not found"})
+	// }
+	// if () {
+		
+	// }
+	res.json({message : "test"});
+};
 
-export { usersCount,allUsers, singleUser };
+export { usersCount,allUsers, singleUser,editUserInfo };

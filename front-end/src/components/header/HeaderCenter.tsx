@@ -35,9 +35,9 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
           ? { clipPath: "polygon(0 0, 100% 0%, 100% 100%, 0% 100%)" }
           : { clipPath: "polygon(0 0, 100% 0%, 100% 0, 0 0)" }
       }
-      className="lg:relative absolute right-8 lg:right-auto lg:w-auto w-[200px] lg:p-0 p-4 lg:top-auto rounded-2xl top-[100px] duration-300 z-10 bg-white"
+      className="lg:relative absolute right-8 lg:right-auto lg:w-auto w-[200px] lg:p-0 p-4 lg:top-auto rounded-2xl top-[100px] duration-300 z-50 bg-white"
     >
-      <ul className="flex lg:flex-row flex-col items-center gap-4 ">
+      <ul className="flex lg:flex-row flex-col items-center gap-10 ">
         <li>
           <NavLink className="cursor-pointer navigation-header-link" to="/">
             Home
@@ -54,6 +54,34 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
           </li>
         )}
 
+        {user && (
+          <>
+            <li>
+              <NavLink
+                className="cursor-pointer navigation-header-link"
+                to={`/profile/${user?.id}`}
+              >
+                Profile
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                className="cursor-pointer navigation-header-link"
+                to={`/wishlist/${user?.id}`}
+              >
+                Wishlist
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                className="cursor-pointer navigation-header-link"
+                to="/profile/chat/:id"
+              >
+                Chat
+              </NavLink>
+            </li>
+          </>
+        )}
         <li>
           <NavLink
             className="cursor-pointer navigation-header-link"
@@ -62,16 +90,6 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
             Find
           </NavLink>
         </li>
-        {user && (
-          <li>
-            <NavLink
-              className="cursor-pointer navigation-header-link"
-              to="/profile/dashBoard/:id"
-            >
-              DashBoard
-            </NavLink>
-          </li>
-        )}
         <li>
           <NavLink
             className="cursor-pointer navigation-header-link"
