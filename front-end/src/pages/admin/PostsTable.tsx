@@ -1,77 +1,56 @@
 import Swal from "sweetalert2";
 import AdminSideBar from "./AdminSideBar";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import customAxios from "../../utils/axios";
 
 const PostsTable = () => {
-  // const dispatch = useDispatch()
-  // useEffect(() => {
-  //     dispatch(getAllPosts())
-  // })
-  const posts = [
-    {
-      _id: "65ca983d3509c22dd09e14dd",
-      title: "moahdfjsa",
-      description: "sfasfsafsfsf",
-      image: {
-        url : "../../../public/profile.jpg",
-        publicId: "ununfaym9tcd37kra124",
-      },
-      user: {
-        username: "mohmaed Outerbah",
-        url : "../../../public/profile.jpg",
-      },
-      likes: [
-        {
-          _id: "65ca97e53509c22dd09e14b0",
-        },
-      ],
-    },
-    {
-      _id: "65ca983d3509c22dd09e14dd",
-      title: "little House",
-      description: "sfasfsafsfsf",
-      image: {
-        url : "../../../public/profile.jpg",
-        publicId: "ununfaym9tcd37kra124",
-      },
-      user: {
-        url : "../../../public/profile.jpg",
-        username: "Achraf Safi",
-      },
-      likes: [
-        {
-          _id: "65ca97e53509c22dd09e14b0",
-        },
-      ],
-    },
-  ];
-  const removeHandler = (postId) => {
+  const [properties, setproperties] = useState<any[]>([]);
+  const [remove, setremove] = useState(0);
+  const getAllPropertiesHandler = async () => {
+    try {
+      const { data } = await customAxios.get("/admin//homes");
+      setproperties(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const removeHandler = (id) => {
     Swal.fire({
-      title: "Are you sure to remove this user?",
+      title: "Are you sure to remove this Property?",
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        // dispatch(deletePost(postId))
-        Swal.fire({
-          title: "Deleted!",
-          text: "The user has been deleted.",
-          icon: "success",
-        });
+        try {
+          const { data } = await customAxios.delete(`/users/${id}`);
+          Swal.fire({
+            title: "Deleted!",
+            text: "Property Deleted Successfuly",
+            icon: "success",
+          });
+          setremove((prev) => prev + 1);
+        } catch (error) {
+          console.log(error);
+          toast.error(error?.response?.data.message);
+        }
       } else {
         Swal.fire({
-          title: "the user post is safe!",
+          title: "your profile is safe!",
           text: "something went wrong",
           icon: "error",
         });
       }
     });
   };
-
+  useEffect(() => {
+    getAllUsersHandler();
+  }, [remove]);
   return (
     <div className="flex" style={{ minHeight: "calc(100vh - (72px +  48px))" }}>
       <AdminSideBar />
@@ -93,10 +72,7 @@ const PostsTable = () => {
                   <td>{index + 1}</td>
                   <td>
                     <div className="flex items-center justify-start gap-2 img w-[260px] pl-4">
-                      <img
-                        className="w-10 rounded-full"
-                        src={post.user.url}
-                      />
+                      <img className="w-10 rounded-full" src={post.user.url} />
                       <span>{post.user.username}</span>
                     </div>
                   </td>

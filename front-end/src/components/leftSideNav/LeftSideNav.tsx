@@ -25,11 +25,11 @@ const LeftSideNav = () => {
           <p className="md:block hidden">DashBoard</p>
         </NavLink> */}
         <NavLink
-          to="/profile/wishlist/:id"
+          to={`/wishlist/${user?.id}`}
           className=" flex gap-2 items-center md:py-1 md:pl-3 p-2 rounded-xl left-nav-link"
         >
           <FaHeart />
-          <p className="md:block hidden">Favorites</p>
+          <p className="md:block hidden">Wishlist</p>
         </NavLink>
         <NavLink
           to="/profile/chat/:id"

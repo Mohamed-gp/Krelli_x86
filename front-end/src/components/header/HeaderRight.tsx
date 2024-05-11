@@ -29,13 +29,13 @@ const HeaderRight = () => {
         <>
           <Link
             to="/login"
-            className="cursor-pointer  text-white px-6 py-1 rounded-xl bg-[#4561EC] duration-300 hover:scale-105 "
+            className="cursor-pointer  text-white px-6 py-1  bg-[#4561EC] duration-300 hover:scale-105 "
           >
             Login
           </Link>
           <Link
             to="/register"
-            className="cursor-pointer   text-white px-6 py-1 rounded-xl bg-[#4561EC] duration-300 hover:scale-105 "
+            className="cursor-pointer   text-white px-6 py-1  bg-[#4561EC] duration-300 hover:scale-105 "
           >
             Register
           </Link>

@@ -37,7 +37,7 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
       }
       className="lg:relative absolute right-8 lg:right-auto lg:w-auto w-[200px] lg:p-0 p-4 lg:top-auto rounded-2xl top-[100px] duration-300 z-50 bg-white"
     >
-      <ul className="flex lg:flex-row flex-col items-center gap-10 ">
+      <ul className="flex lg:flex-row flex-col items-center gap-x-10  gap-y-6 ">
         <li>
           <NavLink className="cursor-pointer navigation-header-link" to="/">
             Home
@@ -100,14 +100,24 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
         </li>
 
         {user && (
-          <li className="lg:hidden">
-            <span
-              className="cursor-pointer navigation-header-link"
-              onClick={(e) => logoutHandler(e)}
-            >
-              Logout
-            </span>
-          </li>
+          <>
+            <li className="sm:hidden">
+              <NavLink
+                className="cursor-pointer navigation-header-link"
+                to={`/settings/${user?.id}`}
+              >
+                Settings
+              </NavLink> 
+            </li>
+            <li className="lg:hidden">
+              <span
+                className="cursor-pointer navigation-header-link"
+                onClick={(e) => logoutHandler(e)}
+              >
+                Logout
+              </span>
+            </li>
+          </>
         )}
         {!user && (
           <>

@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import { jwtVerify } from "./middleware/jwtVerify.js";
+import { jwtVerify, jwtVerifyAdmin, jwtVerifyUser } from "./middleware/jwtVerify.js";
 import cookieParser from "cookie-parser";
 import geminiRouter from "./routes/gemini.js"
 import authRouter from "./routes/auth.js";
@@ -38,9 +38,9 @@ app.use(cookieParser());
 
 app.use(hpp())
 
-// security headers
+// // security headers
 app.use(helmet())
-// prevent xss attack
+// // prevent xss attack
 
 app.use(xss())
 
@@ -62,7 +62,7 @@ app.get("/", (req, res) => {
 app.use("/gemini", geminiRouter);
 app.use("/auth", authRouter);
 
-app.use(jwtVerify);
+// app.use(jwtVerify);
 
 const io = socketServer(server);
 app.use((req, res, next) => {
@@ -71,15 +71,15 @@ app.use((req, res, next) => {
 });
 
 app.use("/users", usersRouter);
-app.use("/host", HostRouter);
+app.use("/host", jwtVerify,jwtVerifyUser,HostRouter);
 
 app.use("/homes", HomesRouter);
 
-app.use("/messages", MessagesRouter);
+app.use("/messages",jwtVerify,jwtVerifyUser, MessagesRouter);
 
-app.use("/reservations", ReservationRouter);
+app.use("/reservations", jwtVerify,jwtVerifyUser,ReservationRouter);
 
-app.use("/admin", verifyRoles("admin"), AdminRouter);
+app.use("/admin", jwtVerify,jwtVerifyAdmin, AdminRouter);
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {

@@ -18,7 +18,7 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const { data } = await customAxios.post("http://localhost:3000/auth/login", dataToSubmit,{
+      const { data } = await customAxios.post("/auth/login", dataToSubmit,{
         withCredentials : true
       });
       dispatch(authActions.login({ ...data, password: "" }));

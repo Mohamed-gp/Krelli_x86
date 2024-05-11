@@ -231,3 +231,12 @@ table div {
   scale: 1.05;
   transition-duration: 0.3s;
 }
+
+
+.logout-setting-button:hover span{
+  transform: translateX(2px);
+  -webkit-transform: translateX(2px);
+  -moz-transform: translateX(2px);
+  -ms-transform: translateX(2px);
+  -o-transform: translateX(2px);
+}

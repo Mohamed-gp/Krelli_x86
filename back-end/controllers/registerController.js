@@ -40,7 +40,7 @@ const HandelRegister = async (req, res) => {
   res.cookie("authorization", token, {
     httpOnly: true,
     sameSite: "strict",
-    secure: false,
+    secure: true,
   });
 
   // const token = jwt.sign({ userId: user.id , role: user.role }, process.env.TOKEN_SECRET, { expiresIn: "30d" });

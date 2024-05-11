@@ -2,7 +2,7 @@ import axios from "axios";
 
 const env = "developement"
 
-const url = env == "developement" ? "http://localhost:3000" : "somedomain" 
+const url = "https://render.com/docs/web-services#port-binding"
 
 const customAxios = axios.create({
     baseURL: url, // Set a base URL for all requests

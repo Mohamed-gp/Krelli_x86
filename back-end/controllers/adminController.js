@@ -41,6 +41,8 @@ const allUsers = async (req, res) => {
   }
 };
 
+
+
 const singleUser = async (req, res) => {
   if (req.user.role !== "admin") {
     return res.status(403).send("You are not authorized to view this");

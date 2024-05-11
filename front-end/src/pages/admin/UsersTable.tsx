@@ -3,9 +3,11 @@ import AdminSideBar from "./AdminSideBar";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import customAxios from "../../utils/axios";
+import toast from "react-hot-toast";
 
 const UsersTable = () => {
   const [users, setusers] = useState<any[]>([]);
+  const [remove,setremove] = useState(0)
   const getAllUsersHandler = async () => {
     try {
       const { data } = await customAxios.get("/admin/users");
@@ -14,7 +16,7 @@ const UsersTable = () => {
       console.log(error);
     }
   };
-  const removeHandler = (userId) => {
+  const removeHandler = (id) => {
     Swal.fire({
       title: "Are you sure to remove this user?",
       text: "You won't be able to revert this!",
@@ -23,17 +25,23 @@ const UsersTable = () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        // dispatch(deleteUser(userId))
-        Swal.fire({
-          title: "Deleted!",
-          text: "The user has been deleted.",
-          icon: "success",
-        });
+        try {
+          const { data } = await customAxios.delete(`/users/${id}`);
+          Swal.fire({
+            title: "Deleted!",
+            text: "User Profile Deleted Successfuly",
+            icon: "success",
+          });
+          setremove(prev => prev + 1)
+        } catch (error) {
+          console.log(error);
+          toast.error(error?.response?.data.message);
+        }
       } else {
         Swal.fire({
-          title: "the user profile is safe!",
+          title: "your profile is safe!",
           text: "something went wrong",
           icon: "error",
         });
@@ -42,7 +50,7 @@ const UsersTable = () => {
   };
   useEffect(() => {
     getAllUsersHandler();
-  });
+  },[remove]);
   return (
     <div className="flex" style={{ minHeight: "calc(100vh - (72px +  48px))" }}>
       <AdminSideBar />
@@ -60,7 +68,7 @@ const UsersTable = () => {
             </thead>
             <tbody>
               {users?.map((user, index) => (
-                <tr key={user?._id}>
+                <tr key={user?.id}>
                   <td>{index + 1}</td>
                   <td>
                     <div className="flex items-center-center justify-start pl-4 gap-2 img min-w-[260px]">
@@ -82,11 +90,11 @@ const UsersTable = () => {
                   <td>
                     <div className="flex users-center justify-center gap-2 text-white w-[260px]">
                       <button className="px-3 py-1 bg-green-400 rounded-xl">
-                        <Link to={`/profile/${user._id}`}>View Profile</Link>
+                        <Link to={`/profile/${user.id}`}>View Profile</Link>
                       </button>
                       <button
                         className="px-3 py-1 bg-red-400 rounded-xl"
-                        onClick={() => removeHandler(user._id)}
+                        onClick={() => removeHandler(user.id)}
                       >
                         Delete Profile
                       </button>

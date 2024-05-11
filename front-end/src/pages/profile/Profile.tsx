@@ -23,27 +23,29 @@ const Profile = () => {
       console.log(error.message);
     }
   };
+  console.log(user)
   return (
     <div
-      className="container py-16"
+      className="container py-16 sm:px-32"
       style={{ minHeight: "calc(100vh - 70.94px)" }}
     >
       <div className="my-10 rounded-xl border-2 border-buttonColor p-3">
         <p className="border-b border-buttonColor pb-1 font-bold text-center">
           Profile
         </p>
-        <div className="flex flex-col-reverse items-center justify-between gap-x-32 px-4 py-6">
-          <div className="flex flex-col items-center justify-center gap-3">
+        <div className="flex flex-col-reverse  items-center justify-between gap-x-32 px-4 py-6">
+          <div className="flex flex-col md:flex-row-reverse justify-between items-center w-full gap-3">
             <div className="rounded-full w-36 h-36 overflow-hidden">
               <img
-                src="../../../public/profile.jpg"
+                src={user?.profileImage}
                 alt="avatar"
                 className=""
               />
             </div>
-            <div className="flex gap-1">
-              <p>{user?.firstName}</p>
-              <p>{user?.firstName}</p>
+            <div className="flex gap-1 flex-col">
+              <p><span className="font-bold">firstName:</span> {user?.firstName}</p>
+              <p><span className="font-bold">lastName:</span> {user?.lastName}</p>
+              <p><span className="font-bold">Email:</span> {user?.email}</p>
             </div>
           </div>
         </div>
