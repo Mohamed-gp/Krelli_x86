@@ -2,7 +2,7 @@ import axios from "axios";
 
 const env = "developement"
 
-const url = "https://render.com/docs/web-services#port-binding"
+const url = "https://krelli-x86-test.onrender.com"
 
 const customAxios = axios.create({
     baseURL: url, // Set a base URL for all requests

@@ -39,7 +39,7 @@ const HandelRegister = async (req, res) => {
 
   res.cookie("authorization", token, {
     httpOnly: true,
-    sameSite: "strict",
+    sameSite: "None",
     secure: true,
   });
 
