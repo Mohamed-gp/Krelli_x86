@@ -19,7 +19,7 @@ export const jwtVerifyUser = (req, res, next) => {
   if (req.user.userId != req.params.id) {
     return res.status(400).send("Access denied");
   }
-  next();
+next();
 };
 export const jwtVerifyAdminAndUser = (req, res, next) => {
   console.log();

@@ -2,9 +2,9 @@ import axios from "axios";
 
 const env = "developement"
 
-const url = "https://krelli-x86-test.onrender.com"
+const url = "http://localhost:3000/"
 
-const customAxios = axios.create({
+const customAxios = axios.create({  
     baseURL: url, // Set a base URL for all requests
     // timeout: 5000, // Set a timeout for requests in milliseconds
     // headers: {

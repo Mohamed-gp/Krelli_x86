@@ -42,8 +42,19 @@ const SingleProperty = () => {
       console.log(error);
     }
   };
+  const getHouseReviews = async () => {
+    try {
+      const { data } = await customAxios(`/homes/${id}/reviews `);
+      console.log(data, "reviews");
+      // setpropertyOwner(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     getHouseById();
+    getHouseReviews();
+    
   }, []);
   useEffect(() => {
     getPropertyOwnerById(house?.userId);
