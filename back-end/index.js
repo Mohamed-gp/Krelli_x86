@@ -25,9 +25,10 @@ dotenv.config();
 const app = express();
 const server = createServer(app);
 
-app.use(originChecker);
+// app.use(originChecker);
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+app.use(cors())
 
 app.use(express.urlencoded({ extended: false }));
 
