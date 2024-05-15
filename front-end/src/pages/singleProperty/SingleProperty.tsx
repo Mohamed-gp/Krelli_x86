@@ -21,7 +21,7 @@ const SingleProperty = () => {
   const { id } = useParams();
 
   const [house, sethouse] = useState<any>({
-    Pictures: [{ url: "../../../public/images.png" }],
+    Pictures: [{ url: "/images.png" }],
   });
   const [propertyOwner, setpropertyOwner] = useState<any>();
 
@@ -328,14 +328,7 @@ const SingleProperty = () => {
                   <div className="flex flex-col  border-y border-y-[#4561ec26] py-4  my-4">
                     <div className="flex items-center gap-2 my-3">
                       <div className="size-10 rounded-full overflow-hidden">
-                        <img
-                          src={
-                            propertyOwner?.profileImage
-                              ? propertyOwner?.profileImage
-                              : "../../../public/profile.jpg"
-                          }
-                          alt=""
-                        />
+                        <img src={propertyOwner?.profileImage} alt="" />
                       </div>
                       <div className="flex flex-col gap2 opacity-90">
                         <StarsReview rating={5} />

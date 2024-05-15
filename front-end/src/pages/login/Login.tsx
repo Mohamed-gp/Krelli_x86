@@ -1,5 +1,4 @@
 import { useState } from "react";
-import logo from "../../../public/Krelli LOGO 1.png";
 import { loginDataInterface } from "../../interfaces/userDataInterfaces/interface";
 import toast from "react-hot-toast";
 import customAxios from "../../utils/axios";
@@ -39,7 +38,7 @@ const Login = () => {
         style={{ height: "calc(100vh - 84.14px)" }}
       >
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img className="w-auto h-10 mx-auto" src={logo} alt="Your Company" />
+          <img className="w-auto h-10 mx-auto" src="/Krelli LOGO 1.png" alt="Your Company" />
           <h2 className="mt-4 text-2xl font-bold leading-9 tracking-tight text-center text-gray-900">
             Login to your account
           </h2>
