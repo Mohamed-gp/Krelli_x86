@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 
 const UsersTable = () => {
   const [users, setusers] = useState<any[]>([]);
-  const [remove,setremove] = useState(0)
+  const [remove, setremove] = useState(0);
   const getAllUsersHandler = async () => {
     try {
       const { data } = await customAxios.get("/admin/users");
@@ -34,7 +34,7 @@ const UsersTable = () => {
             text: "User Profile Deleted Successfuly",
             icon: "success",
           });
-          setremove(prev => prev + 1)
+          setremove((prev) => prev + 1);
         } catch (error) {
           console.log(error);
           toast.error(error?.response?.data.message);
@@ -50,7 +50,7 @@ const UsersTable = () => {
   };
   useEffect(() => {
     getAllUsersHandler();
-  },[remove]);
+  }, [remove]);
   return (
     <div className="flex" style={{ minHeight: "calc(100vh - (72px +  48px))" }}>
       <AdminSideBar />
@@ -74,11 +74,7 @@ const UsersTable = () => {
                     <div className="flex items-center-center justify-start pl-4 gap-2 img min-w-[260px]">
                       <img
                         className="w-10 h-10 rounded-full"
-                        src={
-                          user?.profileImage
-                            ? user?.profileImage
-                            : "../../../public/profile.jpg"
-                        }
+                        src={user?.profileImage}
                       />
                       <div className="div flex flex-col items-start">
                         <span>{user?.firstName}</span>

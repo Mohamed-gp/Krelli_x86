@@ -6,7 +6,7 @@ const Hero = () => {
     <section
       style={{
         height: "calc(100vh - 84.14px)",
-        background: "url(/../../../../public/heroBG.png)",
+        background: "url(/heroBG.png)",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}

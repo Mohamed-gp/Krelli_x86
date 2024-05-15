@@ -98,7 +98,7 @@ const SingleProperty = () => {
     try {
       const { data } = await customAxios.post(`/homes/${house?.id}/chat`);
       console.log(data, "message");
-    } catch (error : any) {
+    } catch (error: any) {
       console.log(error);
       toast.error(error.response.data.message);
     }
@@ -235,7 +235,7 @@ const SingleProperty = () => {
               <p className="w-[4px] h-[4px] bg-black rounded-full"></p>
               <p className="opacity-50">{house?.bathrooms} bathrooms</p>
             </div>
-            <div className="flex my-2">
+            {/* <div className="flex my-2">
               <span className="text-yellow-500">
                 <FaStar />
               </span>
@@ -251,17 +251,10 @@ const SingleProperty = () => {
               <span className="text-yellow-500">
                 <FaStar />
               </span>
-            </div>
+            </div> */}
             <div className="flex items-center gap-4  my-3 flex-wrap justify-center sm:justify-normal ">
               <div className="size-10 rounded-full overflow-hidden">
-                <img
-                  src={
-                    propertyOwner?.profilePicture
-                      ? propertyOwner?.profilePicture
-                      : "../../../public/profile.jpg"
-                  }
-                  alt=""
-                />
+                <img src={propertyOwner?.profilePicture} alt="" />
               </div>
               <div className="flex flex-col  opacity-90 flex-1">
                 <p className="text-center sm:text-left ">

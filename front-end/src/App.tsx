@@ -42,7 +42,7 @@ function App() {
           <Route path="/properties/:id/photos" element={<PhotosModel />} />
           <Route path={`/settings/:id`} element={<Settings />} />
           <Route path={`/profile/:id`} element={<Profile />} />
-          <Route path="/profile/chat/:id" element={<Chat />} />
+          <Route path="/profile/chat/" element={<Chat />} />
           <Route path={`/wishlist/:id`} element={<Wishlist />} />
           <Route path="/profile/dashboard/:id" element={<DashBoard />} />
           <Route path="/admin-dashboard">

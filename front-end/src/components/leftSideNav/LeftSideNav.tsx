@@ -32,7 +32,7 @@ const LeftSideNav = () => {
           <p className="md:block hidden">Wishlist</p>
         </NavLink>
         <NavLink
-          to="/profile/chat/:id"
+          to="/profile/chat"
           className=" flex gap-2 items-center md:py-1 md:pl-3 p-2 rounded-xl left-nav-link"
         >
           <IoMdChatbubbles />

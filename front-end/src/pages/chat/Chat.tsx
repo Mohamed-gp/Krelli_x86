@@ -52,7 +52,7 @@ const Chat = () => {
   }, []);
   useEffect(() => {
     getSingleMessages();
-  }, [activeInboxIndex, messageInput,inbox]);
+  }, [activeInboxIndex, messageInput, inbox]);
 
   return (
     <>
@@ -107,8 +107,7 @@ const Chat = () => {
                             <img
                               src={
                                 host?.users[0]?.profileImage
-                                  ? host?.users[0]?.profileImage
-                                  : "../../../public/profile.jpg"
+
                               }
                               alt="avatar"
                               className="w-12 h-12 object-cover rounded-full"
@@ -147,7 +146,7 @@ const Chat = () => {
                     {message?.userId == user?.id && (
                       <div className="flex items-end gap-2">
                         <p className="bg-[#4880FF] text-white p-6 rounded-xl w-full">
-                          {message.message}
+                          {message?.message}
                         </p>
                         <img
                           src={user.profileImage}
@@ -159,7 +158,7 @@ const Chat = () => {
                     {message?.userId != user?.id && (
                       <div className="flex items-end gap-2 w-full">
                         <img
-                          src="../../../public/profile.jpg"
+                          src="/profile.jpg"
                           alt=""
                           className="w-12 h-12 object-cover rounded-full"
                         />

@@ -42,24 +42,24 @@ export const getChat = async (req, res) => {
   });
   res.json(chat);
 };
-  
+
 export const createMessage = async (req, res) => {
   const { chatId } = req.params;
   const { text } = req.body;
   const message = await prisma.message.create({
     data: {
-      message : text,
+      message: text,
       Chat: {
         connect: {
           id: chatId,
         },
       },
+
       User: {
         connect: {
           id: req.user.userId,
         },
       },
-      
     },
   });
 

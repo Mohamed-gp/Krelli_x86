@@ -8,7 +8,7 @@ const NotFound = () => {
         <div className="flex flex-col items-center ">
           <img
             className="px-4 max-w-[350px]"
-            src="../../../public/Monster 404 Error-amico.svg"
+            src="/Monster 404 Error-amico.svg"
           />
           <h1 className="text-center  text-4xl font-bold  ">
             Page Not Found

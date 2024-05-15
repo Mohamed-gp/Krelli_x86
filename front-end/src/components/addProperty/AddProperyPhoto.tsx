@@ -53,14 +53,7 @@ const AddProperyPhoto = ({
             </div>
           </>
         ))}
-        {/* {dataToSubmit?.files?.forEach((file) => <div>hello</div>)} */}
-        {/* 
-        <div className="img">
-          <img src="../../../public/heroBG.png" alt="" />
-        </div>
-        <div className="img">
-          <img src="../../../public/heroBG.png" alt="" />
-      </div>*/}
+
       </div>
     </div>
   );

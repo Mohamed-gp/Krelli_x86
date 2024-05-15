@@ -18,7 +18,7 @@ const Footer = () => {
       <div className="container flex items-center py-6 justify-between border-t-2 border-[#4561EC] flex-col md:flex-row gap-y-4">
         <div className="">
           <img
-            src="../../../public/Krelli LOGO 1.png"
+            src="/Krelli LOGO 1.png"
             alt="krelli-logo"
             className="w-[350px] object-fill"
           />

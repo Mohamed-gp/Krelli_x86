@@ -137,23 +137,7 @@ const PropertiesCard = ({
                       </p>
                     </div>
                   </div>
-                  <div className="flex gap-1">
-                    <span className="flex text-yellow-400">
-                      <FaStar />
-                    </span>
-                    <span className="flex text-yellow-400">
-                      <FaStar />
-                    </span>
-                    <span className="flex text-yellow-400">
-                      <FaStar />
-                    </span>
-                    <span className="flex text-yellow-400">
-                      <FaStar />
-                    </span>
-                    <span>
-                      <FaStar />
-                    </span>
-                  </div>
+
                 </div>
               </Link>
             </>
