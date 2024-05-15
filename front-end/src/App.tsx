@@ -58,19 +58,19 @@ function App() {
                 user?.role != "admin" ? <Navigate to="/" /> : <UsersTable />
               }
             />
-            <Route
+            {/* <Route
               path="comments-table"
               element={
                 user?.role != "admin" ? <Navigate to="/" /> : <CommentsTable />
               }
-            />
+            /> */}
             <Route
-              path="posts-table"
+              path="homes-table"
               element={
                 user?.role != "admin" ? <Navigate to="/" /> : <PostsTable />
               }
             />
-            <Route
+            {/* <Route
               path="categories-table"
               element={
                 user?.role != "admin" ? (
@@ -79,7 +79,7 @@ function App() {
                   <CategoriesTable />
                 )
               }
-            />
+            /> */}
           </Route>
 
           <Route path="*" element={<NotFound />} />

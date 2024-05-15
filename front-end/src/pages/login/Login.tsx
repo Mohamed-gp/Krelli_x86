@@ -17,10 +17,12 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(dataToSubmit)
     try {
       const { data } = await customAxios.post("/auth/login", dataToSubmit,{
         withCredentials : true
       });
+      
       dispatch(authActions.login({ ...data, password: "" }));
       toast.success("login Successful");
       navigate("/");

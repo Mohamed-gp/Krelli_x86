@@ -58,9 +58,7 @@ const Settings = () => {
       if (dataToSubmit?.file) {
         formData.set("file", dataToSubmit?.file);
       }
-      console.log(formData.forEach((e) => console.log(e)));
       const { data } = await customAxios.post(`/users/${user?.id}`, formData);
-      console.log(data);
       toast.success(data.message);
       dispatch(authActions.login(data.data));
     } catch (error) {

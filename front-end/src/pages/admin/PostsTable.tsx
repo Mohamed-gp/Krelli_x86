@@ -10,8 +10,9 @@ const PostsTable = () => {
   const [remove, setremove] = useState(0);
   const getAllPropertiesHandler = async () => {
     try {
-      const { data } = await customAxios.get("/admin//homes");
+      const { data } = await customAxios.get("/admin/homes");
       setproperties(data);
+      console.log(data,"test")
     } catch (error) {
       console.log(error);
     }
@@ -28,7 +29,7 @@ const PostsTable = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const { data } = await customAxios.delete(`/users/${id}`);
+          const { data } = await customAxios.delete(`/admin/homes/${id}`);
           Swal.fire({
             title: "Deleted!",
             text: "Property Deleted Successfuly",
@@ -49,7 +50,7 @@ const PostsTable = () => {
     });
   };
   useEffect(() => {
-    getAllUsersHandler();
+    getAllPropertiesHandler();
   }, [remove]);
   return (
     <div className="flex" style={{ minHeight: "calc(100vh - (72px +  48px))" }}>
@@ -61,32 +62,35 @@ const PostsTable = () => {
             <thead>
               <tr className="">
                 <th>Count</th>
-                <th>User</th>
+                <th>Property</th>
                 <th>Title</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              {posts.map((post, index) => (
+              {properties?.map((post, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>
-                    <div className="flex items-center justify-start gap-2 img w-[260px] pl-4">
-                      <img className="w-10 rounded-full" src={post.user.url} />
-                      <span>{post.user.username}</span>
+                    <div className="flex items-center justify-center gap-2 img w-[260px] pl-4">
+                      <img className="w-11 h-11 rounded-full object-cover" src={post?.Pictures[0]?.url} />
+                      <img className="w-11 h-11 rounded-full object-cover" src={post?.Pictures[1]?.url} />
+                      <img className="w-11 h-11 rounded-full object-cover" src={post?.Pictures[2]?.url} />
+                      <img className="w-11 h-11 rounded-full object-cover" src={post?.Pictures[3]?.url} />
+                      <img className="w-11 h-11 rounded-full object-cover" src={post?.Pictures[4]?.url} />
                     </div>
                   </td>
-                  <td>{post.title}</td>
+                  <td>{post?.title}</td>
                   <td>
-                    <div className="flex items-center justify-center gap-2 text-white w-[260px]">
-                      <button className="px-3 py-1 bg-green-400 rounded-xl">
-                        <Link to={`/posts/details/${post._id}`}>View post</Link>
+                    <div className="flex items-center justify-center gap-2 text-white w-[320px]">
+                      <button className="px-3 py-1 bg-green-400 rounded-xl min-w-[150px]">
+                        <Link to={`/properties/${post?.id}`}>View Property</Link>
                       </button>
                       <button
-                        className="px-3 py-1 bg-red-400 rounded-xl"
-                        onClick={() => removeHandler(post._id)}
+                        className="px-3 py-1 bg-red-400 rounded-xl min-w-[150px]"
+                        onClick={() => removeHandler(post?.id)}
                       >
-                        Delete Post
+                        Delete Property
                       </button>
                     </div>
                   </td>

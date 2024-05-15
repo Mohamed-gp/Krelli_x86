@@ -10,6 +10,17 @@ export const getChats = async (req, res) => {
         },
       },
     },
+    select: {
+      id: true,
+      picture: true,
+      users: {
+        select: {
+          firstName: true,
+          lastName: true,
+          profileImage: true,
+        },
+      },
+    },
   });
   res.json(chats);
 };
@@ -21,7 +32,7 @@ export const getChat = async (req, res) => {
       id: chatId,
     },
     include: {
-      messages: {
+      Messages: {
         orderBy: {
           createdAt: "asc",
         },
@@ -31,24 +42,24 @@ export const getChat = async (req, res) => {
   });
   res.json(chat);
 };
-
+  
 export const createMessage = async (req, res) => {
   const { chatId } = req.params;
   const { text } = req.body;
-  const userId = req.user.id;
   const message = await prisma.message.create({
     data: {
-      text,
-      chat: {
+      message : text,
+      Chat: {
         connect: {
           id: chatId,
         },
       },
-      user: {
+      User: {
         connect: {
-          id: req.user.id,
+          id: req.user.userId,
         },
       },
+      
     },
   });
 

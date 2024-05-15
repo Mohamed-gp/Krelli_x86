@@ -41,8 +41,6 @@ const allUsers = async (req, res) => {
   }
 };
 
-
-
 const singleUser = async (req, res) => {
   if (req.user.role !== "admin") {
     return res.status(403).send("You are not authorized to view this");
@@ -83,16 +81,48 @@ const reviewsCount = async (req, res) => {
   if (req.user.role !== "admin") {
     return res.status(403).send("You are not authorized to delete this");
   }
-  const reviewsCount = await prisma.review.count()
-  return res.json(reviewsCount)
+  const reviewsCount = await prisma.review.count();
+  return res.json(reviewsCount);
 };
 const allReviews = async (req, res) => {
   if (req.user.role !== "admin") {
     return res.status(403).send("You are not authorized to delete this");
   }
-  const reviews = await prisma.review.findMany()
+  const reviews = await prisma.review.findMany();
 
   res.json(reviews);
 };
 
-export { allHomes, allUsers, singleUser, deleteUser, usersCount,homesCount,reviewsCount,allReviews };
+const removeHome = async (req, res) => {
+  if (req.user.role !== "admin") {
+    return res.status(403).send("You are not authorized to delete this");
+  }
+  let { id } = req.params;
+  id = parseInt(id);
+  const home = await prisma.home.findUnique({
+    where: {
+      id,
+    },
+  });
+  if (!home) {
+    return res.status(404).send("User not found");
+  }
+  await prisma.home.delete({
+    where: {
+      id,
+    },
+  });
+  res.json("User deleted successfully");
+};
+
+export {
+  allHomes,
+  allUsers,
+  singleUser,
+  deleteUser,
+  usersCount,
+  homesCount,
+  reviewsCount,
+  allReviews,
+  removeHome,
+};

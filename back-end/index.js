@@ -44,10 +44,10 @@ app.use(helmet())
 
 app.use(xss())
 
-app.use(rateLimiting({
-    windowMs : 10 * 60 * 1000 ,
-    max : 100,
-}))
+// app.use(rateLimiting({
+//     windowMs : 10 * 60 * 1000 ,
+//     max : 200,
+// }))
 
 
 
@@ -71,13 +71,13 @@ app.use((req, res, next) => {
 });
 
 app.use("/users", usersRouter);
-app.use("/host", jwtVerify,jwtVerifyUser,HostRouter);
+app.use("/host", jwtVerify,HostRouter);
 
 app.use("/homes", HomesRouter);
 
-app.use("/messages",jwtVerify,jwtVerifyUser, MessagesRouter);
+app.use("/messages",jwtVerify, MessagesRouter);
 
-app.use("/reservations", jwtVerify,jwtVerifyUser,ReservationRouter);
+app.use("/reservations", jwtVerify,ReservationRouter);
 
 app.use("/admin", jwtVerify,jwtVerifyAdmin, AdminRouter);
 

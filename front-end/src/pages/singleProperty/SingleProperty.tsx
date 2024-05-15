@@ -12,8 +12,12 @@ import { FaStar } from "react-icons/fa6";
 import { Link, useParams } from "react-router-dom";
 import customAxios from "../../utils/axios";
 import { getWilayaNameById } from "../../utils/data";
+import { useSelector } from "react-redux";
+import { IRootState } from "../../store/store";
+import StarsReview from "../../components/starsReview/StarsReview";
 
 const SingleProperty = () => {
+  const user = useSelector((state: IRootState) => state.auth.user);
   const { id } = useParams();
 
   const [house, sethouse] = useState<any>({
@@ -42,19 +46,20 @@ const SingleProperty = () => {
       console.log(error);
     }
   };
+  const [reviews, setreviews] = useState([]);
   const getHouseReviews = async () => {
     try {
       const { data } = await customAxios(`/homes/${id}/reviews `);
-      console.log(data, "reviews");
-      // setpropertyOwner(data);
-    } catch (error) {
+      console.log(data);
+      setreviews(data);
+    } catch (error: any) {
       console.log(error);
+      toast.error(error.response.data);
     }
   };
   useEffect(() => {
     getHouseById();
     getHouseReviews();
-    
   }, []);
   useEffect(() => {
     getPropertyOwnerById(house?.userId);
@@ -89,14 +94,61 @@ const SingleProperty = () => {
     toast.success("copied succefuly to clipBoard,share it with your friends");
     return result;
   };
-  const messageHouseHandler = async() => {
+  const messageHouseHandler = async () => {
     try {
-      const {data} = await customAxios.post(`/homes/${house?.id}/chat`)
-      console.log(data,"message")
-    } catch (error) {
-      console.log(error)
+      const { data } = await customAxios.post(`/homes/${house?.id}/chat`);
+      console.log(data, "message");
+    } catch (error : any) {
+      console.log(error);
+      toast.error(error.response.data.message);
     }
-  }
+  };
+
+  const reserveHandler = async () => {
+    try {
+      console.log({
+        checkIn: state[0].startDate,
+        checkOut: state[0].endDate,
+      });
+      const { data } = await customAxios.post(`/homes/${house?.id}/reserve`, {
+        checkIn: state[0].startDate,
+        checkOut: state[0].endDate,
+      });
+      console.log(data);
+      toast.success(
+        "status is pending you must wait for the owner to accept your reservation"
+      );
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.response.data);
+    }
+  };
+  const [review, setreview] = useState({
+    rating: 5,
+    comment: "",
+  });
+  const [emptyArray, setemptyArray] = useState<any[]>([]);
+  useEffect(() => {
+    setemptyArray([]);
+    for (let index = 0; index < 5; index++) {
+      setemptyArray((prev) => prev.concat(index));
+    }
+  }, []);
+  const addReviewHandler = async () => {
+    try {
+      const { data } = await customAxios.post(`/homes/${house?.id}/review`, {
+        rating: 6 - review.rating,
+        comment: review.comment,
+      });
+      console.log(data);
+      // toast.success(
+      //   "status is pending you must wait for the owner to accept your reservation"
+      // );
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.response.data);
+    }
+  };
   return (
     <>
       <div className="container my-12">
@@ -110,9 +162,9 @@ const SingleProperty = () => {
               <LuUpload />
               <p className="underline">Share</p>
             </div>
-            <div className="flex gap-1 items-center">
+            {/* <div className="flex gap-1 items-center">
               <FaRegHeart />
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -131,40 +183,36 @@ const SingleProperty = () => {
             className="flex flex-col gap-y-2
         "
           >
-            <div className="relative h-[170px] object-fill">
-              <img
-                src={house?.Pictures[1]?.url}
-                alt=""
-                className="w-full object-cover h-full"
-              />
-              <div className="absolute bg-black opacity-0 duration-300 hover:opacity-15 left-0 top-0 w-full h-full"></div>
-            </div>
-            <div className="relative h-[170px] ">
-              <img
-                src={house?.Pictures[2]?.url}
-                alt=""
-                className="w-full object-cover h-full"
-              />
-              <div className="absolute bg-black opacity-0 duration-300 hover:opacity-15 left-0 top-0 w-full h-full"></div>
-            </div>
+            {emptyArray?.map((ele, index) => (
+              <>
+                {index <= 1 && (
+                  <div className="relative h-[170px] object-fill">
+                    <img
+                      src={house?.Pictures[index + 1]?.url}
+                      alt=""
+                      className="w-full object-cover h-full"
+                    />
+                    <div className="absolute bg-black opacity-0 duration-300 hover:opacity-15 left-0 top-0 w-full h-full"></div>
+                  </div>
+                )}
+              </>
+            ))}
           </div>
           <div className="flex flex-col gap-y-2">
-            <div className="relative h-[170px] rounded-tr-xl overflow-hidden">
-              <img
-                src={house?.Pictures[3]?.url}
-                alt=""
-                className="w-full object-cover h-full"
-              />
-              <div className="absolute bg-black opacity-0 duration-300 hover:opacity-15 left-0 top-0 w-full h-full"></div>
-            </div>
-            <div className="relative h-[170px] rounded-br-xl overflow-hidden">
-              <img
-                src={house?.Pictures[4]?.url}
-                alt=""
-                className="w-full object-cover h-full"
-              />
-              <div className="absolute bg-black opacity-0 duration-300 hover:opacity-15 left-0 top-0 w-full h-full"></div>
-            </div>
+            {emptyArray?.map((ele, index) => (
+              <>
+                {index <= 3 && index >= 2 && (
+                  <div className="relative h-[170px] object-fill">
+                    <img
+                      src={house?.Pictures[index + 1]?.url}
+                      alt=""
+                      className="w-full object-cover h-full"
+                    />
+                    <div className="absolute bg-black opacity-0 duration-300 hover:opacity-15 left-0 top-0 w-full h-full"></div>
+                  </div>
+                )}
+              </>
+            ))}
           </div>
           <Link
             to={`/properties/${id}/photos`}
@@ -208,8 +256,8 @@ const SingleProperty = () => {
               <div className="size-10 rounded-full overflow-hidden">
                 <img
                   src={
-                    propertyOwner?.profileImage
-                      ? propertyOwner?.profileImage
+                    propertyOwner?.profilePicture
+                      ? propertyOwner?.profilePicture
                       : "../../../public/profile.jpg"
                   }
                   alt=""
@@ -218,7 +266,9 @@ const SingleProperty = () => {
               <div className="flex flex-col  opacity-90 flex-1">
                 <p className="text-center sm:text-left ">
                   Hosted by{" "}
-                  <span className="font-bold text-center">{propertyOwner?.firstName}</span>
+                  <span className="font-bold text-center">
+                    {propertyOwner?.firstName}
+                  </span>
                 </p>
                 <p className="text-center sm:text-left">
                   Member Since{" "}
@@ -227,75 +277,116 @@ const SingleProperty = () => {
                   </span>
                 </p>
               </div>
-              <button onClick={() => messageHouseHandler()} className="text-white bg-buttonColor rounded-xl px-6 py-2">Message Host</button>
+              {propertyOwner?.id != user?.id && (
+                <button
+                  onClick={() => messageHouseHandler()}
+                  className="text-white bg-buttonColor rounded-xl px-6 py-2"
+                >
+                  Message Host
+                </button>
+              )}
             </div>
             <p className="my-4 py-12 border-y-2 border-y-[#4561ec53] ">
               {house?.description}
             </p>
             <div className="reviews flex flex-col">
               <p className="text-3xl font-bold">Reviews</p>
-              <div className="flex flex-col  border-y border-y-[#4561ec26] py-4  my-4">
-                <div className="flex items-center gap-2 my-3">
-                  <div className="size-10 rounded-full overflow-hidden">
-                    <img
-                      src={
-                        propertyOwner?.profileImage
-                          ? propertyOwner?.profileImage
-                          : "../../../public/profile.jpg"
+              {propertyOwner?.id != user?.id && (
+                <>
+                  <div className="py-2 my-8 px-4 mb-4 bg-white rounded-lg rounded-t-lg border ">
+                    <textarea
+                      id="comment"
+                      value={review?.comment}
+                      onChange={(e) =>
+                        setreview({ ...review, comment: e.target.value })
                       }
-                      alt=""
-                    />
+                      className="px-0 w-full text-sm   border-0 focus:ring-0 focus:outline-none "
+                      placeholder="Write a review..."
+                      required
+                    ></textarea>
                   </div>
-                  <div className="flex flex-col gap2 opacity-90">
-                    <div className="flex my-2">
-                      <span className="text-yellow-500">
-                        <FaStar />
-                      </span>
-                      <span className="text-yellow-500">
-                        <FaStar />
-                      </span>
-                      <span className="text-yellow-500">
-                        <FaStar />
-                      </span>
-                      <span className="text-yellow-500">
-                        <FaStar />
-                      </span>
-                      <span className="text-yellow-500">
-                        <FaStar />
-                      </span>
+                  <div className="flex flex-row-reverse justify-between p-10">
+                    {emptyArray?.map((index) => (
+                      <FaStar
+                        onClick={() =>
+                          setreview({ ...review, rating: index + 1 })
+                        }
+                        className={`${
+                          review.rating < index + 2
+                            ? "text-yellow-500 opacity-100 "
+                            : "text-yellow-200  "
+                        } w-6 h-6 mx-2 peer peer-hover:text-yellow-500 hover:text-yellow-500  `}
+                      />
+                    ))}
+                    <span>{6 - review.rating}/5</span>
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={review.comment.trim() == ""}
+                    onClick={() => addReviewHandler()}
+                    className="flex disabled:opacity-50 disabled:cursor-not-allowed justify-center items-center py-2.5 px-4 text-xs font-medium  text-white bg-buttonColor text-center"
+                  >
+                    Post comment
+                  </button>
+                </>
+              )}
+              <>
+                {[1, 2, 4, 5, 2]?.map((review) => (
+                  <div className="flex flex-col  border-y border-y-[#4561ec26] py-4  my-4">
+                    <div className="flex items-center gap-2 my-3">
+                      <div className="size-10 rounded-full overflow-hidden">
+                        <img
+                          src={
+                            propertyOwner?.profileImage
+                              ? propertyOwner?.profileImage
+                              : "../../../public/profile.jpg"
+                          }
+                          alt=""
+                        />
+                      </div>
+                      <div className="flex flex-col gap2 opacity-90">
+                        <StarsReview rating={5} />
+                        <p>{propertyOwner?.firstName}</p>
+                      </div>
                     </div>
-                    <p>{propertyOwner?.firstName}</p>
+                    <p className="bg-white p-2 rounded-xl">
+                      camping in the desert with Mohamed was a really beautiful
+                      and amazing experience that we will remember forever
+                    </p>
                   </div>
-                </div>
-                <p className="bg-white p-2 rounded-xl">
-                  camping in the desert with Mohamed was a really beautiful and
-                  amazing experience that we will remember forever
+                ))}
+              </>
+            </div>
+          </div>
+          {propertyOwner?.id != user?.id && (
+            <>
+              <div className="flex flex-col bg-white p-6 rounded-xl h-fit">
+                <p className="my-2">
+                  <span className="text-2xl">$47</span> night
                 </p>
+                <DateRange
+                  editableDateInputs={true}
+                  onChange={(item) => setState([item.selection])}
+                  moveRangeOnFirstSelection={false}
+                  ranges={state}
+                />
+                <button
+                  onClick={() => reserveHandler()}
+                  className="cursor-pointer mx-auto w-full   text-white px-6 py-1 rounded-xl bg-[#3d91ff] duration-300 hover:scale-105 justify-center my-2 flex items-center gap-2"
+                >
+                  Reserve
+                </button>
+                <div className="flex justify-between my-2 text-2xl">
+                  <p className="font-bold text-lg">Nights</p>
+                  <p>${daysCount} * 47</p>
+                </div>
+                <div className="flex justify-between my-2 text-2xl">
+                  <p className="font-bold">Total</p>
+                  <p>${daysCount * 47}</p>
+                </div>
               </div>
-            </div>
-          </div>
-          <div className="flex flex-col bg-white p-6 rounded-xl h-fit">
-            <p className="my-2">
-              <span className="text-2xl">$47</span> night
-            </p>
-            <DateRange
-              editableDateInputs={true}
-              onChange={(item) => setState([item.selection])}
-              moveRangeOnFirstSelection={false}
-              ranges={state}
-            />
-            <button className="cursor-pointer mx-auto w-full   text-white px-6 py-1 rounded-xl bg-[#3d91ff] duration-300 hover:scale-105 justify-center my-2 flex items-center gap-2">
-              Reserve
-            </button>
-            <div className="flex justify-between my-2 text-2xl">
-              <p className="font-bold text-lg">Nights</p>
-              <p>${daysCount} * 47</p>
-            </div>
-            <div className="flex justify-between my-2 text-2xl">
-              <p className="font-bold">Total</p>
-              <p>${daysCount * 47}</p>
-            </div>
-          </div>
+            </>
+          )}
         </div>
       </div>
     </>

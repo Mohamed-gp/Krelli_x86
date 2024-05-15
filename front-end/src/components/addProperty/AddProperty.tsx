@@ -55,7 +55,6 @@ const AddProperty = () => {
     for (let i = 0; i < dataToSubmit.files.length; i++) {
       formData.append("files", dataToSubmit.files[i]);
     }
-    console.log(dataToSubmit);
 
     try {
       const url = user ? "/host/homes" : "/auth/addHome";
@@ -116,7 +115,6 @@ const AddProperty = () => {
     } catch (error: any) {
       console.log(error);
       toast.error(error.response.data);
-      console.log(error);
     }
   };
 

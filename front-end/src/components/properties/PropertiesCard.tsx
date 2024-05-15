@@ -4,9 +4,11 @@ import { FaHeart, FaStar } from "react-icons/fa6";
 import { Link, useSearchParams } from "react-router-dom";
 import customAxios from "../../utils/axios";
 import toast from "react-hot-toast";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BsHeart } from "react-icons/bs";
 import { getWilayaIdByName, getWilayaNameById } from "../../utils/data";
+import { useSelector } from "react-redux";
+import { IRootState } from "../../store/store";
 
 interface PropertiesCardProps {
   all: boolean;
@@ -23,7 +25,9 @@ const PropertiesCard = ({
   filter,
   setfilter,
 }: PropertiesCardProps) => {
+  const user = useSelector((state: IRootState) => state.auth.user);
   const [SearchParams, setSearchParams] = useSearchParams();
+  const [wishlist, setwishlist] = useState([]);
   const getHouses = async () => {
     try {
       if (all == false) {
@@ -36,15 +40,40 @@ const PropertiesCard = ({
       toast.error(error.response.data);
     }
   };
+  const getWishlist = async () => {
+    try {
+      const { data } = await customAxios.get(`/users/wishlist/${user?.id}`);
+      console.log(data, "this is data");
+      setwishlist(data);
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.response.data);
+    }
+  };
   useEffect(() => {
     getHouses();
   }, [SearchParams]);
-
-  console.log(houses[0]);
+  useEffect(() => {
+    if (user) {
+      getWishlist();
+    }
+  }, []);
+  const toggleWishlistHandler = async (e, id) => {
+    e.preventDefault();
+    try {
+      const { data } = await customAxios.post(`/users/wishlist/${id}`);
+      console.log(data);
+      setwishlist(data);
+      toast.success("wishlist toggled successfuly");
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.response.data);
+    }
+  };
 
   return (
     <>
-      {houses.length == 0 ? (
+      {houses?.length == 0 ? (
         <div
           className="flex justify-center items-center w-full"
           style={{ height: "calc(100vh - 350px)" }}
@@ -67,7 +96,7 @@ const PropertiesCard = ({
           return (
             <>
               <Link
-                to={`/properties/${property.id}`}
+                to={`/properties/${property?.id}`}
                 style={{ boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 15px" }}
                 key={property.path}
                 className="w-[240px] rounded-xl overflow-hidden bg-white property-card"
@@ -76,63 +105,25 @@ const PropertiesCard = ({
                   <div className=" img w-[240px] h-[160px] overflow-hidden">
                     <img
                       src={property?.Pictures[0]?.url}
-                      alt={property.title}
+                      alt={property?.title}
                       className="hover:scale-105 duration-300"
                     />
                   </div>
-                  <FaHeart className="absolute top-[11px] right-3 text-xl" />
-
-                  <BsHeart className="absolute top-3 right-3 text-xl text-white" />
-                </div>
-                <div className="flex flex-col gap-2 px-3 py-4">
-                  <div className="flex items-center justify-between gap-2">
-                    <div>
-                      <p className="font-bold">{property.title}</p>
-                      <p>${property.price}/ Night</p>
+                  {user && (
+                    <div
+                      className=""
+                      onClick={(e) => toggleWishlistHandler(e, property.id)}
+                    >
+                      <FaHeart
+                        className={`absolute top-[11px] right-3 text-xl ${
+                          wishlist?.find((ele) => ele?.homeId == property?.id)
+                            ? "text-red-600"
+                            : ""
+                        }`}
+                      />
+                      <BsHeart className="absolute top-3 right-3 text-xl text-white" />
                     </div>
-                    <div>
-                      <p className="font-bold">
-                        {getWilayaNameById(property.wilaya)}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex gap-1">
-                    <span className="flex text-yellow-400">
-                      <FaStar />
-                    </span>
-                    <span className="flex text-yellow-400">
-                      <FaStar />
-                    </span>
-                    <span className="flex text-yellow-400">
-                      <FaStar />
-                    </span>
-                    <span className="flex text-yellow-400">
-                      <FaStar />
-                    </span>
-                    <span>
-                      <FaStar />
-                    </span>
-                  </div>
-                </div>
-              </Link>
-              <Link
-                to={`/properties/${property.id}`}
-                key={property.path}
-                style={{ boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 0px" }}
-
-                className="w-[240px] rounded-xl overflow-hidden bg-white property-card duration-1000"
-              >
-                <div className="img relative">
-                  <div className="img w-[240px] h-[160px] overflow-hidden">
-                    <img
-                      src={property?.Pictures[0]?.url}
-                      alt={property.title}
-                      className="hover:scale-105 duration-300"
-                    />
-                  </div>
-                  <FaHeart className="absolute top-[11px] right-3 text-xl" />
-
-                  <BsHeart className="absolute top-3 right-3 text-xl text-white" />
+                  )}
                 </div>
                 <div className="flex flex-col gap-2 px-3 py-4">
                   <div className="flex items-center justify-between gap-2">

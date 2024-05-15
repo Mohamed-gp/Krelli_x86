@@ -22,7 +22,7 @@ const Properties = () => {
     <>
       <SearchBar filter={filter} setfilter={setfilter} />
       <Categories filter={filter} setfilter={setfilter} />
-      <div className="container flex flex-wrap items-center justify-center sm:justify-between  gap-3 my-6">
+      <div className="container flex flex-wrap items-center justify-center sm:justify-center  gap-12 my-6">
         <PropertiesCard all={true} houses={houses} sethouses={sethouses} filter={filter} setfilter={setfilter} />
       </div>
     </>

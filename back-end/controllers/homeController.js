@@ -79,9 +79,58 @@ const addReservation = async (req, res) => {
   res.json(reservation);
 };
 
+// const createChat = async (req, res) => {
+//   const userId = req.user.userId;
+//   const homeId = req.params.id;
+//   const home = await prisma.home.findUnique({
+//     where: {
+//       id: parseInt(homeId),
+//     },
+//     include: {
+//       Pictures: {
+//         select: {
+//           url: true,
+//         },
+//       },
+//     },
+//   });
+//   if (!home) {
+//     return res.status(404).send("Home not found");
+//   }
+//   const userIds = [userId, home.userId];
+
+//   const chat = await prisma.chat.create({
+//     data: {
+//       users: {
+//         connect: userIds.map((id) => ({ id })),
+//       },
+//       picture: home.Pictures[0].url,
+//     },
+//   });
+
+//   res.json(chat);
+// };
+
 const createChat = async (req, res) => {
   const userId = req.user.userId;
   const homeId = req.params.id;
+
+  // Check if a chat already exists between the users
+  const existingChat = await prisma.chat.findFirst({
+    where: {
+      AND: [
+        { users: { some: { id: userId } } },
+        { users: { some: { id: { not: userId } } } },
+        { users: { some: { id: homeId } } },
+      ],
+    },
+  });
+
+  if (existingChat) {
+    // Return existing chat if found
+    return res.status(200).json(existingChat);
+  }
+
   const home = await prisma.home.findUnique({
     where: {
       id: parseInt(homeId),
@@ -104,17 +153,18 @@ const createChat = async (req, res) => {
       users: {
         connect: userIds.map((id) => ({ id })),
       },
-      picture: home.Pictures[0].url,
+      picture: home.Pictures[0]?.url,
     },
   });
+
   res.json(chat);
 };
 
 const searchHomes = async (req, res) => {
   const { wilaya, guests, checkIn, checkOut, category } = req.query;
   console.log(wilaya, category);
-  console.log(typeof parseInt(wilaya),typeof category);
-  console.log(category)
+  console.log(typeof parseInt(wilaya), typeof category);
+  console.log(category);
   const homes = await prisma.home.findMany({
     where: {
       wilaya: wilaya ? parseInt(wilaya) : undefined,

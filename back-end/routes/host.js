@@ -6,7 +6,7 @@ const storage = multer({ dest: "uploads/" });
 
 const router = express.Router();
 
-router.post("/homes", storage.array("file"), addHome);
+router.post("/homes", storage.array("files"), addHome);
 router.get("/homes", myHomes);
 router.get("/reservations", myHomesReservations);
 router.patch("/reservations/:id/accept", acceptReservation);

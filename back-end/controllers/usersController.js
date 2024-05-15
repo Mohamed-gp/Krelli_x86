@@ -92,13 +92,12 @@ const changePassword = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   const oldUser = await prisma.user.findUnique({
-    where : {
-      id : req.params.id
-    }
-  })
+    where: {
+      id: req.params.id,
+    },
+  });
   if (!oldUser) {
     return res.status(404).json({ message: "user Not Found" });
-    
   }
   await prisma.user.delete({
     where: {
@@ -130,4 +129,58 @@ const deleteUser = async (req, res) => {
   // res.status(200).json({ message: "user deleted succefuly" });
 };
 
-export { usersCount, singleUser, updateProfile, changePassword,deleteUser };
+const getWishlist = async (req, res) => {
+  const userId = req.user.userId;
+  const wishlist = await prisma.favorite.findMany({
+    where: {
+      userId: userId,
+    },
+  });
+
+  return res.json(wishlist);
+};
+const toggleWishlist = async (req, res) => {
+  const userId = req.user.userId;
+  const homeId = parseInt(req.params.id); // Ensure homeId is an integer
+
+    const existingFavorite = await prisma.favorite.findFirst({
+      where: {
+        userId: userId,
+        homeId: homeId,
+      },
+    });
+
+    if (existingFavorite) {
+      await prisma.favorite.delete({
+        where: {
+          id: existingFavorite.id,
+        },
+      });
+    } else {
+      await prisma.favorite.create({
+        data: {
+          homeId: homeId,
+          userId: userId,
+        },
+      });
+    }
+
+    const wishlist = await prisma.favorite.findMany({
+      where: {
+        userId: userId,
+      },
+    });
+
+    return res.json(wishlist);
+
+};
+
+export {
+  usersCount,
+  singleUser,
+  updateProfile,
+  changePassword,
+  deleteUser,
+  toggleWishlist,
+  getWishlist
+};

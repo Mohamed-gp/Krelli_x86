@@ -10,7 +10,6 @@ const PhotosModel = () => {
   const getHousePhotosById = async () => {
     try {
       const { data } = await customAxios.get(`/homes/${id}/pictures`);
-      console.log(data);
       setimages(data);
       // console.log("this is hous");
       // console.log(images);
@@ -21,7 +20,6 @@ const PhotosModel = () => {
   // console.log(params.id)
   useEffect(() => {
     getHousePhotosById();
-    console.log(images[1], "tesst");
   }, []);
   return (
     <div className="container  flex justify-center items-center mt-6  ">
