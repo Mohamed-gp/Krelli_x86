@@ -26,8 +26,10 @@ const handelLogin = async (req, res ) => {
 		{ expiresIn: "30d" },
 	);
 	
+
 	res.cookie("authorization", token, { httpOnly: true , sameSite: 'None', secure: true });
 	res.json(user);
+
 };
 
 export default handelLogin;

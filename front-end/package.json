@@ -16,7 +16,7 @@
     "@reduxjs/toolkit": "^2.2.3",
     "@types/dom-speech-recognition": "^0.0.4",
     "axios": "^1.6.7",
-    "framer-motion": "^11.1.5",
+    "framer-motion": "^11.1.7",
     "react": "^18.2.0",
     "react-date-range": "^2.0.1",
     "react-dom": "^18.2.0",
