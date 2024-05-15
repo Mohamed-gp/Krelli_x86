@@ -75,7 +75,7 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
             <li>
               <NavLink
                 className="cursor-pointer navigation-header-link"
-                to="/profile/chat/:id"
+                to="/profile/chat/"
               >
                 Chat
               </NavLink>
