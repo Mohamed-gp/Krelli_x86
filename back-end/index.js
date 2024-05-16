@@ -29,7 +29,7 @@ dotenv.config();
 
 
 const app = express();
-app.use(cors({credentials: true, origin: 'https://krilli-x86.netlify.app/'}));
+app.use(cors({credentials: true, origin: 'https://testing--krilli-x86.netlify.app/'}));
 
 const server = createServer(app);
 
