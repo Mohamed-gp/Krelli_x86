@@ -9,7 +9,7 @@ import cookieParser from "cookie-parser";
 import geminiRouter from "./routes/gemini.js";
 import authRouter from "./routes/auth.js";
 import originChecker from "./middleware/originChecker.js";
-import corsOptions from "./config/corsOptions.js";
+// import corsOptions from "./config/corsOptions.js";
 import { createServer } from "http";
 import { socketServer } from "./socket/socket.js";
 import HostRouter from "./routes/host.js";
