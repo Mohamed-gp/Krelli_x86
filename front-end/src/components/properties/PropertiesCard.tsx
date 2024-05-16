@@ -34,9 +34,13 @@ const PropertiesCard = ({
         location.search == "";
       }
       const { data } = await customAxios("/homes" + location.search);
-      console.log(location.search,"why it's removing")
-      console.log(data,"why it's removing")
-      sethouses(data);
+      console.log(location.search, "why it's removing");
+      console.log(data, "why it's removing");
+      if (all == false) {
+        sethouses(data?.slice(0, 4));
+      } else {
+        sethouses(data);
+      }
     } catch (error: any) {
       console.log(error);
       toast.error(error.response.data);
@@ -139,7 +143,6 @@ const PropertiesCard = ({
                       </p>
                     </div>
                   </div>
-
                 </div>
               </Link>
             </>
