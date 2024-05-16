@@ -33,13 +33,13 @@ const server = createServer(app);
 
 // app.use(cors(corsOptions));
 
-const corsOptions = {
-  origin: "https://krilli-x86.netlify.app/",
-  credentials: true, // Allow credentials (cookies) to be sent
-  optionsSuccessStatus: 200,
-};
+// const corsOptions = {
+//   origin: "https://krilli-x86.netlify.app/",
+//   credentials: true, // Allow credentials (cookies) to be sent
+//   optionsSuccessStatus: 200,
+// };
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use(express.urlencoded({ extended: false }));
 
