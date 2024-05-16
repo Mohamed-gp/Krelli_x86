@@ -8,7 +8,7 @@ import {
 import cookieParser from "cookie-parser";
 import geminiRouter from "./routes/gemini.js";
 import authRouter from "./routes/auth.js";
-import originChecker from "./middleware/originChecker.js";
+// import originChecker from "./middleware/originChecker.js";
 // import corsOptions from "./config/corsOptions.js";
 import { createServer } from "http";
 import { socketServer } from "./socket/socket.js";
@@ -17,7 +17,7 @@ import HomesRouter from "./routes/home.js";
 import MessagesRouter from "./routes/messages.js";
 import ReservationRouter from "./routes/reservation.js";
 import AdminRouter from "./routes/admin.js";
-import verifyRoles from "./middleware/roleChecker.js";
+// import verifyRoles from "./middleware/roleChecker.js";
 import cors from "cors";
 import usersRouter from "./routes/users.js";
 import hpp from "hpp";
@@ -26,7 +26,11 @@ import xss from "xss-clean";
 import rateLimiting from "express-rate-limit";
 dotenv.config();
 
+
+
 const app = express();
+app.use(cors({credentials: true, origin: 'https://krilli-x86.netlify.app/'}));
+
 const server = createServer(app);
 
 // app.use(originChecker);
@@ -38,8 +42,6 @@ const server = createServer(app);
 //   credentials: true, // Allow credentials (cookies) to be sent
 //   optionsSuccessStatus: 200,
 // };
-
-app.use(cors());
 
 app.use(express.urlencoded({ extended: false }));
 
