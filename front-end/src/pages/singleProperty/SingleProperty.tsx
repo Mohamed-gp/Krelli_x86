@@ -310,7 +310,7 @@ const SingleProperty = () => {
                 <span className="text-xl">{reviews?.length}</span>
               </div>
 
-              {propertyOwner?.id != user?.id && (
+              {propertyOwner?.id != user?.id && user && (
                 <>
                   <div className="py-2 my-8 px-4 mb-4 bg-white rounded-lg rounded-t-lg border ">
                     <textarea
