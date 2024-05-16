@@ -9,7 +9,7 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 
 import { LuUpload, LuGrip } from "react-icons/lu";
 import { FaStar } from "react-icons/fa6";
-import { Link, useParams } from "react-router-dom";
+import { Link,  useParams } from "react-router-dom";
 import customAxios from "../../utils/axios";
 import { getWilayaNameById } from "../../utils/data";
 import { useSelector } from "react-redux";
@@ -97,27 +97,26 @@ const SingleProperty = () => {
   const messageHouseHandler = async () => {
     try {
       const { data } = await customAxios.post(`/homes/${house?.id}/chat`);
-      console.log(data, "message");
+      console.log(data);
+      toast.success("Chat Created Succefuly");
     } catch (error: any) {
       console.log(error);
-      toast.error(error.response.data.message);
+      toast.error(error.response.data);
     }
   };
-
   const reserveHandler = async () => {
     try {
       console.log({
-        checkIn: state[0].startDate,
-        checkOut: state[0].endDate,
+        checkIn: new Date(state[0]?.startDate).toISOString().slice(0, 10),
+        checkOut: new Date(state[0]?.endDate).toISOString().slice(0, 10),
       });
       const { data } = await customAxios.post(`/homes/${house?.id}/reserve`, {
-        checkIn: state[0].startDate,
-        checkOut: state[0].endDate,
+        checkIn: new Date(state[0]?.startDate).toISOString().slice(0, 10),
+        checkOut: new Date(state[0]?.endDate).toISOString().slice(0, 10),
       });
       console.log(data);
-      toast.success(
-        "status is pending you must wait for the owner to accept your reservation"
-      );
+      toast.success(data.message);
+      window.open(data.url, "_blank");
     } catch (error: any) {
       console.log(error);
       toast.error(error.response.data);
@@ -283,7 +282,7 @@ const SingleProperty = () => {
               {house?.description}
             </p>
             <div className="reviews flex flex-col">
-              <p className="text-3xl font-bold">Reviews</p>
+              {/* <p className="text-3xl font-bold">Reviews</p> */}
               {propertyOwner?.id != user?.id && (
                 <>
                   <div className="py-2 my-8 px-4 mb-4 bg-white rounded-lg rounded-t-lg border ">
@@ -323,7 +322,7 @@ const SingleProperty = () => {
                   </button>
                 </>
               )}
-              <>
+              {/* <>
                 {[1, 2, 4, 5, 2]?.map((review) => (
                   <div className="flex flex-col  border-y border-y-[#4561ec26] py-4  my-4">
                     <div className="flex items-center gap-2 my-3">
@@ -341,14 +340,14 @@ const SingleProperty = () => {
                     </p>
                   </div>
                 ))}
-              </>
+              </> */}
             </div>
           </div>
           {propertyOwner?.id != user?.id && (
             <>
               <div className="flex flex-col bg-white p-6 rounded-xl h-fit">
                 <p className="my-2">
-                  <span className="text-2xl">$47</span> night
+                  <span className="text-2xl">${house?.price} </span> night
                 </p>
                 <DateRange
                   editableDateInputs={true}
@@ -364,11 +363,13 @@ const SingleProperty = () => {
                 </button>
                 <div className="flex justify-between my-2 text-2xl">
                   <p className="font-bold text-lg">Nights</p>
-                  <p>${daysCount} * 47</p>
+                  <p>
+                    {daysCount} * ${house?.price}
+                  </p>
                 </div>
                 <div className="flex justify-between my-2 text-2xl">
                   <p className="font-bold">Total</p>
-                  <p>${daysCount * 47}</p>
+                  <p>{daysCount * house?.price}$</p>
                 </div>
               </div>
             </>

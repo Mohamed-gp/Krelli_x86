@@ -1,4 +1,14 @@
 import prisma from "../prisma/client.js";
+import Chargily from "@chargily/chargily-pay";
+import { configDotenv } from "dotenv";
+configDotenv();
+
+const apiSecretKey = process.env.CHARGILY_SECRET_KEY;
+
+const client = new Chargily.ChargilyClient({
+  api_key: apiSecretKey,
+  mode: "test",
+});
 
 const singleHome = async (req, res) => {
   const { id } = req.params;
@@ -18,6 +28,66 @@ const singleHome = async (req, res) => {
   res.json(home);
 };
 
+// const addReservation = async (req, res) => {
+//   const userId = req.user.userId;
+//   const homeId = req.params.id;
+
+//   let { checkIn, checkOut } = req.body;
+//   checkIn = new Date(checkIn);
+//   checkOut = new Date(checkOut);
+
+//   if (checkIn > checkOut) {
+//     return res
+//       .status(400)
+//       .send("Check out date must be greater than check in date");
+//   }
+//   if (checkIn < new Date()) {
+//     return res.status(400).send("Check in date must be greater than today");
+//   }
+
+//   const home = await prisma.home.findUnique({
+//     where: {
+//       id: parseInt(homeId),
+//     },
+//   });
+
+//   if (!home) {
+//     return res.status(404).send("Home not found");
+//   }
+//   //check if the there is a reservation with the sattus accepted in the same date
+//   const hasReserved = await prisma.reservation.findFirst({
+//     where: {
+//       homeId: parseInt(homeId),
+//       status: "accepted",
+//       startDate: {
+//         lte: checkOut,
+//       },
+//       endDate: {
+//         gte: checkIn,
+//       },
+//     },
+//   });
+//   if (hasReserved) {
+//     return res.status(400).send("This home is already reserved in this date");
+//   }
+//   const reservation = await prisma.reservation.create({
+//     data: {
+//       startDate: new Date(checkIn),
+//       endDate: new Date(checkOut),
+//       User: {
+//         connect: {
+//           id: userId,
+//         },
+//       },
+//       Home: {
+//         connect: {
+//           id: parseInt(homeId),
+//         },
+//       },
+//     },
+//   });
+//   res.json(reservation);
+// };
 const addReservation = async (req, res) => {
   const userId = req.user.userId;
   const homeId = req.params.id;
@@ -48,7 +118,7 @@ const addReservation = async (req, res) => {
   const hasReserved = await prisma.reservation.findFirst({
     where: {
       homeId: parseInt(homeId),
-      status: "accepted",
+      status: "paid",
       startDate: {
         lte: checkOut,
       },
@@ -57,13 +127,14 @@ const addReservation = async (req, res) => {
       },
     },
   });
+  console.log(hasReserved);
   if (hasReserved) {
     return res.status(400).send("This home is already reserved in this date");
   }
   const reservation = await prisma.reservation.create({
     data: {
-      startDate: new Date(checkIn),
-      endDate: new Date(checkOut),
+      startDate: checkIn,
+      endDate: checkOut,
       User: {
         connect: {
           id: userId,
@@ -76,9 +147,26 @@ const addReservation = async (req, res) => {
       },
     },
   });
-  res.json(reservation);
-};
+  console.log(reservation);
+  // calculate how many days the user will stay
+  const days = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
+  console.log(days);
+  console.log("this is price ", home.price);
+  console.log(home.price * days);
+  console.log(typeof (home.price * days));
+  const newCheckout = await client.createCheckout({
+    amount: home.price * days,
+    currency: "dzd",
+    success_url: "https://krelli.onrender.com/chargily/success",
+    failure_url: "https://krelli.onrender.com/chargily/failure",
+    metadata: [{ reservationId: reservation.id }],
+  });
 
+  res.json({
+    message: "Reservation successfully created",
+    url: newCheckout.checkout_url,
+  });
+};
 // const createChat = async (req, res) => {
 //   const userId = req.user.userId;
 //   const homeId = req.params.id;
@@ -114,21 +202,25 @@ const addReservation = async (req, res) => {
 const createChat = async (req, res) => {
   const userId = req.user.userId;
   const homeId = req.params.id;
+  const house = await prisma.home.findUnique({
+    where: {
+      id: parseInt(homeId),
+    },
+  });
 
   // Check if a chat already exists between the users
   const existingChat = await prisma.chat.findFirst({
     where: {
       AND: [
         { users: { some: { id: userId } } },
-        { users: { some: { id: { not: userId } } } },
-        { users: { some: { id: homeId } } },
+        { users: { some: { id: house.userId } } },
       ],
     },
   });
 
   if (existingChat) {
     // Return existing chat if found
-    return res.status(200).json(existingChat);
+    return res.status(400).send("chat Already Exist");
   }
 
   const home = await prisma.home.findUnique({
@@ -162,29 +254,29 @@ const createChat = async (req, res) => {
 
 const searchHomes = async (req, res) => {
   const { wilaya, guests, checkIn, checkOut, category } = req.query;
-  console.log(wilaya, category);
-  console.log(typeof parseInt(wilaya), typeof category);
+  console.log("query");
+  console.log(wilaya);
   console.log(category);
   const homes = await prisma.home.findMany({
     where: {
       wilaya: wilaya ? parseInt(wilaya) : undefined,
       category: category ? category : undefined,
-      guests: {
-        gte: parseInt(guests) ? guests : undefined,
-      },
+      // guests: {
+      //   gte: parseInt(guests) ? guests : undefined,
+      // },
       category: {
         equals: category ? category : undefined,
       },
-      Reservations: {
-        none: {
-          startDate: {
-            lte: new Date(checkOut) ? checkOut : undefined,
-          },
-          endDate: {
-            gte: new Date(checkIn) ? checkIn : undefined,
-          },
-        },
-      },
+      // Reservations: {
+      //   none: {
+      //     startDate: {
+      //       lte: new Date(checkOut) ? checkOut : undefined,
+      //     },
+      //     endDate: {
+      //       gte: new Date(checkIn) ? checkIn : undefined,
+      //     },
+      //   },
+      // },
     },
     include: {
       Pictures: {
@@ -194,7 +286,7 @@ const searchHomes = async (req, res) => {
       },
     },
   });
-
+  console.log(homes);
   res.json(homes);
 };
 

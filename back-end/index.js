@@ -17,6 +17,8 @@ import HomesRouter from "./routes/home.js";
 import MessagesRouter from "./routes/messages.js";
 import ReservationRouter from "./routes/reservation.js";
 import AdminRouter from "./routes/admin.js";
+import chargilyRouter from "./routes/chargily.js";
+
 // import verifyRoles from "./middleware/roleChecker.js";
 import cors from "cors";
 import usersRouter from "./routes/users.js";
@@ -26,11 +28,9 @@ import xss from "xss-clean";
 import rateLimiting from "express-rate-limit";
 dotenv.config();
 
-
-
 const app = express();
-app.use(cors({credentials: true, origin: 'https://krelli-86x.netlify.app'}));
-
+// app.use(cors({ credentials: true, origin: "https://krelli-86x.netlify.app" }));
+app.use(cors({ credentials: true, origin: "http://localhost:3500" }));
 
 const server = createServer(app);
 
@@ -69,6 +69,7 @@ app.get("/", (req, res) => {
 
 app.use("/gemini", geminiRouter);
 app.use("/auth", authRouter);
+app.use("/chargily", chargilyRouter);
 
 // app.use(jwtVerify);
 
