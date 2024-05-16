@@ -7,6 +7,7 @@ import {
   allReviews,
   addReservation,
   createChat,
+  deleteReview,
 } from "../controllers/homeController.js";
 import { jwtVerify, jwtVerifyUser } from "../middleware/jwtVerify.js";
 
@@ -23,6 +24,7 @@ router.post("/:id/reserve",jwtVerify, addReservation);
 router.get("/:id/pictures", homePictures);
 router.get("/:id/reviews", allReviews);
 router.post("/:id/review", jwtVerify,addReview);
+router.delete("/:id/review", jwtVerify,deleteReview);
 router.get("/:id", singleHome);
 
 export default router;

@@ -8,13 +8,15 @@ import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 
 import { LuUpload, LuGrip } from "react-icons/lu";
-import { FaStar } from "react-icons/fa6";
-import { Link,  useParams } from "react-router-dom";
+import { FaStar, FaTrash, FaX } from "react-icons/fa6";
+import { Link, useParams } from "react-router-dom";
 import customAxios from "../../utils/axios";
 import { getWilayaNameById } from "../../utils/data";
 import { useSelector } from "react-redux";
 import { IRootState } from "../../store/store";
 import StarsReview from "../../components/starsReview/StarsReview";
+import Rating from "../../components/rating/Rating";
+import Swal from "sweetalert2";
 
 const SingleProperty = () => {
   const user = useSelector((state: IRootState) => state.auth.user);
@@ -50,6 +52,7 @@ const SingleProperty = () => {
   const getHouseReviews = async () => {
     try {
       const { data } = await customAxios(`/homes/${id}/reviews `);
+      console.log("this is reviews");
       console.log(data);
       setreviews(data);
     } catch (error: any) {
@@ -57,10 +60,15 @@ const SingleProperty = () => {
       toast.error(error.response.data);
     }
   };
+  const [review, setreview] = useState({
+    rating: 5,
+    comment: "",
+  });
   useEffect(() => {
     getHouseById();
     getHouseReviews();
   }, []);
+
   useEffect(() => {
     getPropertyOwnerById(house?.userId);
     console.log(house?.userId);
@@ -122,10 +130,7 @@ const SingleProperty = () => {
       toast.error(error.response.data);
     }
   };
-  const [review, setreview] = useState({
-    rating: 5,
-    comment: "",
-  });
+
   const [emptyArray, setemptyArray] = useState<any[]>([]);
   useEffect(() => {
     setemptyArray([]);
@@ -139,14 +144,48 @@ const SingleProperty = () => {
         rating: 6 - review.rating,
         comment: review.comment,
       });
+      getHouseReviews();
       console.log(data);
-      // toast.success(
-      //   "status is pending you must wait for the owner to accept your reservation"
-      // );
+
+      toast.success("Review Add Succefuly");
     } catch (error: any) {
       console.log(error);
       toast.error(error.response.data);
     }
+  };
+
+  const deleteReviewHandler = (id) => {
+    Swal.fire({
+      title: "Are you sure to remove this Review?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const { data } = await customAxios.delete(`/homes/${id}/review`);
+          getHouseReviews();
+          toast.success(data);
+          Swal.fire({
+            title: "Deleted!",
+            text: "Review Deleted Successfuly",
+            icon: "success",
+          });
+        } catch (error) {
+          console.log(error);
+          toast.error(error?.response?.data);
+        }
+      } else {
+        Swal.fire({
+          title: "your Review is Safe!",
+          text: "something went wrong",
+          icon: "error",
+        });
+      }
+    });
   };
   return (
     <>
@@ -222,8 +261,8 @@ const SingleProperty = () => {
           </Link>
         </div>
         {/*  */}
-        <div className="flex   mt-24 gap-20 md:flex-row flex-col">
-          <div className="flex flex-col ">
+        <div className="grid grid-cols-12 gap-8 pt-12 ">
+          <div className="flex flex-col col-span-8">
             <p className="text-2xl font-bold">
               {house?.title}, {getWilayaNameById(house?.wilaya)}
             </p>
@@ -234,26 +273,10 @@ const SingleProperty = () => {
               <p className="w-[4px] h-[4px] bg-black rounded-full"></p>
               <p className="opacity-50">{house?.bathrooms} bathrooms</p>
             </div>
-            {/* <div className="flex my-2">
-              <span className="text-yellow-500">
-                <FaStar />
-              </span>
-              <span className="text-yellow-500">
-                <FaStar />
-              </span>
-              <span className="text-yellow-500">
-                <FaStar />
-              </span>
-              <span className="text-yellow-500">
-                <FaStar />
-              </span>
-              <span className="text-yellow-500">
-                <FaStar />
-              </span>
-            </div> */}
+
             <div className="flex items-center gap-4  my-3 flex-wrap justify-center sm:justify-normal ">
               <div className="size-10 rounded-full overflow-hidden">
-                <img src={propertyOwner?.profilePicture} alt="" />
+                <img src={propertyOwner?.profileImage} alt="" />
               </div>
               <div className="flex flex-col  opacity-90 flex-1">
                 <p className="text-center sm:text-left ">
@@ -282,7 +305,11 @@ const SingleProperty = () => {
               {house?.description}
             </p>
             <div className="reviews flex flex-col">
-              {/* <p className="text-3xl font-bold">Reviews</p> */}
+              <div className="flex justify-between items-center">
+                <p className="text-3xl font-bold">Reviews</p>
+                <span className="text-xl">{reviews?.length}</span>
+              </div>
+
               {propertyOwner?.id != user?.id && (
                 <>
                   <div className="py-2 my-8 px-4 mb-4 bg-white rounded-lg rounded-t-lg border ">
@@ -322,30 +349,35 @@ const SingleProperty = () => {
                   </button>
                 </>
               )}
-              {/* <>
-                {[1, 2, 4, 5, 2]?.map((review) => (
-                  <div className="flex flex-col  border-y border-y-[#4561ec26] py-4  my-4">
+              <>
+                {reviews?.map((review) => (
+                  <div className="flex flex-col  border-y border-y-[#4561ec26] py-4  my-4    ">
                     <div className="flex items-center gap-2 my-3">
                       <div className="size-10 rounded-full overflow-hidden">
-                        <img src={propertyOwner?.profileImage} alt="" />
+                        <img src={review?.User?.profileImage} alt="" />
                       </div>
-                      <div className="flex flex-col gap2 opacity-90">
-                        <StarsReview rating={5} />
-                        <p>{propertyOwner?.firstName}</p>
+                      <div className="flex flex-1 flex-col gap2 opacity-90">
+                        <Rating rating={review?.rating} />
+                        <p>{review?.User?.firstName}</p>
                       </div>
+                      {review?.User?.id == user?.id && (
+                        <FaTrash
+                          onClick={() => deleteReviewHandler(review?.id)}
+                          className="cursor-pointer text-red-400"
+                        />
+                      )}
                     </div>
-                    <p className="bg-white p-2 rounded-xl">
-                      camping in the desert with Mohamed was a really beautiful
-                      and amazing experience that we will remember forever
+                    <p className="bg-white p-2 rounded-xl break-words ">
+                      {review?.comment}
                     </p>
                   </div>
                 ))}
-              </> */}
+              </>
             </div>
           </div>
           {propertyOwner?.id != user?.id && (
             <>
-              <div className="flex flex-col bg-white p-6 rounded-xl h-fit">
+              <div className="flex flex-col bg-white p-6 rounded-xl h-fit col-span-4">
                 <p className="my-2">
                   <span className="text-2xl">${house?.price} </span> night
                 </p>

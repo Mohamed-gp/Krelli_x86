@@ -7,7 +7,6 @@ interface StarsReviewProps {
 const StarsReview = ({ rating }: StarsReviewProps) => {
   return (
     <div className="inline-flex">
-
       <FaStar className={`${rating >= 1 ? "text-yellow-300" : ""}`} />
       <FaStar className={`${rating >= 2 ? "text-yellow-300" : ""}`} />
       <FaStar className={`${rating >= 3 ? "text-yellow-300" : ""}`} />

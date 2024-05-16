@@ -148,13 +148,8 @@ const addReservation = async (req, res) => {
         },
       },
     });
-    console.log(reservation);
     // calculate how many days the user will stay
     const days = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
-    console.log(days);
-    console.log("this is price ", home.price);
-    console.log(home.price * days);
-    console.log(typeof (home.price * days));
     const newCheckout = await client.createCheckout({
       amount: home.price * days,
       currency: "dzd",
@@ -258,9 +253,7 @@ const createChat = async (req, res) => {
 
 const searchHomes = async (req, res) => {
   const { wilaya, guests, checkIn, checkOut, category } = req.query;
-  console.log("query");
-  console.log(wilaya);
-  console.log(category);
+
   const homes = await prisma.home.findMany({
     where: {
       wilaya: wilaya ? parseInt(wilaya) : undefined,
@@ -309,9 +302,23 @@ const homePictures = async (req, res) => {
   res.json(home.Pictures);
 };
 
+const deleteReview = async (req,res) => {
+  const review = await prisma.review.delete({
+    where : {
+      id : req.params.id
+    }
+  }
+  )
+  if (!review) {
+    return res.status(404).send("Review Does Not Exist")
+  }
+  return res.status(200).send("Deleted Successfully")
+
+}
+
 const addReview = async (req, res) => {
   const userId = req.user.userId;
-  const homeId = req.params;
+  const homeId = req.params.id;
   const { rating, comment } = req.body;
   const user = await prisma.user.findUnique({
     where: {
@@ -328,6 +335,12 @@ const addReview = async (req, res) => {
       status: "paid",
     },
   });
+  console.log({
+    userId,
+    homeId: parseInt(homeId),
+    status: "paid",
+  });
+  console.log(hasReserved);
   if (!hasReserved) {
     return res.status(400).send("You must reserve this home first");
   }
@@ -365,6 +378,19 @@ const allReviews = async (req, res) => {
     where: {
       homeId: parseInt(id),
     },
+    select: {
+      comment: true,
+      id: true,
+      rating: true,
+      User: {
+        select: {
+          profileImage: true,
+          firstName: true,
+          createdAT: true,
+          id: true,
+        },
+      },
+    },
   });
 
   res.json(reviews);
@@ -378,4 +404,5 @@ export {
   addReview,
   allReviews,
   createChat,
+  deleteReview
 };

@@ -38,7 +38,7 @@ const PostsTable = () => {
           setremove((prev) => prev + 1);
         } catch (error) {
           console.log(error);
-          toast.error(error?.response?.data.message);
+          toast.error(error?.response?.data);
         }
       } else {
         Swal.fire({
