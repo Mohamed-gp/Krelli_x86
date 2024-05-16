@@ -19,7 +19,7 @@ const Login = () => {
     console.log(dataToSubmit);
     try {
       const { data } = await customAxios.post("/auth/login", dataToSubmit);
-
+      console.log(data)
       dispatch(authActions.login({ ...data, password: "" }));
       toast.success("login Successful");
       navigate("/");
