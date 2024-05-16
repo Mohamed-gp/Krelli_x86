@@ -286,7 +286,6 @@ const searchHomes = async (req, res) => {
       },
     },
   });
-  console.log(homes);
   res.json(homes);
 };
 
