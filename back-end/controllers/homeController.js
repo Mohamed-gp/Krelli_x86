@@ -325,7 +325,7 @@ const addReview = async (req, res) => {
     where: {
       userId,
       homeId: parseInt(homeId),
-      status: "accepted",
+      status: "paid",
     },
   });
   if (!hasReserved) {
