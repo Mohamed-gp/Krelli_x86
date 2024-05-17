@@ -261,7 +261,7 @@ const SingleProperty = () => {
           </Link>
         </div>
         {/*  */}
-        <div className="grid grid-cols-12 gap-8 pt-12 ">
+        <div className="flex flex-wrap md:flex-nowrap  gap-8 pt-12 ">
           <div className="flex flex-col col-span-8">
             <p className="text-2xl font-bold">
               {house?.title}, {getWilayaNameById(house?.wilaya)}

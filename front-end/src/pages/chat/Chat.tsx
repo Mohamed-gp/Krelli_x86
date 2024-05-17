@@ -106,7 +106,7 @@ const Chat = () => {
                           <div>
                             <img
                               src={
-                                host?.users[0]?.profileImage
+                                host?.users[1]?.profileImage
 
                               }
                               alt="avatar"
@@ -115,7 +115,7 @@ const Chat = () => {
                           </div>
                           <div className="flex flex-col">
                             <p className="text-sm">
-                              {host?.users[0]?.firstName.slice(0, 11)}...
+                              {host?.users[1]?.firstName.slice(0, 11)}...
                             </p>
                             <p>Property owner</p>
                           </div>
@@ -137,7 +137,7 @@ const Chat = () => {
               <div className="flex flex-col rounded-xl bg-white px-6 py-6 gap-6 flex-1 max-w-[700px] mx-4">
                 <div className="flex border-b-2 justify-between">
                   <p className="">
-                    {inbox[activeInboxIndex]?.users[0]?.firstName}
+                    {inbox[activeInboxIndex]?.users[1]?.firstName}
                   </p>
                   {/* <FaTrash /> */}
                 </div>
