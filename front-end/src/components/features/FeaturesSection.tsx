@@ -1,4 +1,3 @@
-import FeaturesSectionImage from "../../../public/featuresSectionImage.png";
 import { featuresCardsData } from "../../utils/data";
 import TitleHeading from "../title-heading/TitleHeading";
 import FeaturesCard from "./FeaturesCard";
@@ -13,7 +12,7 @@ const FeaturesSection = () => {
         <div className="flex items-center justify-between my-6 md:flex-row flex-col ">
           <div className="img">
             <img
-              src={FeaturesSectionImage}
+              src="/featuresSectionImage.png"
               alt="featuresSectionImage"
               className="w-[300px]"
             />

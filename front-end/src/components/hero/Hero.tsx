@@ -6,7 +6,7 @@ const Hero = () => {
     <section
       style={{
         height: "calc(100vh - 84.14px)",
-        background: "url(/../../../../public/heroBG.png)",
+        background: "url(/heroBG.png)",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -22,16 +22,16 @@ const Hero = () => {
             Discover a wide range of rental properties, from cozy apartments to
             spacious homes, all tailored to your needs and budget.
           </p>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             <Link
               to="/properties"
-              className="cursor-pointer  text-white px-6 py-1 rounded-xl bg-[#4561EC] duration-300 hover:scale-105 w-fit my-2"
+              className="cursor-pointer  w-full px-6 py-1  bg-white text-buttonColor font-bold duration-300 hover:scale-[1.03] sm:w-fit text-center sm:text-left my-2"
             >
               Find Now
             </Link>
             <a
               href="#addProperty"
-              className="cursor-pointer  text-white px-6 py-1 rounded-xl bg-[#4561EC] duration-300 hover:scale-105 w-fit my-2 flex items-center gap-2"
+              className="cursor-pointer w-full  text-white px-6 py-1  bg-[#4561EC] duration-300 justify-center hover:scale-[1.03] sm:w-fit my-2 flex text-center sm:text-left items-center gap-2"
             >
               <span>Rent Your House</span>
               <FaArrowRight/>

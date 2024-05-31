@@ -1,17 +1,21 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+
+declare global {
+  interface Window {
+    cloudinary: any;
+  }
+}
 
 interface AddPropertyInputProps {
-  formData: FormData;
+  dataToSubmit: any;
+  setDataToSubmit: (prev: any) => any;
 }
 
 const AddProperyPhoto = ({
-  formData,
+  dataToSubmit,
+  setDataToSubmit,
 }: AddPropertyInputProps) => {
-  const addImageHandler = (e) => {
-    console.log(e.target.files);
-    formData.append("files", e.target.files);
-    console.log(formData.getAll("files"))
-  };
+
 
   return (
     <div className="name-input  ">
@@ -34,8 +38,23 @@ const AddProperyPhoto = ({
         name=""
         className="hidden"
         id="photoUploader"
-        onChange={(e) => addImageHandler(e)}
+        onChange={(e) => {
+          if (e.target.files != null) {
+            // addImageHandler(e);
+            setDataToSubmit({ ...dataToSubmit, files: e.target.files });
+          }
+        }}
       />
+      <div className="flex justify-center flex-wrap gap-3 my-6">
+        {new Array(...dataToSubmit.files).map((file) => (
+          <>
+            <div className="img w-36 h-36 rounded-xl overflow-hidden">
+              <img src={URL.createObjectURL(file)} alt="" className="h-full w-full object-cover" />  
+            </div>
+          </>
+        ))}
+
+      </div>
     </div>
   );
 };

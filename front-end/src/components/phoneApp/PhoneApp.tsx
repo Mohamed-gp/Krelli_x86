@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 
 const PhoneApp = () => {
   return (
-    <div className="container flex md:flex-row flex-col items-center">
+    <div className="container flex justify-center md:flex-row flex-col items-center">
       <div className="max-w-[700px]">
         <img
-          src="../../../public/phoneAppAddGroup.png"
+          src="/phoneAppAddGroup.png"
           alt="phoneApp"
           //   className="w-[400px]"
         />
@@ -17,11 +17,11 @@ const PhoneApp = () => {
         <div className="flex gap-2 justify-center">
           <div className="flex flex-col items-center justify-center">
             <div>
-              <img src="../../../public/image 1.png" alt="" />
+              <img src="/image 1.png" alt="" />
             </div>
             <Link to="" className="cursor-pointer -mt-6">
               <img
-                src="../../../public/google-play-badge.svg"
+                src="/google-play-badge.svg"
                 alt="play-store-download"
                 className="w-32 h-32 "
               />
@@ -29,11 +29,11 @@ const PhoneApp = () => {
           </div>
           <div className="flex flex-col items-center justify-center">
             <div>
-              <img src="../../../public/image 1.png" alt="" />
+              <img src="/image 1.png" alt="" />
             </div>
             <Link to="/" className="cursor-pointer -mt-6">
               <img
-                src="../../../public/app-store-badge.svg"
+                src="/app-store-badge.svg"
                 alt="play-store-download"
                 className="w-32 h-32 "
               />

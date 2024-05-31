@@ -1,3 +1,4 @@
+import { useState,useEffect } from "react";
 import AddProperty from "../../components/addProperty/AddProperty";
 import ChatBot from "../../components/chatbot/ChatBot";
 import FeaturesSection from "../../components/features/FeaturesSection";
@@ -7,11 +8,14 @@ import PropertiesSection from "../../components/properties/PropertiesSection";
 
 
 const Home = () => {
+  useEffect(() => {
+    scrollTo(0,0)
+  },[])
   return (
     <>
       <Hero />
       <FeaturesSection />
-      <PropertiesSection />
+      <PropertiesSection  />
       <PhoneApp />
       <AddProperty />
       <ChatBot/>

@@ -1,15 +1,14 @@
 import { useState } from "react";
-import logo from "../../../public/Krelli LOGO 1.png";
 import { registerDataInterface } from "../../interfaces/userDataInterfaces/interface";
-import axios from "axios";
+import customAxios from "../../utils/axios";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../store/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [dataToSubmit, setdataToSubmit] = useState<registerDataInterface>({
     email: "",
     password: "",
@@ -18,24 +17,28 @@ const Register = () => {
   });
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (dataToSubmit.email.trim() == "" || dataToSubmit.password.trim() == "" || dataToSubmit.firstName.trim() == "" ||  dataToSubmit.lastName.trim() == "" ) {
-      return toast.error("All Inputs Are Required")
+    if (
+      dataToSubmit.email.trim() == "" ||
+      dataToSubmit.password.trim() == "" ||
+      dataToSubmit.firstName.trim() == "" ||
+      dataToSubmit.lastName.trim() == ""
+    ) {
+      return toast.error("All Inputs Are Required");
     }
     try {
-      const { data } = await axios.post(
-        "http://localhost:3000/auth/register",
+      const { data } = await customAxios.post(
+        "/auth/register",
         dataToSubmit,{
           withCredentials : true
         }
       );
-      console.log(data);
-      dispatch(authActions.login({...data,password : ""}))
-      navigate("/")
+      dispatch(authActions.login({ ...data, password: "" }));
+      navigate("/");
 
-      return toast.success("Account Created Succefully")
-    } catch (error) {
-      console.log(error.response.data);
+      return toast.success("Account Created Succefully");
+    } catch (error: any) {
       toast.error(error.response.data);
+      console.log(error);
     }
   };
 
@@ -46,7 +49,7 @@ const Register = () => {
         style={{ height: "calc(100vh - 84.14px)" }}
       >
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img className="w-auto h-10 mx-auto" src={logo} alt="Your Company" />
+          <img className="w-auto h-10 mx-auto" src="/Krelli LOGO 1.png" alt="Your Company" />
           <h2 className="mt-2 text-2xl font-bold leading-9 tracking-tight text-center text-gray-900">
             Create new account
           </h2>

@@ -1,120 +1,44 @@
+import HeroAboutSection from "../../components/aboutUsComponents/HeroAboutSection";
+import AboutUsTwoGrid from "../../components/aboutUsComponents/AboutUsTwoGrid.tsx";
+import SubscribeToUs from "../../components/aboutUsComponents/SubscribeToUs.tsx";
+import Faq from "../../components/fAQ/FAQ.tsx";
+import ContactUs from "../../components/contactUs/ContactUs.tsx";
+
 const AboutUs = () => {
   return (
     <>
-      <div className="bg-white dark:bg-[#4561ecc9] text-white">
-        <div className="container mx-auto space-y-16 px-4 py-16 lg:px-8 lg:py-32 xl:max-w-7xl">
-          {/* Heading */}
-          <div className="text-center">
-            <div className="mb-1 text-sm font-bold uppercase tracking-wider text-[#4561EC]">
-              We Answer
-            </div>
-            <h2 className="text-4xl font-black text-black dark:text-white">
-              Frequently Asked Questions
-            </h2>
-          </div>
-          {/* END Heading */}
+      <HeroAboutSection />
+      <AboutUsTwoGrid
+        title="About Us"
+        description="We're committed to simplifying the rental experience for
+                    everyone in Algeria. Pagedone offers a platform tailored to
+                    the needs of tenants and landlords in the region. Our goal is
+                    straightforward: to provide an intuitive tool that enables you
+                    to effortlessly find and manage your perfect rental property
+                    in Algeria."
+        img="https://pagedone.io/asset/uploads/1702034769.png"
+        order={1}
+      />
+      <AboutUsTwoGrid
+        title="Why Is KRELLI"
+        description="KRELLI stands as a beacon of innovation and efficiency in the
+        realm of rental property management. With KRELLI, we've
+        engineered a solution that streamlines every aspect of the
+        renting process, ensuring seamless experiences for both
+        tenants and landlords. KRELLI embodies our commitment to
+        revolutionizing the way rental properties are managed,
+        empowering users with intuitive tools and comprehensive
+        features. So, why is KRELLI? Because it's the answer to your
+        rental management needs, redefining convenience and
+        effectiveness in property management."
+        img="https://pagedone.io/asset/uploads/1702034785.png"
+        order={0}
+      />
+      <Faq/>
+      <ContactUs/>
+      <SubscribeToUs/>
 
-          {/* FAQ */}
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-12">
-            <div>
-              <h4 className="mb-2 font-semibold">
-                What features are included?
-              </h4>
-              <p className="leading-relaxed text-gray-200 dark:text-gray-400">
-                Etiam egestas fringilla enim, id convallis lectus laoreet at.
-                Fusce purus nisi, gravida sed consectetur ut, interdum quis
-                nisi. Quisque egestas nisl id lectus facilisis scelerisque.
-              </p>
-            </div>
-            <div>
-              <h4 className="mb-2 font-semibold">
-                Can I use PayPal to pay you?
-              </h4>
-              <p className="leading-relaxed text-gray-600 dark:text-gray-400">
-                Etiam egestas fringilla enim, id convallis lectus laoreet at.
-                Fusce purus nisi, gravida sed consectetur ut, interdum quis
-                nisi. Quisque egestas nisl id lectus facilisis scelerisque.
-              </p>
-            </div>
-            <div>
-              <h4 className="mb-2 font-semibold">
-                Do I get access to the community?
-              </h4>
-              <p className="leading-relaxed text-gray-600 dark:text-gray-400">
-                Etiam egestas fringilla enim, id convallis lectus laoreet at.
-                Fusce purus nisi, gravida sed consectetur ut, interdum quis
-                nisi. Quisque egestas nisl id lectus facilisis scelerisque.
-              </p>
-            </div>
-            <div>
-              <h4 className="mb-2 font-semibold">
-                Can I get a refund just in case?
-              </h4>
-              <p className="leading-relaxed text-gray-600 dark:text-gray-400">
-                Etiam egestas fringilla enim, id convallis lectus laoreet at.
-                Fusce purus nisi, gravida sed consectetur ut, interdum quis
-                nisi. Quisque egestas nisl id lectus facilisis scelerisque.
-              </p>
-            </div>
-            <div>
-              <h4 className="mb-2 font-semibold">
-                Do you offer email support?
-              </h4>
-              <p className="leading-relaxed text-gray-600 dark:text-gray-400">
-                Etiam egestas fringilla enim, id convallis lectus laoreet at.
-                Fusce purus nisi, gravida sed consectetur ut, interdum quis
-                nisi. Quisque egestas nisl id lectus facilisis scelerisque.
-              </p>
-            </div>
-            <div>
-              <h4 className="mb-2 font-semibold">
-                Are the updates free for life?
-              </h4>
-              <p className="leading-relaxed text-gray-600 dark:text-gray-400">
-                Etiam egestas fringilla enim, id convallis lectus laoreet at.
-                Fusce purus nisi, gravida sed consectetur ut, interdum quis
-                nisi. Quisque egestas nisl id lectus facilisis scelerisque.
-              </p>
-            </div>
-          </div>
-          {/* END FAQ */}
-
-          
-        </div>
-      </div>
-      {/*  */}
-      {/* Statistics Section: Simple */}
-      <div className="bg-white dark:bg-gray-900 dark:text-gray-100">
-        <div className="container mx-auto px-4 py-16 lg:px-8 lg:py-32 xl:max-w-7xl">
-          <div className="grid grid-cols-1 divide-y text-center dark:divide-gray-700/75 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
-            <dl className="space-y-1 px-5 py-8">
-              <dt className="text-4xl font-extrabold text-black dark:text-white">
-                8,600+
-              </dt>
-              <dd className="text-sm font-semibold uppercase tracking-wide text-blue-600 dark:text-blue-500">
-                Projects
-              </dd>
-            </dl>
-            <dl className="space-y-1 px-5 py-8">
-              <dt className="text-4xl font-extrabold text-black dark:text-white">
-                2,500+
-              </dt>
-              <dd className="text-sm font-semibold uppercase tracking-wide text-blue-600 dark:text-blue-500">
-                Clients
-              </dd>
-            </dl>
-            <dl className="space-y-1 px-5 py-8">
-              <dt className="text-4xl font-extrabold text-black dark:text-white">
-                760k+
-              </dt>
-              <dd className="text-sm font-semibold uppercase tracking-wide text-blue-600 dark:text-blue-500">
-                Earnings
-              </dd>
-            </dl>
-          </div>
-        </div>
-      </div>
-      {/* END Statistics Section: Simple */}
+      
     </>
   );
 };

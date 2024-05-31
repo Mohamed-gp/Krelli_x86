@@ -1,38 +1,31 @@
 import { useState } from "react";
-import logo from "../../../public/Krelli LOGO 1.png";
-import { loginDataInterface } from "../../../interfaces/userDataInterfaces/interface";
-import axios from "axios";
+import { loginDataInterface } from "../../interfaces/userDataInterfaces/interface";
 import toast from "react-hot-toast";
+import customAxios from "../../utils/axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../store/slices/authSlice";
 
 const Login = () => {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [dataToSubmit, setdataToSubmit] = useState<loginDataInterface>({
     email: "",
     password: "",
   });
-  
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(dataToSubmit);
     try {
-      const { data } = await axios.post(
-        "http://localhost:3000/auth/login",
-        dataToSubmit
-        ,{
-          withCredentials: true
-        }
-      );
-      console.log(data);
-      dispatch(authActions.login({...data,password : ""}))
+      const { data } = await customAxios.post("/auth/login", dataToSubmit);
+      console.log(data)
+      dispatch(authActions.login({ ...data, password: "" }));
       toast.success("login Successful");
-      navigate("/")
-
-    } catch (error : any) {
-      console.log(error.response.data);
+      navigate("/");
+    } catch (error: any) {
       toast.error(error.response.data);
+      console.log(error);
     }
   };
 
@@ -43,7 +36,11 @@ const Login = () => {
         style={{ height: "calc(100vh - 84.14px)" }}
       >
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img className="w-auto h-10 mx-auto" src={logo} alt="Your Company" />
+          <img
+            className="w-auto h-10 mx-auto"
+            src="/Krelli LOGO 1.png"
+            alt="Your Company"
+          />
           <h2 className="mt-4 text-2xl font-bold leading-9 tracking-tight text-center text-gray-900">
             Login to your account
           </h2>

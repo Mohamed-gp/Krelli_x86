@@ -2,11 +2,17 @@ import { useEffect, useState } from "react";
 import AddPropertyInput from "./AddPropertyInput";
 import AddProperyPhoto from "./AddProperyPhoto";
 import AddPropertySubmit from "./AddPropertySubmit";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../store/store";
-import axios from "axios";
+import customAxios from "../../utils/axios";
+import toast from "react-hot-toast";
+import { authActions } from "../../store/slices/authSlice";
+import AddPropertyWilaya from "./AddPropertyWilaya";
+import AddPropertyCategory from "./AddPropertyCategory";
+import { getWilayaIdByName } from "../../utils/data";
 
 const AddProperty = () => {
+  const dispatch = useDispatch();
   const user = useSelector((state: IRootState) => state.auth.user);
   const [dataToSubmit, setDataToSubmit] = useState({
     firstName: "",
@@ -15,46 +21,103 @@ const AddProperty = () => {
     password: "",
     title: "",
     wilaya: "",
+    category: "",
     price: "",
     bathrooms: "",
     bedrooms: "",
     guests: "",
     description: "",
+    files: [],
   });
   const formData = new FormData();
   const submitHandler = async (e) => {
     e.preventDefault();
-    try {
-      const { data } = await axios.post(
-        "http://localhost:3000/auth/addHome",
-        formData
-      );
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
     if (dataToSubmit?.firstName?.length != 0) {
-      formData.append("firstName", dataToSubmit?.firstName);
+      formData.set("firstName", dataToSubmit?.firstName);
     }
     if (dataToSubmit?.lastName?.length != 0) {
-      formData.append("lastName", dataToSubmit?.lastName);
+      formData.set("lastName", dataToSubmit?.lastName);
     }
     if (dataToSubmit?.email?.length != 0) {
-      formData.append("email", dataToSubmit?.email);
+      formData.set("email", dataToSubmit?.email);
     }
     if (dataToSubmit?.password.length != 0) {
-      formData.append("password", dataToSubmit.password);
+      formData.set("password", dataToSubmit?.password);
     }
-    formData.append("title", dataToSubmit.title);
-    formData.append("wilaya", dataToSubmit.wilaya);
-    formData.append("price", dataToSubmit.price);
-    formData.append("bathrooms", dataToSubmit.bathrooms);
-    formData.append("bedrooms", dataToSubmit.bedrooms);
-    formData.append("guests", dataToSubmit.guests);
-    formData.append("description", dataToSubmit.description);
-  }, [dataToSubmit]);
+    formData.set("title", dataToSubmit?.title);
+    formData.set("wilaya", dataToSubmit?.wilaya);
+    formData.set("price", dataToSubmit?.price);
+    formData.set("bathrooms", dataToSubmit?.bathrooms);
+    formData.set("bedrooms", dataToSubmit?.bedrooms);
+    formData.set("guests", dataToSubmit?.guests);
+    formData.set("description", dataToSubmit?.description);
+    formData.set("category", dataToSubmit?.category);
+    for (let i = 0; i < dataToSubmit.files.length; i++) {
+      formData.append("files", dataToSubmit.files[i]);
+    }
+
+    try {
+      const url = user ? "/host/homes" : "/auth/addHome";
+
+      if (
+        (formData.get("firstName") == "" ||
+          formData.get("lastName") == "" ||
+          formData.get("email") == "" ||
+          formData.get("password") == "") &&
+        url == "/auth/addHome"
+      ) {
+        return toast.error("all Fields Are Required");
+      }
+      if (
+        formData.get("price") == "" ||
+        formData.get("wilaya") == "" ||
+        formData.get("title") == "" ||
+        formData.get("category") == "" ||
+        formData.get("description") == "" ||
+        formData.get("guests") == "" ||
+        formData.get("bedrooms") == "" ||
+        formData.get("bathrooms") == ""
+      ) {
+        return toast.error("all Fields Are Required");
+      }
+      formData.set("wilaya", getWilayaIdByName(formData.get("wilaya") as string));
+      // @ts-ignore
+      if (+formData.get("price") != formData.get("price")) {
+        return toast.error("price Field Should be a number");
+      }
+      // @ts-ignore
+      if (+formData.get("bathrooms") != formData.get("bathrooms")) {
+        return toast.error("bathrooms Field Should be an integer");
+      }
+      // @ts-ignore
+      if (+formData.get("bedrooms") != formData.get("bedrooms")) {
+        return toast.error("bedrooms Field Should be an integer");
+      }
+      // @ts-ignore
+      if (+formData.get("guests") != formData.get("guests")) {
+        return toast.error("guests Field Should be an integer");
+      }
+      if (formData.getAll("files").length < 5) {
+        return toast.error("you must enter more than 4 images of the house");
+      }
+
+      const { data } = await customAxios.post(url, formData, {
+        withCredentials: true,
+      });
+
+      if (url == "/auth/addHome") {
+        dispatch(authActions.login({ ...data.user }));
+        toast.success("account created and property added successfully");
+        scrollTo(0, 0);
+      } else {
+        toast.success("property created successfuly");
+      }
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.response.data);
+    }
+  };
+
   return (
     <div className="container" id="addProperty">
       <p className="font-bold text-center text-xl">
@@ -100,7 +163,13 @@ const AddProperty = () => {
             setDataToSubmit={setDataToSubmit}
             inputLabel="title"
           />
-          <AddPropertyInput
+
+          <AddPropertyCategory
+            dataToSubmit={dataToSubmit}
+            setDataToSubmit={setDataToSubmit}
+            inputLabel="category"
+          />
+          <AddPropertyWilaya
             dataToSubmit={dataToSubmit}
             setDataToSubmit={setDataToSubmit}
             inputLabel="wilaya"
@@ -144,10 +213,11 @@ const AddProperty = () => {
             setDataToSubmit={setDataToSubmit}
             inputLabel="description"
           />
-
         </div>
-
-        <AddProperyPhoto formData={formData} />
+        <AddProperyPhoto
+          dataToSubmit={dataToSubmit}
+          setDataToSubmit={setDataToSubmit}
+        />
         <AddPropertySubmit />
       </form>
     </div>

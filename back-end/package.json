@@ -11,6 +11,8 @@
   "author": "SAFI Achraf",
   "license": "MIT",
   "dependencies": {
+    "@chargily/chargily-pay": "^2.0.0",
+    "@google/generative-ai": "^0.9.0",
     "@prisma/client": "^5.11.0",
     "bcrypt": "^5.1.1",
     "cloudinary": "^2.1.0",
@@ -18,10 +20,15 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "express-rate-limit": "^7.2.0",
+    "helmet": "^7.1.0",
+    "hpp": "^0.2.3",
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.5-lts.1",
     "prisma": "^5.11.0",
-    "socket.io": "^4.7.5"
+    "socket.io": "^4.7.5",
+    "xss": "^1.0.15",
+    "xss-clean": "^0.1.4"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"

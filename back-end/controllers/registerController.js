@@ -1,39 +1,51 @@
 import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
-import  bcrypt  from "bcrypt";
-import { config } from 'dotenv';
+import bcrypt from "bcrypt";
+import { config } from "dotenv";
 config();
 const prisma = new PrismaClient();
 
-const HandelRegister =  async (req, res) => {
-	const firstName = req.body.firstName;
-	const lastName = req.body.lastName;
-	const email = req.body.email;
-	const password = req.body.password;
+const HandelRegister = async (req, res) => {
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const email = req.body.email;
+  const password = req.body.password;
 
-	const alreadyExists = await prisma.user.findFirst({
-		where: {
-			email,
-		},
-	});
+  const alreadyExists = await prisma.user.findFirst({
+    where: {
+      email,
+    },
+  });
 
-	if (alreadyExists) {
-		return res.status(400).send("User already exists");
-	}
+  if (alreadyExists) {
+    return res.status(400).send("User already exists");
+  }
 
-	const hashedPassword = await bcrypt.hash(password, 10);
-	const user = await prisma.user.create({
-		data: {
-			firstName,
-			lastName,
-			email,
-			password : hashedPassword,
-		},
-	});
+  const hashedPassword = await bcrypt.hash(password, 10);
+  const user = await prisma.user.create({
+    data: {
+      firstName,
+      lastName,
+      email,
+      password: hashedPassword,
+    },
+  });
 
-	const token = jwt.sign({ userId: user.id , role: user.role }, process.env.TOKEN_SECRET, { expiresIn: "30d" });
-	res.cookie("authorization", token, { httpOnly: true , sameSite: 'None', secure: false });
-	res.json(user).status(201);
+  const token = jwt.sign(
+    { userId: user.id, role: user.role },
+    process.env.TOKEN_SECRET,
+    { expiresIn: "30d" }
+  );
+
+  res.cookie("authorization", token, {
+    httpOnly: true,
+    sameSite: "None",
+    secure: true,
+  });
+
+  // const token = jwt.sign({ userId: user.id , role: user.role }, process.env.TOKEN_SECRET, { expiresIn: "30d" });
+  // res.cookie("authorization", token, { httpOnly: true , sameSite: 'None', secure: false });
+  res.json(user).status(201);
 };
 
-export default HandelRegister;		
+export default HandelRegister;

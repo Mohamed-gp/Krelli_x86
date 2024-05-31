@@ -20,7 +20,7 @@ const BurgerMenu = ({ open, setopen }: BurgerMenuProps) => {
           onClick={() => {
             setopen(false);
           }}
-          className="lg:hidden cursor-pointer "
+          className="lg:hidden cursor-pointer z-50"
         >
           <FaX />
         </motion.span>
