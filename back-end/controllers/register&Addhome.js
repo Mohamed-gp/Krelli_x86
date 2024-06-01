@@ -3,7 +3,8 @@ import { v2 as cloudinary } from "cloudinary";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import {verifySignUp} from "../utils/joi/authJoi.js"
+import { verifySignUp } from "../utils/joi/authJoi.js";
+import { verifyAddProperty } from "../utils/joi/addProperty.js";
 
 dotenv.config();
 
@@ -22,11 +23,11 @@ const registerAndAddhome = async (req, res) => {
     return res.status(400).send("All fields are required");
   }
 
-  const { error } = verifySignUp(req.body);
-	if (error) {
-	  // 400 bad request => problem with user info
-	  return res.status(400).send(error.details[0].message);
-	}
+  const { verifyAddPropertyError } = verifyAddProperty(req.body);
+  if (verifyAddPropertyError) {
+    // 400 bad request => problem with user info
+    return res.status(400).send(verifyAddPropertyError.details[0].message);
+  }
   const alreadyExists = await prisma.user.findFirst({
     where: {
       email,
@@ -64,6 +65,12 @@ const registerAndAddhome = async (req, res) => {
   ) {
     return res.status(400).send("All fields are required");
   }
+  const { error } = verifySignUp(req.body);
+  if (error) {
+    // 400 bad request => problem with user info
+    return res.status(400).send(error.details[0].message);
+  }
+
   const pictures = req.files.map((file) => {
     return file.path;
   });

@@ -190,7 +190,7 @@ const SingleProperty = () => {
   return (
     <>
       <div className="container my-12">
-        <div className="flex justify-between">
+        <div className="flex justify-between ">
           <p className="font-bold text-2xl">{house?.title}</p>
           <div className="flex gap-6 items-center">
             <div
@@ -262,7 +262,7 @@ const SingleProperty = () => {
         </div>
         {/*  */}
         <div className="flex flex-wrap md:flex-nowrap  gap-8 pt-12 ">
-          <div className="flex flex-col col-span-8">
+          <div className="flex flex-col flex-1 col-span-8">
             <p className="text-2xl font-bold">
               {house?.title}, {getWilayaNameById(house?.wilaya)}
             </p>

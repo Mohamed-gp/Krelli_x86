@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import {v2 as cloudinary} from 'cloudinary';
 import dotenv from 'dotenv';
+import {verifyAddProperty} from "../utils/joi/addProperty.js"
 
 dotenv.config();
 
@@ -88,6 +89,11 @@ const addHome = async (req, res) => {
     cleanUploads();//checks if the uploads folder has more than 5 files and delete them
 
 	const { title, wilaya, price, bathrooms, bedrooms, guests,category } = req.body;
+    const { error } = verifyAddProperty(req.body);
+	if (error) {
+	  // 400 bad request => problem with user info
+	  return res.status(400).send(error.details[0].message);
+	}
 	const userId = req.user.userId;
 
 	if (!title || !wilaya || !price || !bathrooms || !bedrooms || !guests || !req.files || !category) {
