@@ -24,6 +24,7 @@ const Chat = () => {
   const [singleMessages, setsingleMessages] = useState([]);
   const getSingleMessages = async () => {
     try {
+      console.log(`/messages/${inbox[activeInboxIndex]?.id}`)
       const { data } = await customAxios.get(
         `/messages/${inbox[activeInboxIndex]?.id}`
       );
@@ -52,6 +53,7 @@ const Chat = () => {
   }, []);
   useEffect(() => {
     getSingleMessages();
+    console.log([activeInboxIndex, messageInput, inbox]);
   }, [activeInboxIndex, messageInput, inbox]);
 
   return (
@@ -105,10 +107,7 @@ const Chat = () => {
                         >
                           <div>
                             <img
-                              src={
-                                host?.users[1]?.profileImage
-
-                              }
+                              src={host?.users[1]?.profileImage}
                               alt="avatar"
                               className="w-12 h-12 object-cover rounded-full"
                             />
@@ -141,35 +140,36 @@ const Chat = () => {
                   </p>
                   {/* <FaTrash /> */}
                 </div>
-                {singleMessages?.Messages?.map((message) => (
-                  <>
-                    {message?.userId == user?.id && (
-                      <div className="flex items-end gap-2">
-                        <p className="bg-[#4880FF] text-white p-6 rounded-xl w-full">
-                          {message?.message}
-                        </p>
-                        <img
-                          src={user.profileImage}
-                          alt=""
-                          className="w-12 h-12 object-cover rounded-full"
-                        />
-                      </div>
-                    )}
-                    {message?.userId != user?.id && (
-                      <div className="flex items-end gap-2 w-full">
-                        <img
-                          src="/profile.jpg"
-                          alt=""
-                          className="w-12 h-12 object-cover rounded-full"
-                        />
-                        <p className="bg-[#F5F5F5] p-6 rounded-xl">
-                          {message.message}
-                        </p>
-                      </div>
-                    )}
-                  </>
-                ))}
-
+                <div className="flex flex-col rounded-xl bg-white px-6 py-6 gap-6 flex-1 max-h-[300px] overflow-auto mx-4">
+                  {singleMessages?.Messages?.map((message) => (
+                    <>
+                      {message?.userId == user?.id && (
+                        <div className="flex items-end gap-2">
+                          <p className="bg-[#4880FF] text-white p-6 rounded-xl w-full">
+                            {message?.message}
+                          </p>
+                          <img
+                            src={user.profileImage}
+                            alt=""
+                            className="w-12 h-12 object-cover rounded-full"
+                          />
+                        </div>
+                      )}
+                      {message?.userId != user?.id && (
+                        <div className="flex items-end gap-2 w-full">
+                          <img
+                            src="/profile.jpg"
+                            alt=""
+                            className="w-12 h-12 object-cover rounded-full"
+                          />
+                          <p className="bg-[#F5F5F5] p-6 rounded-xl">
+                            {message.message}
+                          </p>
+                        </div>
+                      )}
+                    </>
+                  ))}
+                </div>
                 <div className="flex justify-between items-center">
                   <input
                     type="text"

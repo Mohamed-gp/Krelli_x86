@@ -91,7 +91,7 @@ const Profile = () => {
       className="container py-16 sm:px-32"
       style={{ minHeight: "calc(100vh - 70.94px)" }}
     >
-      <div className="my-10 rounded-xl border-2 border-buttonColor p-3">
+      <div className="my-10 rounded-xl border-2 border-buttonColor bg-white p-3">
         <p className="border-b border-buttonColor pb-1 font-bold text-center">
           Profile
         </p>
@@ -118,7 +118,7 @@ const Profile = () => {
       </div>
 
       {user?.id == id && (
-        <div className="my-10 rounded-xl border-2 border-buttonColor p-3">
+        <div className="my-10 rounded-xl border-2 border-buttonColor p-3 bg-white">
           <p className="border-b border-buttonColor pb-1 font-bold text-center">
             Your Wishlist
           </p>

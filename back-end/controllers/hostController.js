@@ -85,11 +85,9 @@ const cleanUploads = async () => {
 
 
 const addHome = async (req, res) => {
-    console.log(req.body)
     cleanUploads();//checks if the uploads folder has more than 5 files and delete them
 
 	const { title, wilaya, price, bathrooms, bedrooms, guests,category } = req.body;
-    console.log(req.user.id)
 	const userId = req.user.userId;
 
 	if (!title || !wilaya || !price || !bathrooms || !bedrooms || !guests || !req.files || !category) {
@@ -100,7 +98,6 @@ const addHome = async (req, res) => {
     });
     const uploadedPictures = await Promise.all(pictures.map((picture) => cloudinary.uploader.upload(picture)));
     const pictureUrls = uploadedPictures.map((picture) => picture.url);
-    console.log(pictureUrls);
     const home = await prisma.home.create({
         data: {
             title,

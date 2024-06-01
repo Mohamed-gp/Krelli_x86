@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { config } from "dotenv";
+import { verifySignUp} from "../utils/joi/authJoi.js"
 config();
 const prisma = new PrismaClient();
 
@@ -10,6 +11,12 @@ const HandelRegister = async (req, res) => {
   const lastName = req.body.lastName;
   const email = req.body.email;
   const password = req.body.password;
+
+  const { error } = verifySignUp(req.body);
+	if (error) {
+	  // 400 bad request => problem with user info
+	  return res.status(400).send(error.details[0].message);
+	}
 
   const alreadyExists = await prisma.user.findFirst({
     where: {
