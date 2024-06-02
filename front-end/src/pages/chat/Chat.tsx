@@ -57,7 +57,7 @@ const Chat = () => {
   }, [activeInboxIndex, inbox]);
 
   useEffect(() => {
-    const socket = io("http://localhost:3000", {
+    const socket = io("https://krelli-x86.onrender.com", {
       query: {
         userId: user?.id,
       },
