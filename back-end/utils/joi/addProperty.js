@@ -9,9 +9,9 @@ const verifyAddProperty = (object) => {
     bedrooms: joi.number().required().min(5).max(50),
     guests: joi.number().required().min(5).max(50),
     category: joi.string().required().min(2).max(15),
-    description: joi.string().required().min(20).max(70),
+    description: joi.string().required().min(20),
     
-  });
+  }).unknown(true);
 
   return schema.validate(object);
 };

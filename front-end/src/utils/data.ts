@@ -41,52 +41,52 @@ const featuresCardsData = [
   },
 ] as const;
 
-const propertiesCardsData = [
-  {
-    title: "Alger,Algiers",
-    path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712710442/tdia6y6xyqojxbmtwv4p.jpg",
-  },
-  {
-    title: "Alger,Algiers",
-    path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712710658/wglfisxmldoacbolyppj.jpg",
-  },
+// const propertiesCardsData = [
+//   {
+//     title: "Alger,Algiers",
+//     path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712710442/tdia6y6xyqojxbmtwv4p.jpg",
+//   },
+//   {
+//     title: "Alger,Algiers",
+//     path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712710658/wglfisxmldoacbolyppj.jpg",
+//   },
 
-  {
-    title: "Tipaza,Alger",
-    path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712710879/rnl66ibilkcy1qexokey.jpg",
-  },
-  {
-    title: "Alger,Algiers",
-    path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712711156/tfwqqcr9z8yuztwvxgso.jpg",
-  },
-  {
-    title: "Alger,Algiers",
-    path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712711246/wudphgo2a72cpqrtiqza.jpg",
-  },
-  {
-    title: "Alger,Algiers",
-    path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712711361/rcntezbpdgtb7biigrib.jpg",
-  },
-  {
-    title: "Alger,Algiers",
-    path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712711606/jrm0c6qetp4eovtf1c1r.jpg",
-  },
-  {
-    title: "Alger,Algiers",
-    path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712711731/lljoipblazt4q4pytsfn.jpg",
-  },
-  {
-    title: "Alger,Algiers",
-    path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712712220/usz5kxgfc3rze5lqs0ka.jpg",
-  },
-  {
-    title: "Alger,Algiers",
-    path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712712277/gaapyvsr0712uahtd4lg.jpg",
-  },
-  {
-    title: "Alger,Algiers",
-    path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712712321/uqdzdwg99lt2vquydzc8.jpg",
-  },
+//   {
+//     title: "Tipaza,Alger",
+//     path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712710879/rnl66ibilkcy1qexokey.jpg",
+//   },
+//   {
+//     title: "Alger,Algiers",
+//     path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712711156/tfwqqcr9z8yuztwvxgso.jpg",
+//   },
+//   {
+//     title: "Alger,Algiers",
+//     path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712711246/wudphgo2a72cpqrtiqza.jpg",
+//   },
+//   {
+//     title: "Alger,Algiers",
+//     path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712711361/rcntezbpdgtb7biigrib.jpg",
+//   },
+//   {
+//     title: "Alger,Algiers",
+//     path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712711606/jrm0c6qetp4eovtf1c1r.jpg",
+//   },
+//   {
+//     title: "Alger,Algiers",
+//     path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712711731/lljoipblazt4q4pytsfn.jpg",
+//   },
+//   {
+//     title: "Alger,Algiers",
+//     path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712712220/usz5kxgfc3rze5lqs0ka.jpg",
+//   },
+//   {
+//     title: "Alger,Algiers",
+//     path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712712277/gaapyvsr0712uahtd4lg.jpg",
+//   },
+//   {
+//     title: "Alger,Algiers",
+//     path: "https://res.cloudinary.com/drf3vogno/image/upload/v1712712321/uqdzdwg99lt2vquydzc8.jpg",
+//   },
   // {
   //   title: "Alger,Algiers",
   //   path: "properyImage1.png",
@@ -103,7 +103,7 @@ const propertiesCardsData = [
   //   title: "Alger,Algiers",
   //   path: "properyImage4.png",
   // },
-] as const;
+// ] as const;
 
 const categories = [
   {
@@ -673,7 +673,7 @@ const getWilayaNameById = (id: number): string => {
 
 export {
   featuresCardsData,
-  propertiesCardsData,
+  // propertiesCardsData,
   categories,
   wilayasInfo,
   getWilayaIdByName,

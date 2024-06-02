@@ -103,7 +103,7 @@ const PropertiesCard = ({
               <Link
                 to={`/properties/${property?.id}`}
                 style={{ boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 15px" }}
-                key={property.path}
+                key={property?.id}
                 className="w-[240px] rounded-xl overflow-hidden bg-white property-card"
               >
                 <div className="img relative">
@@ -122,7 +122,7 @@ const PropertiesCard = ({
                       <FaHeart
                         className={`absolute top-[11px] right-3 text-xl ${
                           wishlist?.find((ele) => ele?.homeId == property?.id)
-                            ? "text-red-600"
+                            ? "text-buttonColor"
                             : ""
                         }`}
                       />

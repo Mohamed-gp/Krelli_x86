@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom"
 
 const AdminSideBar = () => {
     return (
-        <div className="hidden sm:block sm:min-w-[240px] p-6 border-solid border-r-2 border-[#fffb94]" >
+        <div className="hidden sm:block sm:min-w-[240px] p-6 border-solid " >
             <Link to="/admin-dashboard" className="flex items-center gap-2 ">
                 <BsBarChartSteps className="text-xl text-buttonColor"/>
                 <p className="py-3 text-xl font-bold">Dashboard</p>

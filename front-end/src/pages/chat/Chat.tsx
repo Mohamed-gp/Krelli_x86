@@ -7,6 +7,8 @@ import customAxios from "../../utils/axios";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { IRootState } from "../../store/store";
+import io from "socket.io-client";
+import toast from "react-hot-toast";
 
 const Chat = () => {
   const user = useSelector((state: IRootState) => state.auth.user);
@@ -24,14 +26,13 @@ const Chat = () => {
   const [singleMessages, setsingleMessages] = useState([]);
   const getSingleMessages = async () => {
     try {
-      console.log(`/messages/${inbox[activeInboxIndex]?.id}`)
       const { data } = await customAxios.get(
         `/messages/${inbox[activeInboxIndex]?.id}`
       );
-      console.log(data);
+
       setsingleMessages(data);
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error.resonse.data);
     }
   };
   const createMessage = async () => {
@@ -42,20 +43,50 @@ const Chat = () => {
           text: messageInput,
         }
       );
-      console.log(data);
       setmessageInput("");
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error.resonse.data);
     }
   };
   useEffect(() => {
     getChats();
   }, []);
+
   useEffect(() => {
     getSingleMessages();
-    console.log([activeInboxIndex, messageInput, inbox]);
-  }, [activeInboxIndex, messageInput, inbox]);
+  }, [activeInboxIndex, inbox]);
 
+  useEffect(() => {
+    const socket = io("http://localhost:3000", {
+      query: {
+        userId: user?.id,
+      },
+    }); // Replace with your server URL
+
+    // socket.on("message", (messages) => {
+    //   if (singleMessages?.Messages?.length == 0) {
+    //     setsingleMessages({
+    //       Messages: [messages],
+    //     });
+    //   } else {
+    //     setsingleMessages((prev) => prev?.Messages?.push(messages));
+    //   }
+    // });
+
+    socket.on("message", (message) => {
+      setsingleMessages((prevMessages) => {
+        if (prevMessages.Messages?.length === 0) {
+          return { Messages: [message] };
+        } else {
+          return { Messages: [...prevMessages.Messages, message] };
+        }
+      });
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
   return (
     <>
       <div className=" flex    mt-12 gap-6 ">
@@ -97,6 +128,7 @@ const Chat = () => {
                   ) : (
                     <>
                       {inbox.map((host, index) => (
+                        // i neeed to fix the view of the hoster
                         <div
                           onClick={() => setactiveInboxIndex(index)}
                           className={`flex gap-3 items-center relative px-2 bg-white rounded-xl py-2 justify-center hover:opacity-85 duration-300 cursor-pointer w-[250px] ${
@@ -107,16 +139,28 @@ const Chat = () => {
                         >
                           <div>
                             <img
-                              src={host?.users[1]?.profileImage}
+                              src={host?.users[0]?.profileImage}
                               alt="avatar"
                               className="w-12 h-12 object-cover rounded-full"
                             />
                           </div>
                           <div className="flex flex-col">
-                            <p className="text-sm">
-                              {host?.users[1]?.firstName.slice(0, 11)}...
-                            </p>
-                            <p>Property owner</p>
+                            {host?.users[0]?.firstName == user?.firstName &&
+                            host?.users[0]?.lastName == user?.lastName ? (
+                              <>
+                                <p className="text-sm">
+                                  {host?.users[1]?.firstName.slice(0, 11)}...
+                                </p>
+                                <p>Property Tenant</p>
+                              </>
+                            ) : (
+                              <>
+                                <p className="text-sm">
+                                  {host?.users[0]?.firstName.slice(0, 11)}...
+                                </p>
+                                <p>Property owner</p>
+                              </>
+                            )}
                           </div>
                           <div>
                             <img

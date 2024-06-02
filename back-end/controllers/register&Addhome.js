@@ -23,10 +23,10 @@ const registerAndAddhome = async (req, res) => {
     return res.status(400).send("All fields are required");
   }
 
-  const { verifyAddPropertyError } = verifyAddProperty(req.body);
-  if (verifyAddPropertyError) {
+  const { error } = verifySignUp(req.body);
+  if (error) {
     // 400 bad request => problem with user info
-    return res.status(400).send(verifyAddPropertyError.details[0].message);
+    return res.status(400).send(error.details[0].message);
   }
   const alreadyExists = await prisma.user.findFirst({
     where: {
@@ -65,10 +65,10 @@ const registerAndAddhome = async (req, res) => {
   ) {
     return res.status(400).send("All fields are required");
   }
-  const { error } = verifySignUp(req.body);
-  if (error) {
+  const { error : err } = verifyAddProperty(req.body);
+  if (err) {
     // 400 bad request => problem with user info
-    return res.status(400).send(error.details[0].message);
+    return res.status(400).send(err.details[0].message);
   }
 
   const pictures = req.files.map((file) => {

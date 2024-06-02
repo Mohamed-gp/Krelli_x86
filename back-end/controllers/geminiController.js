@@ -37,6 +37,14 @@ const talkToGemini = async (req, res) => {
           role: "model",
           parts: [{ text: process.env.AI_MISTAKE_TEXT }],
         },
+        {
+          role: "user",
+          parts: [{ text: process.env.USER_CORRECT_TEXT }],
+        },
+        {
+          role: "model",
+          parts: [{ text: process.env.AI_CORRECT_TEXT }],
+        },
       ].concat(history),
       generationConfig: {
         maxOutputTokens: 1000,

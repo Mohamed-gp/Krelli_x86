@@ -104,7 +104,7 @@ const Wishlist = () => {
                         onClick={(e) => toggleWishlistHandler(e, property.id)}
                       >
                         <FaHeart
-                          className={`absolute top-[11px] right-3 text-xl  text-red-600`}
+                          className={`absolute top-[11px] right-3 text-xl  text-buttonColor`}
                         />
                         <BsHeart className="absolute top-3 right-3 text-xl text-white" />
                       </div>

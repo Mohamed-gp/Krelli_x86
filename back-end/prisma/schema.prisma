@@ -20,6 +20,7 @@ model User {
   firstName    String
   lastName     String
   profileImage String?       @default("http://res.cloudinary.com/dyhllkjj1/image/upload/v1715439059/dblboyxypvtkaeebvpgr.jpg")
+  isSubscribed Boolean?      @default(false)
   password     String
   role         String        @default("user")
   createdAT    DateTime      @default(now())
