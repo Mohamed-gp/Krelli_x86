@@ -300,6 +300,16 @@ const SingleProperty = () => {
                   Message Host
                 </button>
               )}
+              {!user && (
+                <>
+                  <Link
+                    to="/login"
+                    className="text-white bg-buttonColor rounded-xl px-6 py-2"
+                  >
+                    Login
+                  </Link>
+                </>
+              )}
             </div>
             <p className="my-4 py-12 border-y-2 border-y-[#4561ec53] ">
               {house?.description}
