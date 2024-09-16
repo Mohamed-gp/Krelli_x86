@@ -4,7 +4,8 @@ import axios from "axios";
 // const url = "https://krelli-x86-1.onrender.com";
 const customAxios = axios.create({
   // baseURL: "https://krelli-x86-1.onrender.com/",
-  baseURL: "http://localhost:3000/",
+  baseURL: "https://krelli-x86.onrender.com/",
+  // baseURL: "http://localhost:3000/",
   withCredentials: true,
 });
 

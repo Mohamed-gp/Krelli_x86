@@ -1,6 +1,8 @@
 import prisma from "../prisma/client.js";
 import { v2 as cloudinary } from "cloudinary";
 import bcrypt from "bcrypt";
+import { verifyUpdateUser } from "../utils/joi/authJoi.js";
+import { verifyUpdatePassword } from "../utils/joi/authJoi.js";
 
 const usersCount = async (req, res) => {
   if (req.user.role !== "admin") {
@@ -27,6 +29,10 @@ const updateProfile = async (req, res) => {
   }
   if (lastName == "") {
     lastName = undefined;
+  }
+  const { error } = verifyUpdateUser(req.body);
+  if (error) {
+    return res.status(400).send(error.details[0].message);
   }
   const pictures = req.files.map((file) => {
     return file.path;
@@ -63,20 +69,22 @@ const changePassword = async (req, res) => {
     });
   }
 
+  
   const user = await prisma.user.findUnique({
     where: {
       id: req.user.userId,
     },
   });
-  console.log("test");
-  console.log(user.password);
-  console.log(currentPassword);
   const validPassword = await bcrypt.compare(currentPassword, user?.password);
   console.log(validPassword);
   if (!validPassword) {
     return res.status(400).json({ message: "Invalid credentials" });
   }
 
+  const {error} = verifyUpdatePassword({password: newPassword});
+  if (error) {
+    return res.status(400).send(error.details[0].message);
+  }
   const updatedUser = await prisma.user.update({
     where: {
       id: req.params.id,
@@ -143,36 +151,35 @@ const toggleWishlist = async (req, res) => {
   const userId = req.user.userId;
   const homeId = parseInt(req.params.id); // Ensure homeId is an integer
 
-    const existingFavorite = await prisma.favorite.findFirst({
+  const existingFavorite = await prisma.favorite.findFirst({
+    where: {
+      userId: userId,
+      homeId: homeId,
+    },
+  });
+
+  if (existingFavorite) {
+    await prisma.favorite.delete({
       where: {
-        userId: userId,
+        id: existingFavorite.id,
+      },
+    });
+  } else {
+    await prisma.favorite.create({
+      data: {
         homeId: homeId,
-      },
-    });
-
-    if (existingFavorite) {
-      await prisma.favorite.delete({
-        where: {
-          id: existingFavorite.id,
-        },
-      });
-    } else {
-      await prisma.favorite.create({
-        data: {
-          homeId: homeId,
-          userId: userId,
-        },
-      });
-    }
-
-    const wishlist = await prisma.favorite.findMany({
-      where: {
         userId: userId,
       },
     });
+  }
 
-    return res.json(wishlist);
+  const wishlist = await prisma.favorite.findMany({
+    where: {
+      userId: userId,
+    },
+  });
 
+  return res.json(wishlist);
 };
 
 export {
@@ -182,5 +189,5 @@ export {
   changePassword,
   deleteUser,
   toggleWishlist,
-  getWishlist
+  getWishlist,
 };

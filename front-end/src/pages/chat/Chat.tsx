@@ -7,6 +7,8 @@ import customAxios from "../../utils/axios";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { IRootState } from "../../store/store";
+import io from "socket.io-client";
+import toast from "react-hot-toast";
 
 const Chat = () => {
   const user = useSelector((state: IRootState) => state.auth.user);
@@ -27,10 +29,10 @@ const Chat = () => {
       const { data } = await customAxios.get(
         `/messages/${inbox[activeInboxIndex]?.id}`
       );
-      console.log(data);
+
       setsingleMessages(data);
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error.resonse.data);
     }
   };
   const createMessage = async () => {
@@ -41,19 +43,50 @@ const Chat = () => {
           text: messageInput,
         }
       );
-      console.log(data);
       setmessageInput("");
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error.resonse.data);
     }
   };
   useEffect(() => {
     getChats();
   }, []);
+
   useEffect(() => {
     getSingleMessages();
-  }, [activeInboxIndex, messageInput, inbox]);
+  }, [activeInboxIndex, inbox]);
 
+  useEffect(() => {
+    const socket = io("https://krelli-x86.onrender.com", {
+      query: {
+        userId: user?.id,
+      },
+    }); // Replace with your server URL
+
+    // socket.on("message", (messages) => {
+    //   if (singleMessages?.Messages?.length == 0) {
+    //     setsingleMessages({
+    //       Messages: [messages],
+    //     });
+    //   } else {
+    //     setsingleMessages((prev) => prev?.Messages?.push(messages));
+    //   }
+    // });
+
+    socket.on("message", (message) => {
+      setsingleMessages((prevMessages) => {
+        if (prevMessages.Messages?.length === 0) {
+          return { Messages: [message] };
+        } else {
+          return { Messages: [...prevMessages.Messages, message] };
+        }
+      });
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
   return (
     <>
       <div className=" flex    mt-12 gap-6 ">
@@ -95,6 +128,7 @@ const Chat = () => {
                   ) : (
                     <>
                       {inbox.map((host, index) => (
+                        // i neeed to fix the view of the hoster
                         <div
                           onClick={() => setactiveInboxIndex(index)}
                           className={`flex gap-3 items-center relative px-2 bg-white rounded-xl py-2 justify-center hover:opacity-85 duration-300 cursor-pointer w-[250px] ${
@@ -105,19 +139,28 @@ const Chat = () => {
                         >
                           <div>
                             <img
-                              src={
-                                host?.users[1]?.profileImage
-
-                              }
+                              src={host?.users[0]?.profileImage}
                               alt="avatar"
                               className="w-12 h-12 object-cover rounded-full"
                             />
                           </div>
                           <div className="flex flex-col">
-                            <p className="text-sm">
-                              {host?.users[1]?.firstName.slice(0, 11)}...
-                            </p>
-                            <p>Property owner</p>
+                            {host?.users[0]?.firstName == user?.firstName &&
+                            host?.users[0]?.lastName == user?.lastName ? (
+                              <>
+                                <p className="text-sm">
+                                  {host?.users[1]?.firstName.slice(0, 11)}...
+                                </p>
+                                <p>Property Tenant</p>
+                              </>
+                            ) : (
+                              <>
+                                <p className="text-sm">
+                                  {host?.users[0]?.firstName.slice(0, 11)}...
+                                </p>
+                                <p>Property owner</p>
+                              </>
+                            )}
                           </div>
                           <div>
                             <img
@@ -141,35 +184,36 @@ const Chat = () => {
                   </p>
                   {/* <FaTrash /> */}
                 </div>
-                {singleMessages?.Messages?.map((message) => (
-                  <>
-                    {message?.userId == user?.id && (
-                      <div className="flex items-end gap-2">
-                        <p className="bg-[#4880FF] text-white p-6 rounded-xl w-full">
-                          {message?.message}
-                        </p>
-                        <img
-                          src={user.profileImage}
-                          alt=""
-                          className="w-12 h-12 object-cover rounded-full"
-                        />
-                      </div>
-                    )}
-                    {message?.userId != user?.id && (
-                      <div className="flex items-end gap-2 w-full">
-                        <img
-                          src="/profile.jpg"
-                          alt=""
-                          className="w-12 h-12 object-cover rounded-full"
-                        />
-                        <p className="bg-[#F5F5F5] p-6 rounded-xl">
-                          {message.message}
-                        </p>
-                      </div>
-                    )}
-                  </>
-                ))}
-
+                <div className="flex flex-col rounded-xl bg-white px-6 py-6 gap-6 flex-1 max-h-[300px] overflow-auto mx-4">
+                  {singleMessages?.Messages?.map((message) => (
+                    <>
+                      {message?.userId == user?.id && (
+                        <div className="flex items-end gap-2">
+                          <p className="bg-[#4880FF] text-white p-6 rounded-xl w-full">
+                            {message?.message}
+                          </p>
+                          <img
+                            src={user.profileImage}
+                            alt=""
+                            className="w-12 h-12 object-cover rounded-full"
+                          />
+                        </div>
+                      )}
+                      {message?.userId != user?.id && (
+                        <div className="flex items-end gap-2 w-full">
+                          <img
+                            src="/profile.jpg"
+                            alt=""
+                            className="w-12 h-12 object-cover rounded-full"
+                          />
+                          <p className="bg-[#F5F5F5] p-6 rounded-xl">
+                            {message.message}
+                          </p>
+                        </div>
+                      )}
+                    </>
+                  ))}
+                </div>
                 <div className="flex justify-between items-center">
                   <input
                     type="text"

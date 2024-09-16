@@ -100,7 +100,6 @@ const AddProperty = () => {
       if (formData.getAll("files").length < 5) {
         return toast.error("you must enter more than 4 images of the house");
       }
-
       const { data } = await customAxios.post(url, formData, {
         withCredentials: true,
       });

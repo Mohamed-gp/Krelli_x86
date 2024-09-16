@@ -11,6 +11,8 @@ const socketServer = (server) => {
     io.on("connection", (socket) => {
         console.log("User connected", socket.id);
         const userId = socket.handshake.query.userId;
+        console.log(socket.handshake)
+        console.log("this is user id", userId);
         if(userId){
             onlineUsers[userId] = socket.id;
         };

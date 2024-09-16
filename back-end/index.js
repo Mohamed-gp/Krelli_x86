@@ -7,6 +7,7 @@ import {
 } from "./middleware/jwtVerify.js";
 import cookieParser from "cookie-parser";
 import geminiRouter from "./routes/gemini.js";
+import subscribeRouter from "./routes/subscribe.js";
 import authRouter from "./routes/auth.js";
 // import originChecker from "./middleware/originChecker.js";
 // import corsOptions from "./config/corsOptions.js";
@@ -30,7 +31,8 @@ dotenv.config();
 
 const app = express();
 // app.use(cors({ credentials: true, origin: "https://krelli-86x.netlify.app" }));
-app.use(cors({ credentials: true, origin: "http://localhost:3500" }));
+// app.use(cors({ credentials: true, origin: "http://localhost:3500" }));
+app.use(cors({ credentials: true, origin: "https://krelli-x86.netlify.app" }));
 
 const server = createServer(app);
 
@@ -58,15 +60,16 @@ app.use(helmet());
 
 app.use(xss());
 
-// app.use(rateLimiting({
-//     windowMs : 10 * 60 * 1000 ,
-//     max : 200,
-// }))
+app.use(rateLimiting({
+    windowMs : 10 * 60 * 1000 ,
+    max : 200,
+}))
 
 app.get("/", (req, res) => {
   res.json("Hello World");
 });
 
+app.use("/subscribe", subscribeRouter);
 app.use("/gemini", geminiRouter);
 app.use("/auth", authRouter);
 app.use("/chargily", chargilyRouter);

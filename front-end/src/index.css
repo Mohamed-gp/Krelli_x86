@@ -198,20 +198,32 @@ td {
 /* table admin dashboard */
 td,
 th {
-  border: 2px solid #1d2d3d;
+  /* border: 2px solid #1d2d3d; */
   width: 260px;
   /* cursor: pointer; */
 }
+
 table thead tr {
-  background-color: #868686;
+  /* background-color: #868686; */
+  background-color: #4561ec;
+  color: white;
 }
-tr:nth-child(even) {
+table thead tr th {
+  padding: 10px;
+}
+table tr:hover {
+  /* background-color: #868686; */
+  background-color: #4561ec;
+  color: white;
+  transition-duration: 0.3s;
+}
+/* tr:nth-child(even) {
   background-color: #c6c6c6;
 }
 tr:nth-child(even):hover {
   background-color: gray;
   transition-duration: 0.5s;
-}
+} */
 tr {
   color: rgb(19, 19, 19);
 }
@@ -220,7 +232,7 @@ table div {
 }
 
 .admin-link.active {
-  background-color: #a0a0a0;
+  background-color: #4561ec;
   color: white;
 }
 
@@ -232,8 +244,7 @@ table div {
   transition-duration: 0.3s;
 }
 
-
-.logout-setting-button:hover span{
+.logout-setting-button:hover span {
   transform: translateX(2px);
   -webkit-transform: translateX(2px);
   -moz-transform: translateX(2px);

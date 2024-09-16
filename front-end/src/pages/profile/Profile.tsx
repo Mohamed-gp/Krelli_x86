@@ -59,7 +59,9 @@ const Profile = () => {
     getHouses();
   }, []);
   useEffect(() => {
-    getWishlist();
+    if (user?.id == id) {
+      getWishlist();
+    }
   }, []);
   const toggleWishlistHandler = async (e, id) => {
     e.preventDefault();
@@ -91,7 +93,7 @@ const Profile = () => {
       className="container py-16 sm:px-32"
       style={{ minHeight: "calc(100vh - 70.94px)" }}
     >
-      <div className="my-10 rounded-xl border-2 border-buttonColor p-3">
+      <div className="my-10 rounded-xl border-2 border-buttonColor bg-white p-3">
         <p className="border-b border-buttonColor pb-1 font-bold text-center">
           Profile
         </p>
@@ -118,7 +120,7 @@ const Profile = () => {
       </div>
 
       {user?.id == id && (
-        <div className="my-10 rounded-xl border-2 border-buttonColor p-3">
+        <div className="my-10 rounded-xl border-2 border-buttonColor p-3 bg-white">
           <p className="border-b border-buttonColor pb-1 font-bold text-center">
             Your Wishlist
           </p>
@@ -171,7 +173,7 @@ const Profile = () => {
                               }
                             >
                               <FaHeart
-                                className={`absolute top-[11px] right-3 text-xl  text-red-600`}
+                                className={`absolute top-[11px] right-3 text-xl  text-buttonColor`}
                               />
                               <BsHeart className="absolute top-3 right-3 text-xl text-white" />
                             </div>
@@ -217,15 +219,17 @@ const Profile = () => {
         </div>
       )}
       <div className="flex items-center justify-end">
-        <button
-          onClick={(e) => logoutHandler(e)}
-          className="flex items-center gap-4 rounded-xl bg-buttonColor px-6 py-2    text-white"
-        >
-          Logout
-          <span className="text-2xl">
-            <FaPersonWalkingArrowRight />
-          </span>
-        </button>
+        {user?.id == id && (
+          <button
+            onClick={(e) => logoutHandler(e)}
+            className="flex items-center gap-4 rounded-xl bg-buttonColor px-6 py-2    text-white"
+          >
+            Logout
+            <span className="text-2xl">
+              <FaPersonWalkingArrowRight />
+            </span>
+          </button>
+        )}
       </div>
     </div>
   );

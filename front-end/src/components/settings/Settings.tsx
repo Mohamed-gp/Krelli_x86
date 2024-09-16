@@ -63,7 +63,7 @@ const Settings = () => {
       dispatch(authActions.login(data.data));
     } catch (error) {
       console.log(error);
-      toast.error(error?.message);
+      toast.error(error?.response?.data);
     }
   };
 
@@ -84,7 +84,7 @@ const Settings = () => {
       });
     } catch (error) {
       console.log(error);
-      toast.error(error?.response?.data.message);
+      toast.error(error?.response?.data);
     }
   };
 
@@ -128,7 +128,7 @@ const Settings = () => {
     >
       <form
         onSubmit={(e) => submitInfohandler(e)}
-        className="my-10 rounded-xl border-2 border-buttonColor p-3"
+        className="my-10 rounded-xl border-2 border-buttonColor p-3 bg-white"
       >
         <p className="border-b border-buttonColor pb-1 font-bold">
           Account Settings
@@ -217,7 +217,7 @@ const Settings = () => {
       </form>
       <form
         onSubmit={(e) => changePasswordHanlder(e)}
-        className="my-10 rounded-xl border-2 border-buttonColor p-3"
+        className="my-10 rounded-xl border-2 border-buttonColor p-3 bg-white"
       >
         <p className="border-b border-buttonColor pb-1 font-bold">
           Change Password
@@ -291,15 +291,17 @@ const Settings = () => {
             <FaTrash />
           </span>
         </button>
-        <button
-          onClick={(e) => logoutHandler(e)}
-          className="flex items-center logout-setting-button gap-4 rounded-xl bg-buttonColor px-6 py-2  hover:scale-[1.02] duration-300  text-white"
-        >
-          Logout
-          <span className="text-2xl animate-pulse ">
-            <FaPersonWalkingArrowRight />
-          </span>
-        </button>
+        {user?.id == id && (
+          <button
+            onClick={(e) => logoutHandler(e)}
+            className="flex items-center logout-setting-button gap-4 rounded-xl bg-buttonColor px-6 py-2  hover:scale-[1.02] duration-300  text-white"
+          >
+            Logout
+            <span className="text-2xl animate-pulse ">
+              <FaPersonWalkingArrowRight />
+            </span>
+          </button>
+        )}
       </div>
     </div>
   );

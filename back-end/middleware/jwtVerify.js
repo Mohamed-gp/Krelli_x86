@@ -22,7 +22,6 @@ export const jwtVerifyUser = (req, res, next) => {
   next();
 };
 export const jwtVerifyAdminAndUser = (req, res, next) => {
-  console.log();
   // console.log(req.user.userId)
   console.log(req.user.role == "admin" || req.params.id == req.user.userId);
   if (req.user.role == "admin" || req.params.id == req.user.userId) {
