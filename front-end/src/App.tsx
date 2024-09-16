@@ -21,16 +21,15 @@ import Profile from "./pages/profile/Profile.tsx";
 import NotFound from "./pages/notFound/NotFound.tsx";
 import PhotosModel from "./components/photosModel/PhotosModel.tsx";
 import Settings from "./components/settings/Settings.tsx";
+import { useEffect } from "react";
 
 function App() {
   const user = useSelector((state: IRootState) => state.auth.user);
-
   
 
   return (
     <>
       <BrowserRouter>
-        
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />

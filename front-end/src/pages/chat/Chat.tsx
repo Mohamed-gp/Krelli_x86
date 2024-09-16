@@ -27,7 +27,7 @@ const Chat = () => {
   const getSingleMessages = async () => {
     try {
       const { data } = await customAxios.get(
-        `/messages/${inbox[activeInboxIndex]?.id}`
+        `/messages/${inbox[activeInboxIndex]?.id}`,
       );
 
       setsingleMessages(data);
@@ -41,7 +41,7 @@ const Chat = () => {
         `/messages/${inbox[activeInboxIndex]?.id}/messages`,
         {
           text: messageInput,
-        }
+        },
       );
       setmessageInput("");
     } catch (error: any) {
@@ -89,36 +89,36 @@ const Chat = () => {
   }, []);
   return (
     <>
-      <div className=" flex    mt-12 gap-6 ">
+      <div className="mt-12 flex gap-6">
         {/* left side */}
         <LeftSideNav />
         {/* right side */}
         <div className="flex-1">
-          <p className="text-3xl font-bold mb-6">Inbox</p>
-          <div className="  flex md:flex-row gap-6 justify-center flex-col">
-            <div className="flex flex-col px-6 gap-6">
+          <p className="mb-6 text-3xl font-bold">Inbox</p>
+          <div className="flex flex-col justify-center gap-6 md:flex-row">
+            <div className="flex flex-col gap-6 px-6">
               <div className="flex justify-center">
-                <div className="justify-center  flex flex-col items-center  gap-6">
+                <div className="flex flex-col items-center justify-center gap-6">
                   {inbox?.length == 0 ? (
                     <div
-                      className="flex justify-center items-center w-full"
+                      className="flex w-full items-center justify-center"
                       style={{ height: "calc(100vh - 350px)" }}
                     >
                       <div className="flex flex-col items-center">
                         <p className="font-bold">No Chat Found</p>
-                        <p className="opacity-70 text-sm mt-1 mb-3 text-center">
+                        <p className="mb-3 mt-1 text-center text-sm opacity-70">
                           Try Connecting With Properties Hoster Or Rent Houses
                         </p>
-                        <div className="flex gap-2 flex-wrap justify-center">
+                        <div className="flex flex-wrap justify-center gap-2">
                           <Link
                             to="/properties"
-                            className="border-2 w-[160px] font-bold border-black px-6 py-2 rounded-xl text-center cursor-pointer"
+                            className="w-[160px] cursor-pointer rounded-xl border-2 border-black px-6 py-2 text-center font-bold"
                           >
                             Find Rent
                           </Link>
                           <Link
                             to="/#addProperty"
-                            className="border-2 w-[160px] font-bold border-black px-6 py-2 rounded-xl text-center cursor-pointer"
+                            className="w-[160px] cursor-pointer rounded-xl border-2 border-black px-6 py-2 text-center font-bold"
                           >
                             Rent A House
                           </Link>
@@ -131,9 +131,9 @@ const Chat = () => {
                         // i neeed to fix the view of the hoster
                         <div
                           onClick={() => setactiveInboxIndex(index)}
-                          className={`flex gap-3 items-center relative px-2 bg-white rounded-xl py-2 justify-center hover:opacity-85 duration-300 cursor-pointer w-[250px] ${
+                          className={`relative flex w-[250px] cursor-pointer items-center justify-center gap-3 rounded-xl bg-white px-2 py-2 duration-300 hover:opacity-85 ${
                             index == activeInboxIndex
-                              ? " text-white  !bg-buttonColor"
+                              ? "!bg-buttonColor text-white"
                               : ""
                           }`}
                         >
@@ -141,22 +141,21 @@ const Chat = () => {
                             <img
                               src={host?.users[0]?.profileImage}
                               alt="avatar"
-                              className="w-12 h-12 object-cover rounded-full"
+                              className="h-12 w-12 rounded-full object-cover"
                             />
                           </div>
                           <div className="flex flex-col">
-                            {host?.users[0]?.firstName == user?.firstName &&
-                            host?.users[0]?.lastName == user?.lastName ? (
+                            {host?.users[0]?.username == user?.username ? (
                               <>
                                 <p className="text-sm">
-                                  {host?.users[1]?.firstName.slice(0, 11)}...
+                                  {host?.users[1]?.username.slice(0, 11)}...
                                 </p>
                                 <p>Property Tenant</p>
                               </>
                             ) : (
                               <>
                                 <p className="text-sm">
-                                  {host?.users[0]?.firstName.slice(0, 11)}...
+                                  {host?.users[0]?.username.slice(0, 11)}...
                                 </p>
                                 <p>Property owner</p>
                               </>
@@ -165,7 +164,7 @@ const Chat = () => {
                           <div>
                             <img
                               src={host?.picture}
-                              className="w-12 h-12 rounded-xl object-cover"
+                              className="h-12 w-12 rounded-xl object-cover"
                               alt=""
                             />
                           </div>
@@ -177,36 +176,36 @@ const Chat = () => {
               </div>
             </div>
             {inbox?.length != 0 && (
-              <div className="flex flex-col rounded-xl bg-white px-6 py-6 gap-6 flex-1 max-w-[700px] mx-4">
-                <div className="flex border-b-2 justify-between">
+              <div className="mx-4 flex max-w-[700px] flex-1 flex-col gap-6 rounded-xl bg-white px-6 py-6">
+                <div className="flex justify-between border-b-2">
                   <p className="">
-                    {inbox[activeInboxIndex]?.users[1]?.firstName}
+                    {inbox[activeInboxIndex]?.users[1]?.username}
                   </p>
                   {/* <FaTrash /> */}
                 </div>
-                <div className="flex flex-col rounded-xl bg-white px-6 py-6 gap-6 flex-1 max-h-[300px] overflow-auto mx-4">
+                <div className="mx-4 flex max-h-[300px] flex-1 flex-col gap-6 overflow-auto rounded-xl bg-white px-6 py-6">
                   {singleMessages?.Messages?.map((message) => (
                     <>
                       {message?.userId == user?.id && (
                         <div className="flex items-end gap-2">
-                          <p className="bg-[#4880FF] text-white p-6 rounded-xl w-full">
+                          <p className="w-full rounded-xl bg-[#4880FF] p-6 text-white">
                             {message?.message}
                           </p>
                           <img
                             src={user.profileImage}
                             alt=""
-                            className="w-12 h-12 object-cover rounded-full"
+                            className="h-12 w-12 rounded-full object-cover"
                           />
                         </div>
                       )}
                       {message?.userId != user?.id && (
-                        <div className="flex items-end gap-2 w-full">
+                        <div className="flex w-full items-end gap-2">
                           <img
                             src="/profile.jpg"
                             alt=""
-                            className="w-12 h-12 object-cover rounded-full"
+                            className="h-12 w-12 rounded-full object-cover"
                           />
-                          <p className="bg-[#F5F5F5] p-6 rounded-xl">
+                          <p className="rounded-xl bg-[#F5F5F5] p-6">
                             {message.message}
                           </p>
                         </div>
@@ -214,19 +213,19 @@ const Chat = () => {
                     </>
                   ))}
                 </div>
-                <div className="flex justify-between items-center">
+                <div className="flex items-center justify-between">
                   <input
                     type="text"
                     placeholder="Write Message"
                     value={messageInput}
                     onChange={(e) => setmessageInput(e.target.value)}
-                    className="focus:outline-none w-full border-t-2 py-6"
+                    className="w-full border-t-2 py-6 focus:outline-none"
                   />
                   <button
                     onClick={() => createMessage()}
-                    className={`flex text-white  font-bold gap-2 bg-[#4880FF] items-center px-6 py-2 rounded-xl disabled:opacity-50 ${
+                    className={`flex items-center gap-2 rounded-xl bg-[#4880FF] px-6 py-2 font-bold text-white disabled:opacity-50 ${
                       messageInput.length < 1
-                        ? "opacity-50 cursor-not-allowed"
+                        ? "cursor-not-allowed opacity-50"
                         : "opacity-100"
                     }`}
                     disabled={messageInput.length < 1}

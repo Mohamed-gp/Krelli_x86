@@ -12,7 +12,6 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { IRootState } from "../../store/store";
 import { useEffect, useState } from "react";
-import { getWilayaNameById } from "../../utils/data";
 import { BsHeart } from "react-icons/bs";
 
 const Profile = () => {
@@ -94,22 +93,18 @@ const Profile = () => {
       style={{ minHeight: "calc(100vh - 70.94px)" }}
     >
       <div className="my-10 rounded-xl border-2 border-buttonColor bg-white p-3">
-        <p className="border-b border-buttonColor pb-1 font-bold text-center">
+        <p className="border-b border-buttonColor pb-1 text-center font-bold">
           Profile
         </p>
-        <div className="flex flex-col-reverse  items-center justify-between gap-x-32 px-4 py-6">
-          <div className="flex flex-col md:flex-row-reverse justify-between items-center w-full gap-3">
-            <div className="rounded-full w-36 h-36 overflow-hidden">
+        <div className="flex flex-col-reverse items-center justify-between gap-x-32 px-4 py-6">
+          <div className="flex w-full flex-col items-center justify-between gap-3 md:flex-row-reverse">
+            <div className="h-36 w-36 overflow-hidden rounded-full">
               <img src={userInfo?.profileImage} alt="avatar" className="" />
             </div>
-            <div className="flex gap-1 flex-col">
+            <div className="flex flex-col gap-1">
               <p>
-                <span className="font-bold">firstName:</span>{" "}
-                {userInfo?.firstName}
-              </p>
-              <p>
-                <span className="font-bold">lastName:</span>{" "}
-                {userInfo?.lastName}
+                <span className="font-bold">username:</span>{" "}
+                {userInfo?.username}
               </p>
               <p>
                 <span className="font-bold">Email:</span> {userInfo?.email}
@@ -120,27 +115,27 @@ const Profile = () => {
       </div>
 
       {user?.id == id && (
-        <div className="my-10 rounded-xl border-2 border-buttonColor p-3 bg-white">
-          <p className="border-b border-buttonColor pb-1 font-bold text-center">
+        <div className="my-10 rounded-xl border-2 border-buttonColor bg-white p-3">
+          <p className="border-b border-buttonColor pb-1 text-center font-bold">
             Your Wishlist
           </p>
           <>
-            <div className=" flex    mt-12 gap-6 ">
+            <div className="mt-12 flex gap-6">
               <div className="w-full">
-                <div className="flex flex-wrap items-center justify-between gap-3 my-6 mx-12">
+                <div className="mx-12 my-6 flex flex-wrap items-center justify-between gap-3">
                   {wishlist?.length == 0 && (
                     <div
-                      className="flex justify-center items-center w-full"
+                      className="flex w-full items-center justify-center"
                       style={{ height: "calc(100vh - 350px)" }}
                     >
                       <div className="flex flex-col items-center">
                         <p className="font-bold">No Wishlist Found</p>
-                        <p className="opacity-70 text-sm mt-1 mb-3 text-center">
+                        <p className="mb-3 mt-1 text-center text-sm opacity-70">
                           Go Browse Some Properties And Add To Wishlist
                         </p>
                         <Link
-                          to={`/properties?wilaya=&category=`}
-                          className="border-2 font-bold border-black px-6 py-2 rounded-xl text-center cursor-pointer"
+                          to={`/properties?category=`}
+                          className="cursor-pointer rounded-xl border-2 border-black px-6 py-2 text-center font-bold"
                         >
                           Add Some Properties To Wishlist
                         </Link>
@@ -156,14 +151,14 @@ const Profile = () => {
                             boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 15px",
                           }}
                           key={property.path}
-                          className="w-[240px] rounded-xl overflow-hidden bg-white property-card"
+                          className="property-card w-[240px] overflow-hidden rounded-xl bg-white"
                         >
                           <div className="img relative">
-                            <div className=" img w-[240px] h-[160px] overflow-hidden">
+                            <div className="img h-[160px] w-[240px] overflow-hidden">
                               <img
                                 src={property?.Pictures[0]?.url}
                                 alt={property.title}
-                                className="hover:scale-105 duration-300"
+                                className="duration-300 hover:scale-105"
                               />
                             </div>
                             <div
@@ -173,9 +168,9 @@ const Profile = () => {
                               }
                             >
                               <FaHeart
-                                className={`absolute top-[11px] right-3 text-xl  text-buttonColor`}
+                                className={`absolute right-3 top-[11px] text-xl text-buttonColor`}
                               />
-                              <BsHeart className="absolute top-3 right-3 text-xl text-white" />
+                              <BsHeart className="absolute right-3 top-3 text-xl text-white" />
                             </div>
                           </div>
                           <div className="flex flex-col gap-2 px-3 py-4">
@@ -184,11 +179,7 @@ const Profile = () => {
                                 <p className="font-bold">{property.title}</p>
                                 <p>${property.price}/ Night</p>
                               </div>
-                              <div>
-                                <p className="font-bold">
-                                  {getWilayaNameById(property.wilaya)}
-                                </p>
-                              </div>
+                              
                             </div>
                             {/* <div className="flex gap-1">
                               <span className="flex text-yellow-400">
@@ -222,7 +213,7 @@ const Profile = () => {
         {user?.id == id && (
           <button
             onClick={(e) => logoutHandler(e)}
-            className="flex items-center gap-4 rounded-xl bg-buttonColor px-6 py-2    text-white"
+            className="flex items-center gap-4 rounded-xl bg-buttonColor px-6 py-2 text-white"
           >
             Logout
             <span className="text-2xl">

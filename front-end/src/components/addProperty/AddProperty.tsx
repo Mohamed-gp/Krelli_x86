@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AddPropertyInput from "./AddPropertyInput";
 import AddProperyPhoto from "./AddProperyPhoto";
 import AddPropertySubmit from "./AddPropertySubmit";
@@ -7,49 +7,66 @@ import { IRootState } from "../../store/store";
 import customAxios from "../../utils/axios";
 import toast from "react-hot-toast";
 import { authActions } from "../../store/slices/authSlice";
-import AddPropertyWilaya from "./AddPropertyWilaya";
 import AddPropertyCategory from "./AddPropertyCategory";
-import { getWilayaIdByName } from "../../utils/data";
+import AddLocationInput from "../maps/AddLocationInput";
+import AddPropertyInputNumber from "./AddPropertyInputNumber";
 
 const AddProperty = () => {
   const dispatch = useDispatch();
   const user = useSelector((state: IRootState) => state.auth.user);
   const [dataToSubmit, setDataToSubmit] = useState({
-    firstName: "",
-    lastName: "",
+    username: "",
     email: "",
     password: "",
     title: "",
-    wilaya: "",
+    latitude: 36.66,
+    longitude: 2.87,
     category: "",
-    price: "",
-    bathrooms: "",
-    bedrooms: "",
-    guests: "",
+    price: 10,
+    bathrooms: 0,
+    bedrooms: 0,
+    guests: 0,
     description: "",
     files: [],
   });
   const formData = new FormData();
   const submitHandler = async (e) => {
     e.preventDefault();
-    if (dataToSubmit?.firstName?.length != 0) {
-      formData.set("firstName", dataToSubmit?.firstName);
+    if (dataToSubmit.price < 10 || dataToSubmit.price > 10000) {
+      return toast.error("price must be greater than $10 and less than $10000");
     }
-    if (dataToSubmit?.lastName?.length != 0) {
-      formData.set("lastName", dataToSubmit?.lastName);
+    if (dataToSubmit.guests < 1) {
+      return toast.error("guests must be greater than 0");
     }
-    if (dataToSubmit?.email?.length != 0) {
-      formData.set("email", dataToSubmit?.email);
+    if (dataToSubmit.bathrooms < 1) {
+      return toast.error("bathrooms must be greater than 0");
     }
-    if (dataToSubmit?.password.length != 0) {
-      formData.set("password", dataToSubmit?.password);
+    if (dataToSubmit.bedrooms < 1) {
+      return toast.error("bedrooms must be greater than 0");
     }
+    if (
+      dataToSubmit.title == "" ||
+      dataToSubmit.category == "" ||
+      dataToSubmit.description == "" ||
+      !dataToSubmit.latitude ||
+      !dataToSubmit.longitude
+    ) {
+      return toast.error("all Fields Are Required");
+    }
+    if (dataToSubmit.files.length < 5) {
+      return toast.error("you must enter more than 4 images of the house");
+    }
+
+    formData.set("username", dataToSubmit?.username);
+    formData.set("email", dataToSubmit?.email);
+    formData.set("password", dataToSubmit?.password);
     formData.set("title", dataToSubmit?.title);
-    formData.set("wilaya", dataToSubmit?.wilaya);
-    formData.set("price", dataToSubmit?.price);
-    formData.set("bathrooms", dataToSubmit?.bathrooms);
-    formData.set("bedrooms", dataToSubmit?.bedrooms);
-    formData.set("guests", dataToSubmit?.guests);
+    formData.set("price", String(dataToSubmit?.price));
+    formData.set("bathrooms", String(dataToSubmit?.bathrooms));
+    formData.set("bedrooms", String(dataToSubmit?.bedrooms));
+    formData.set("latitude", String(dataToSubmit?.latitude));
+    formData.set("longitude", String(dataToSubmit?.longitude));
+    formData.set("guests", String(dataToSubmit?.guests));
     formData.set("description", dataToSubmit?.description);
     formData.set("category", dataToSubmit?.category);
     for (let i = 0; i < dataToSubmit.files.length; i++) {
@@ -60,46 +77,14 @@ const AddProperty = () => {
       const url = user ? "/host/homes" : "/auth/addHome";
 
       if (
-        (formData.get("firstName") == "" ||
-          formData.get("lastName") == "" ||
-          formData.get("email") == "" ||
-          formData.get("password") == "") &&
+        (dataToSubmit.username == "" ||
+          dataToSubmit.email == "" ||
+          dataToSubmit.password == "") &&
         url == "/auth/addHome"
       ) {
         return toast.error("all Fields Are Required");
       }
-      if (
-        formData.get("price") == "" ||
-        formData.get("wilaya") == "" ||
-        formData.get("title") == "" ||
-        formData.get("category") == "" ||
-        formData.get("description") == "" ||
-        formData.get("guests") == "" ||
-        formData.get("bedrooms") == "" ||
-        formData.get("bathrooms") == ""
-      ) {
-        return toast.error("all Fields Are Required");
-      }
-      formData.set("wilaya", getWilayaIdByName(formData.get("wilaya") as string));
-      // @ts-ignore
-      if (+formData.get("price") != formData.get("price")) {
-        return toast.error("price Field Should be a number");
-      }
-      // @ts-ignore
-      if (+formData.get("bathrooms") != formData.get("bathrooms")) {
-        return toast.error("bathrooms Field Should be an integer");
-      }
-      // @ts-ignore
-      if (+formData.get("bedrooms") != formData.get("bedrooms")) {
-        return toast.error("bedrooms Field Should be an integer");
-      }
-      // @ts-ignore
-      if (+formData.get("guests") != formData.get("guests")) {
-        return toast.error("guests Field Should be an integer");
-      }
-      if (formData.getAll("files").length < 5) {
-        return toast.error("you must enter more than 4 images of the house");
-      }
+
       const { data } = await customAxios.post(url, formData, {
         withCredentials: true,
       });
@@ -111,7 +96,7 @@ const AddProperty = () => {
       } else {
         toast.success("property created successfuly");
       }
-    } catch (error: any) {
+    } catch (error) {
       console.log(error);
       toast.error(error.response.data);
     }
@@ -119,44 +104,37 @@ const AddProperty = () => {
 
   return (
     <div className="container" id="addProperty">
-      <p className="font-bold text-center text-xl">
+      <p className="text-center text-xl font-bold">
         Your property with us and be Confident that Your Room will be Filled
         Out!
       </p>
       <form
         onSubmit={submitHandler}
-        className="flex flex-col my-6 bg-white border-2 rounded-xl border-black py-6 px-6 gap-6"
+        className="my-6 flex flex-col gap-6 rounded-xl border-2 border-black bg-white px-6 py-6"
       >
         <p className="text-center font-bold text-[#4561EC]">
           Add A New Property
         </p>
         {!user && (
-          <div className="flex gap-6 flex-wrap">
+          <div className="flex flex-wrap justify-between gap-6">
             <AddPropertyInput
               dataToSubmit={dataToSubmit}
               setDataToSubmit={setDataToSubmit}
-              inputLabel="firstName"
-            />
-            <AddPropertyInput
-              dataToSubmit={dataToSubmit}
-              setDataToSubmit={setDataToSubmit}
-              inputLabel="lastName"
+              inputLabel="username"
             />
             <AddPropertyInput
               dataToSubmit={dataToSubmit}
               setDataToSubmit={setDataToSubmit}
               inputLabel="email"
             />
-          </div>
-        )}
-        <div className="flex gap-6  flex-wrap">
-          {!user && (
             <AddPropertyInput
               dataToSubmit={dataToSubmit}
               setDataToSubmit={setDataToSubmit}
               inputLabel="password"
             />
-          )}
+          </div>
+        )}
+        <div className="gap flex flex-wrap justify-between gap-6">
           <AddPropertyInput
             dataToSubmit={dataToSubmit}
             setDataToSubmit={setDataToSubmit}
@@ -168,40 +146,41 @@ const AddProperty = () => {
             setDataToSubmit={setDataToSubmit}
             inputLabel="category"
           />
-          <AddPropertyWilaya
+
+          <AddLocationInput
             dataToSubmit={dataToSubmit}
             setDataToSubmit={setDataToSubmit}
-            inputLabel="wilaya"
+            inputLabel="location"
           />
-
           {user && (
-            <AddPropertyInput
+            <AddPropertyInputNumber
               dataToSubmit={dataToSubmit}
               setDataToSubmit={setDataToSubmit}
               inputLabel="guests"
             />
           )}
         </div>
-        <div className="flex gap-6 flex-wrap">
-          <AddPropertyInput
+        <div className="flex flex-wrap justify-between gap-6">
+          <AddPropertyInputNumber
             dataToSubmit={dataToSubmit}
             setDataToSubmit={setDataToSubmit}
             inputLabel="price"
           />
-          <AddPropertyInput
+          <AddPropertyInputNumber
             dataToSubmit={dataToSubmit}
             setDataToSubmit={setDataToSubmit}
             inputLabel="bathrooms"
           />
-          <AddPropertyInput
+
+          <AddPropertyInputNumber
             dataToSubmit={dataToSubmit}
             setDataToSubmit={setDataToSubmit}
             inputLabel="bedrooms"
           />
         </div>
-        <div className="flex gap-6 flex-wrap">
+        <div className="flex flex-wrap justify-between gap-6">
           {!user && (
-            <AddPropertyInput
+            <AddPropertyInputNumber
               dataToSubmit={dataToSubmit}
               setDataToSubmit={setDataToSubmit}
               inputLabel="guests"
@@ -212,6 +191,13 @@ const AddProperty = () => {
             setDataToSubmit={setDataToSubmit}
             inputLabel="description"
           />
+          <div className="invisible w-[100%] md:w-[30%]">
+            <AddPropertyInput
+              dataToSubmit={dataToSubmit}
+              setDataToSubmit={setDataToSubmit}
+              inputLabel="description"
+            />
+          </div>
         </div>
         <AddProperyPhoto
           dataToSubmit={dataToSubmit}

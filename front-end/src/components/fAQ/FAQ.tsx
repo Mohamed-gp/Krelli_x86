@@ -2,18 +2,18 @@ import FAQElement from "./FAQElement";
 
 const Faq = () => {
   return (
-    <section className="relative pt-24 pb-28 bg-blueGray-50 overflow-hidden">
+    <section className="bg-blueGray-50 relative overflow-hidden pb-28 pt-24">
       <img
-        className="absolute bottom-0 left-1/2 transform -translate-x-1/2"
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 transform"
         src="flaro-assets/images/faqs/gradient.svg"
         alt=""
       />
-      <div className="relative z-10 container px-4 mx-auto">
-        <div className="md:max-w-4xl mx-auto">
-          <h2 className="font-medium text-center text-5xl mb-12">
+      <div className="container relative z-10 mx-auto px-4">
+        <div className="mx-auto md:max-w-4xl">
+          <h2 className="mb-12 text-center text-5xl font-medium">
             Frequently Asked Questions
           </h2>
-          <div className="mb-11 flex flex-wrap -m-1">
+          <div className="-m-1 mb-11 flex flex-wrap">
             <FAQElement
               question="What is Krelli, and does it provide apps for iPhone and Android?"
               answer="Krelli is a cutting-edge rental housing application designed to streamline the rental process for both tenants and landlords. Our platform offers a comprehensive suite of features, including property search, listing management, communication tools, and secure payment processing. Whether you're looking for your dream rental property or managing your rental portfolio, Krelli provides a seamless and intuitive experience tailored to your needs. Yes, Krelli is available as a mobile app for both iPhone and Android devices. You can download the Krelli app from the Apple App Store for iOS devices and the Google Play Store for Android devices, allowing you to access our platform anytime, anywhere."
@@ -35,11 +35,11 @@ const Faq = () => {
               answer="Yes, Krelli prioritizes the security and confidentiality of users' financial information. Our platform employs industry-standard encryption protocols and secure data storage practices to safeguard sensitive financial data, such as credit card details or bank account numbers. Additionally, Krelli adheres to strict data protection regulations and privacy policies to ensure that users' financial information is handled with the utmost care and confidentiality, providing peace of mind to all users."
             />
           </div>
-          <p className="text-gray-600 text-center font-medium">
+          <p className="text-center font-medium text-gray-600">
             <span>Still have any questions? </span>
             <a
               className="font-semibold text-indigo-600 hover:text-indigo-700"
-              href="#contactUs"
+              href="#contact-us"
             >
               Contact us
             </a>

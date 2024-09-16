@@ -4,7 +4,6 @@ import LeftSideNav from "../../components/leftSideNav/LeftSideNav";
 import { useEffect, useState } from "react";
 import { BsHeart } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { getWilayaIdByName, getWilayaNameById } from "../../utils/data";
 import toast from "react-hot-toast";
 import customAxios from "../../utils/axios";
 import { useSelector } from "react-redux";
@@ -74,7 +73,7 @@ const Wishlist = () => {
                     Try Changing Or Removing Some Of Your Filters
                   </p>
                   <Link
-                    to={`/properties?wilaya=&category=`}
+                    to={`/properties?category=`}
                     className="border-2 font-bold border-black px-6 py-2 rounded-xl text-center cursor-pointer"
                   >
                     Add Some Properties To Wishlist
@@ -115,11 +114,7 @@ const Wishlist = () => {
                           <p className="font-bold">{property.title}</p>
                           <p>${property.price}/ Night</p>
                         </div>
-                        <div>
-                          <p className="font-bold">
-                            {getWilayaNameById(property.wilaya)}
-                          </p>
-                        </div>
+                        
                       </div>
                       {/* <div className="flex gap-1">
                         <span className="flex text-yellow-400">

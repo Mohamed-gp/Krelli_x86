@@ -1,88 +1,51 @@
-# React + TypeScript + Vite
+# Krelli Front-end
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the front-end repository for the Renting Houses application(Krelli). It is built using React, Vite, and TypeScript.
 
-Currently, two official plugins are available:
+## Installation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Clone the repository:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
-    project: ["./tsconfig.json", "./tsconfig.node.json"],
-    tsconfigRootDir: __dirname,
-  },
-};
+```bash
+git clone https://github.com/Mohamed-gp/Krelli_x86.git
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+2. Navigate to the project directory:
 
-## what i do
+```bash
+cd front-end
+```
 
-add speach to text for searching property for rent
-\_learn open ai api and create chatbot asisstance using open ai api because workers are not availble 24/7 so we need ai to answer repetetive question related to the instruction we give it to the ai bot
+3. Install the dependencies:
 
-- about page
-  _ link some backend with frontend  add property(80%) just i need to send the request 
-  _ cloudinary and testing
-  \_ we change the font of the website to apolo
+```bash
+npm install
+```
 
-_refactoring : code error typescript types and types files...
-\_code refactor
+## Usage
 
-## todos
-_ complete the link
-_ complete about page
-_ infinit scroll or pagination
-_ some aos and framer motion stuff
-\_joi validation
-_ strong password joi validator and suggestion
-\_ dynamic adding of the category title and the image by admin and providing image
-remove dark:style 
+To start the development server, run the following command:
 
-  <!-- {/* maybe we should add it next time dinamic category adding with image */}
-  {/* <div className="my-5">
-      <AddNewCategory />
-  </div> */} -->
+```bash
+npm run dev
+```
 
-_ i tried to add you in the github but i need a username
-_ i remove the chat gpt api key and logic and replace it with gemeni api key and i add it in the backend not in the frontent(client side) because in the server in the documentation is more secure to put in the server and it give 60 req/hour and this is good for our project in testing mode and i can do chat with images using gemini pro vision
-<!-- _ i code to much today to catch up the last vip star -->
-_ in the next week maybe am going to add select form because i found json in data have all the wilayas of algeria
-not found page
-wishlist
+This will start the application on `http://localhost:3500`.
 
-\__ email sent to verify buying i will use nodemailer
-_ drag and drop images
-don't forget that we write in the cahier de charge unit testing
+## Build
 
+To build the production-ready version of the application, run the following command:
 
-<!-- krelli is an software application that help people find and manage renting houses in algeria -->
+```bash
+npm run build
+```
 
-<!-- i can provide cahier de charge as instruction  -->
+The optimized and minified files will be generated in the `dist` directory.
 
-email : 1276b9ce1b@emailbbox.pro
-password : sendMessageToGPT
-tailwind ring class meaning
+## Contributing
 
-/// test account
-email
-mohamed@estin.dz
-pass
-mohamed@estin.dz
-first name
-mohamed
-last name
-outerbah
+Contributions are welcome! If you find any issues or have suggestions, please open an issue or submit a pull request.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for more information.

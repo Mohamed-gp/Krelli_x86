@@ -30,8 +30,7 @@ const allUsers = async (req, res) => {
     const users = await prisma.user.findMany({
       select: {
         id: true,
-        firstName: true,
-        lastName: true,
+        username: true,
         profileImage: true,
         email: true,
         role: true,
@@ -43,7 +42,9 @@ const allUsers = async (req, res) => {
 
 const singleUser = async (req, res) => {
   if (req.user.role !== "admin") {
-    return res.status(403).send("You are not authorized to view this");
+    return res
+      .status(403)
+      .json({ message: "You are not authorized to view this", data: null });
   }
   const { id } = req.params;
   const user = await prisma.user.findUnique({
@@ -52,14 +53,16 @@ const singleUser = async (req, res) => {
     },
   });
   if (!user) {
-    return res.status(404).send("User not found");
+    return res.status(404).json({ message: "User not found", data: null });
   }
   res.json(user);
 };
 
 const deleteUser = async (req, res) => {
   if (req.user.role !== "admin") {
-    return res.status(403).send("You are not authorized to delete this");
+    return res
+      .status(403)
+      .json({ message: "You are not authorized to delete this", data: null });
   }
   const { id } = req.params;
   const user = await prisma.user.findUnique({
@@ -68,7 +71,7 @@ const deleteUser = async (req, res) => {
     },
   });
   if (!user) {
-    return res.status(404).send("User not found");
+    return res.status(404).json({ message: "User not found", data: null });
   }
   await prisma.user.delete({
     where: {
@@ -79,14 +82,18 @@ const deleteUser = async (req, res) => {
 };
 const reviewsCount = async (req, res) => {
   if (req.user.role !== "admin") {
-    return res.status(403).send("You are not authorized to delete this");
+    return res
+      .status(403)
+      .json({ message: "You are not authorized to delete this", data: null });
   }
   const reviewsCount = await prisma.review.count();
   return res.json(reviewsCount);
 };
 const allReviews = async (req, res) => {
   if (req.user.role !== "admin") {
-    return res.status(403).send("You are not authorized to delete this");
+    return res
+      .status(403)
+      .json({ message: "You are not authorized to delete this", data: null });
   }
   const reviews = await prisma.review.findMany();
 
@@ -95,7 +102,9 @@ const allReviews = async (req, res) => {
 
 const removeHome = async (req, res) => {
   if (req.user.role !== "admin") {
-    return res.status(403).send("You are not authorized to delete this");
+    return res
+      .status(403)
+      .json({ message: "You are not authorized to delete this", data: null });
   }
   let { id } = req.params;
   id = parseInt(id);
@@ -105,7 +114,7 @@ const removeHome = async (req, res) => {
     },
   });
   if (!home) {
-    return res.status(404).send("User not found");
+    return res.status(404).json({ message: "User not found", data: null });
   }
   await prisma.home.delete({
     where: {

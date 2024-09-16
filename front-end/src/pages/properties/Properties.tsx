@@ -1,30 +1,34 @@
 import { useEffect, useState } from "react";
 import Categories from "../../components/categories/Categories";
-import SearchBar from "../../components/filtersAndSearch/SearchBar";
 import PropertiesCard from "../../components/properties/PropertiesCard";
 import { useSearchParams } from "react-router-dom";
-import { getWilayaIdByName } from "../../utils/data";
+import ShowMapPropertiesButton from "../../components/showMapPropertiesButton/ShowMapPropertiesButton";
 
 const Properties = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [houses, sethouses] = useState([]);
-  const [filter, setfilter] = useState({ category: "", wilaya: "" });
+  const [filter, setfilter] = useState({ category: "" });
 
   useEffect(() => {
     scrollTo(0, 0);
   }, []);
   useEffect(() => {
-    const id = getWilayaIdByName(filter.wilaya)
-    setSearchParams({ wilaya: id, category: filter.category });
+    setSearchParams({ category: filter.category });
   }, [filter]);
 
   return (
     <>
-      <SearchBar filter={filter} setfilter={setfilter} />
       <Categories filter={filter} setfilter={setfilter} />
-      <div className="container flex flex-wrap items-center justify-center sm:justify-center  gap-12 my-6">
-        <PropertiesCard all={true} houses={houses} sethouses={sethouses} filter={filter} setfilter={setfilter} />
+      <div className="container relative my-6 flex flex-wrap items-center justify-center gap-12 sm:justify-center">
+        <PropertiesCard
+          all={true}
+          houses={houses}
+          sethouses={sethouses}
+          filter={filter}
+          setfilter={setfilter}
+        />
       </div>
+      <ShowMapPropertiesButton />
     </>
   );
 };

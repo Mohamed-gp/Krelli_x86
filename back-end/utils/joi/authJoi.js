@@ -4,8 +4,7 @@ import joi from "joi";
 const verifySignUp = (object) => {
   const emailSchema = joi
     .object({
-      firstName: joi.string().required().trim().min(5).max(20),
-      lastName: joi.string().required().trim().min(5).max(20),
+      username: joi.string().required().trim().min(5).max(20),
       email: joi.string().required().trim().min(5).max(50).email(),
       password: joiPasswordComplexity(),
     })
@@ -23,10 +22,12 @@ const verifyLogin = (obj) => {
 };
 
 const verifyUpdateUser = (obj) => {
-  const schema = joi.object({
-    firstName: joi.string().trim().min(5).max(20).allow(""),
-    lastName: joi.string().trim().min(5).max(20).allow(""),
-  }).unknown(true);
+  const schema = joi
+    .object({
+      username: joi.string().trim().min(5).max(20).allow(""),
+      lastName: joi.string().trim().min(5).max(20).allow(""),
+    })
+    .unknown(true);
   return schema.validate(obj);
 };
 const verifyUpdatePassword = (obj) => {
@@ -36,4 +37,4 @@ const verifyUpdatePassword = (obj) => {
   return schema.validate(obj);
 };
 
-export { verifyLogin, verifySignUp, verifyUpdateUser,verifyUpdatePassword };
+export { verifyLogin, verifySignUp, verifyUpdateUser, verifyUpdatePassword };

@@ -24,7 +24,11 @@ const subscribeToNewsletter = async (req, res) => {
 
   return res
     .status(200)
-    .send("Email registered successfully you will receive a newsletter soon!");
+    .json({
+      data: null,
+      message:
+        "Email registered successfully you will receive a newsletter soon!",
+    });
 };
 
 export { subscribeToNewsletter };

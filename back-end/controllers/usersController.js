@@ -23,16 +23,16 @@ const singleUser = async (req, res) => {
   res.json(user);
 };
 const updateProfile = async (req, res) => {
-  let { firstName, lastName } = req.body;
-  if (firstName == "") {
-    firstName = undefined;
-  }
-  if (lastName == "") {
-    lastName = undefined;
+  let { username } = req.body;
+
+  if (username == "") {
+    username = undefined;
   }
   const { error } = verifyUpdateUser(req.body);
   if (error) {
-    return res.status(400).send(error.details[0].message);
+    return res
+      .status(400)
+      .json({ data: null, message: error.details[0].message });
   }
   const pictures = req.files.map((file) => {
     return file.path;
@@ -48,8 +48,7 @@ const updateProfile = async (req, res) => {
       id: req.params.id,
     },
     data: {
-      firstName,
-      lastName,
+      username,
       profileImage: pictureUrl,
     },
   });
@@ -61,29 +60,32 @@ const updateProfile = async (req, res) => {
 const changePassword = async (req, res) => {
   const { currentPassword, newPassword, confirmNewPassword } = req.body;
   if (!currentPassword || !newPassword || !confirmNewPassword) {
-    return res.status(400).json({ message: "All Fields Are Required" });
+    return res
+      .status(400)
+      .json({ data: null, message: "All Fields Are Required" });
   }
   if (confirmNewPassword != newPassword) {
     return res.status(400).json({
       message: "confirmNewPassword and newPassword must be have the same value",
+      data: null,
     });
   }
 
-  
   const user = await prisma.user.findUnique({
     where: {
       id: req.user.userId,
     },
   });
-  const validPassword = await bcrypt.compare(currentPassword, user?.password);
-  console.log(validPassword);
+  const validPassword = bcrypt.compare(currentPassword, user?.password);
   if (!validPassword) {
     return res.status(400).json({ message: "Invalid credentials" });
   }
 
-  const {error} = verifyUpdatePassword({password: newPassword});
+  const { error } = verifyUpdatePassword({ password: newPassword });
   if (error) {
-    return res.status(400).send(error.details[0].message);
+    return res
+      .status(400)
+      .json({ data: null, message: error.details[0].message });
   }
   const updatedUser = await prisma.user.update({
     where: {
@@ -105,36 +107,14 @@ const deleteUser = async (req, res) => {
     },
   });
   if (!oldUser) {
-    return res.status(404).json({ message: "user Not Found" });
+    return res.status(404).json({ message: "user Not Found", data: null });
   }
   await prisma.user.delete({
     where: {
       id: req.params.id,
     },
   });
-  return res.status(200).json({ message: "deleted Succefuly" });
-
-  // // 2- get all posts from db
-  // const posts = await Post.find({ user: user._id });
-
-  // // 3- get the public ids from the posts
-  // // video number 20
-  // const publicIds = posts?.map((post) => post?.image?.publicId);
-  // // 4- delete all postsimage from couldinary that belong to this user
-  // if (publicIds.length > 0) {
-  //   await cloudinaryRemoveManyImages(publicIds);
-  // }
-  // // 5- delete the profile picture from cloudinary
-  // if (user.profilePhoto.publicIds != null) {
-  //   await cloudinaryRemoveImage(user?.profilePhoto?.publicId);
-  // }
-  // // 6- delete user posts & comments
-  // await Comment.deleteMany({ user: user._id });
-  // await Post.deleteMany({ user: user._id });
-  // // 7- delete the user himself
-  // await User.findByIdAndDelete(req.user.id);
-  // 8- send a response to the client
-  // res.status(200).json({ message: "user deleted succefuly" });
+  return res.status(200).json({ message: "deleted Succefuly", data: null });
 };
 
 const getWishlist = async (req, res) => {
@@ -145,7 +125,7 @@ const getWishlist = async (req, res) => {
     },
   });
 
-  return res.json(wishlist);
+  return res.json({ data: wishlist, message: null });
 };
 const toggleWishlist = async (req, res) => {
   const userId = req.user.userId;
@@ -179,7 +159,7 @@ const toggleWishlist = async (req, res) => {
     },
   });
 
-  return res.json(wishlist);
+  return res.json({ data: wishlist, message: null });
 };
 
 export {

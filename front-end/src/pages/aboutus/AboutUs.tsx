@@ -3,8 +3,12 @@ import AboutUsTwoGrid from "../../components/aboutUsComponents/AboutUsTwoGrid.ts
 import SubscribeToUs from "../../components/aboutUsComponents/SubscribeToUs.tsx";
 import Faq from "../../components/fAQ/FAQ.tsx";
 import ContactUs from "../../components/contactUs/ContactUs.tsx";
+import { useEffect } from "react";
 
 const AboutUs = () => {
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, []);
   return (
     <>
       <HeroAboutSection />
@@ -34,11 +38,9 @@ const AboutUs = () => {
         img="https://pagedone.io/asset/uploads/1702034785.png"
         order={0}
       />
-      <Faq/>
-      <ContactUs/>
-      <SubscribeToUs/>
-
-      
+      <Faq />
+      <ContactUs />
+      <SubscribeToUs />
     </>
   );
 };

@@ -19,7 +19,7 @@ const Header = () => {
   return (
     <>
       <header className="bg-white">
-        <div className="relative container flex items-center lg:items-end justify-between py-6">
+        <div className="relative container flex items-end lg:items-end justify-between py-6">
           <HeaderLeft />
           <HeaderCenter open={open} setopen={setopen} />
           <HeaderRight />

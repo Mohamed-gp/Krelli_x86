@@ -10,23 +10,19 @@ const FAQElement = ({ question, answer }: FAQElementInterface) => {
   const [open, setopen] = useState(false);
   return (
     <div className="w-full p-1">
-      <div onClick={() => setopen((prev) => !prev)} className="py-7 cursor-pointer px-8 bg-white bg-opacity-60 border-2 hover:border-indigo-600 duration-500 rounded-2xl shadow-10xl">
-        <div className="flex flex-wrap justify-between -m-5">
-          <div className="flex-1 p-2"  >
+      <div
+        onClick={() => setopen((prev) => !prev)}
+        className="shadow-10xl cursor-pointer rounded-2xl border-2 bg-white bg-opacity-60 px-8 py-7 duration-500 hover:border-indigo-600"
+      >
+        <div className="-m-5 flex flex-wrap justify-between">
+          <div className="flex-1 p-2">
             <h3 className="text-lg font-semibold leading-normal">{question}</h3>
             {open && (
               <motion.p
-                // style={{
-                //   clipPath: `${
-                //     open
-                //       ? "polygon(0 0, 100% 0%, 100% 100%, 0% 100%)"
-                //       : "polygon(0 0, 100% 0%, 100% 0, 0 0)"
-                //   }  `,
-                // }}
-                initial={{ opacity: 0 ,height : 0}} 
-                animate={{ opacity: 1 ,height : 160}}
-                transition={{ duration: .1 }}
-                className={`text-gray-600 font-medium  `}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1 }}
+                className={`font-medium text-gray-600`}
               >
                 {answer}
               </motion.p>
@@ -34,7 +30,7 @@ const FAQElement = ({ question, answer }: FAQElementInterface) => {
           </div>
           <div className="w-auto p-2">
             <svg
-              className={` relative top-1 cursor-pointer ${
+              className={`relative top-1 cursor-pointer ${
                 open ? "rotate-0" : "rotate-180"
               } duration-500`}
               width="20"
@@ -46,9 +42,9 @@ const FAQElement = ({ question, answer }: FAQElementInterface) => {
               <path
                 d="M4.16732 12.5L10.0007 6.66667L15.834 12.5"
                 stroke="#4F46E5"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               ></path>
             </svg>
           </div>

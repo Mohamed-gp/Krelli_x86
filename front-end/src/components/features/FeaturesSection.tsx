@@ -17,7 +17,7 @@ const FeaturesSection = () => {
               className="w-[300px]"
             />
           </div>
-          <div className="flex flex-wrap justify-between w-full md:w-[70%] px-6 gap-y-6 items-center">
+          <div className="flex flex-wrap justify-between w-full lg:w-[70%] px-6 gap-y-6 items-center">
             {featuresCardsData.map((feature) => {
               return (
                 <FeaturesCard

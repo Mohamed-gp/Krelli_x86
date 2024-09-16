@@ -15,16 +15,12 @@ const AddProperyPhoto = ({
   dataToSubmit,
   setDataToSubmit,
 }: AddPropertyInputProps) => {
-
-
   return (
-    <div className="name-input  ">
-      <label htmlFor="photoUploader" className="font-bold">
-        Upload Photo
-      </label>
+    <div className="">
+      <p className="font-bold">Upload Photo</p>
       <label
         htmlFor="photoUploader"
-        className="flex flex-col cursor-pointer justify-content items-center border-2 border-dashed rounded-xl border-[#4561EC] my-1    py-6"
+        className="justify-content my-1 text-center flex cursor-pointer flex-col items-center rounded-xl border-2 border-dashed border-[#4561EC] py-6"
       >
         <p className="font-bold">
           Drag your images here, or <span>browse</span>
@@ -45,15 +41,18 @@ const AddProperyPhoto = ({
           }
         }}
       />
-      <div className="flex justify-center flex-wrap gap-3 my-6">
+      <div className="my-6 flex flex-wrap justify-center gap-3">
         {new Array(...dataToSubmit.files).map((file) => (
           <>
-            <div className="img w-36 h-36 rounded-xl overflow-hidden">
-              <img src={URL.createObjectURL(file)} alt="" className="h-full w-full object-cover" />  
+            <div className="img h-36 w-36 overflow-hidden rounded-xl">
+              <img
+                src={URL.createObjectURL(file)}
+                alt=""
+                className="h-full w-full object-cover"
+              />
             </div>
           </>
         ))}
-
       </div>
     </div>
   );

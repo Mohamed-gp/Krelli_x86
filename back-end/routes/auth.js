@@ -1,21 +1,23 @@
 import express from "express";
-import handelLogin from "../controllers/LoginController.js";
-import handelRegister from "../controllers/registerController.js";
-import registerAndAddhome from "../controllers/register&Addhome.js";
 import multer from "multer";
+import {
+  googleSignInController,
+  loginController,
+  registerAndAddHomeController,
+  registerController,
+} from "../controllers/authController.js";
 
 const storage = multer({ dest: "uploads/" });
 
 const router = express.Router();
 
-router.post("/addHome", storage.array("files"), registerAndAddhome);
-router.post("/login", handelLogin);
-router.post("/register", handelRegister);
+router.post("/addHome", storage.array("files"), registerAndAddHomeController);
+router.post("/login", loginController);
+router.post("/register", registerController);
+router.post("/google", googleSignInController);
 
 router.get("/logout", (req, res) => {
-
-  res.clearCookie("authorization");
-  res.json("Logged out");
+  res.clearCookie("authorization").json("Logged out");
 });
 
 export default router;

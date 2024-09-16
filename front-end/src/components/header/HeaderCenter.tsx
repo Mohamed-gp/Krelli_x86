@@ -35,18 +35,21 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
           ? { clipPath: "polygon(0 0, 100% 0%, 100% 100%, 0% 100%)" }
           : { clipPath: "polygon(0 0, 100% 0%, 100% 0, 0 0)" }
       }
-      className="lg:relative absolute right-8 lg:right-auto lg:w-auto w-[200px] lg:p-0 p-4 lg:top-auto rounded-2xl top-[100px] duration-300 z-50 bg-white"
+      className="lg:relative  absolute right-8 lg:right-auto lg:w-auto w-[200px] lg:p-0 p-4 lg:top-auto rounded-2xl top-[100px] duration-300 z-50 bg-white text-center"
     >
-      <ul className="flex lg:flex-row flex-col items-center gap-x-10  gap-y-6 ">
-        <li>
-          <NavLink className="cursor-pointer navigation-header-link" to="/">
+      <ul className="flex flex-1  lg:flex-row flex-col items-center gap-x-10  gap-y-6 ">
+        <li className="">
+          <NavLink
+            className="cursor-pointer navigation-header-link hover:text-navActiveColor duration-300"
+            to="/"
+          >
             Home
           </NavLink>
         </li>
         {user?.role == "admin" && (
           <li>
             <NavLink
-              className="cursor-pointer navigation-header-link"
+              className="cursor-pointer navigation-header-link hover:text-navActiveColor duration-300"
               to="/admin-dashboard"
             >
               Admin
@@ -58,7 +61,7 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
           <>
             <li>
               <NavLink
-                className="cursor-pointer navigation-header-link"
+                className="cursor-pointer navigation-header-link hover:text-navActiveColor duration-300"
                 to={`/profile/${user?.id}`}
               >
                 Profile
@@ -66,7 +69,7 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
             </li>
             <li>
               <NavLink
-                className="cursor-pointer navigation-header-link"
+                className="cursor-pointer navigation-header-link hover:text-navActiveColor duration-300"
                 to={`/wishlist/${user?.id}`}
               >
                 Wishlist
@@ -74,7 +77,7 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
             </li>
             <li>
               <NavLink
-                className="cursor-pointer navigation-header-link"
+                className="cursor-pointer navigation-header-link hover:text-navActiveColor duration-300"
                 to="/profile/chat/"
               >
                 Chat
@@ -84,7 +87,7 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
         )}
         <li>
           <NavLink
-            className="cursor-pointer navigation-header-link"
+            className="cursor-pointer navigation-header-link hover:text-buttonColor duration-300"
             to="/properties"
           >
             Find
@@ -92,7 +95,7 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
         </li>
         <li>
           <NavLink
-            className="cursor-pointer navigation-header-link"
+            className="cursor-pointer navigation-header-link hover:text-buttonColor duration-300"
             to="/aboutus"
           >
             About
@@ -107,7 +110,7 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
                 to={`/settings/${user?.id}`}
               >
                 Settings
-              </NavLink> 
+              </NavLink>
             </li>
             <li className="lg:hidden">
               <span
@@ -119,25 +122,27 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
             </li>
           </>
         )}
-        {!user && (
+        {!user ? (
           <>
-            <li>
+            <li className="lg:hidden">
               <NavLink
-                className="cursor-pointer navigation-header-link lg:hidden"
+                className="cursor-pointer navigation-header-link hover:text-buttonColor"
                 to="/login"
               >
                 Login
               </NavLink>
             </li>
-            <li>
+            <li className="lg:hidden">
               <NavLink
-                className="cursor-pointer navigation-header-link lg:hidden"
+                className="cursor-pointer navigation-header-link hover:text-buttonColor"
                 to="/register"
               >
                 Register
               </NavLink>
             </li>
           </>
+        ) : (
+          <></>
         )}
       </ul>
     </nav>

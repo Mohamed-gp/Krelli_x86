@@ -1,8 +1,4 @@
-import {
-  FaDoorOpen,
-  FaPersonWalkingArrowRight,
-  FaTrash,
-} from "react-icons/fa6";
+import { FaPersonWalkingArrowRight, FaTrash } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../store/slices/authSlice";
 import customAxios from "../../utils/axios";
@@ -30,15 +26,14 @@ const Settings = () => {
       const { data } = await customAxios.get("/auth/logout");
       toast.success(data);
       navigate("/");
-    } catch (error: any) {
+    } catch (error) {
       toast.error(error.message);
       console.log(error.message);
     }
   };
 
   const [dataToSubmit, setdataToSubmit] = useState({
-    firstName: "",
-    lastName: "",
+    username: "",
     // email: "",
     file: null,
   });
@@ -52,8 +47,7 @@ const Settings = () => {
     e.preventDefault();
     try {
       // Update the FormData object with the latest dataToSubmit values
-      formData.set("firstName", dataToSubmit?.firstName);
-      formData.set("lastName", dataToSubmit?.lastName);
+      formData.set("username", dataToSubmit?.username);
       // formData.set("email", dataToSubmit?.email);
       if (dataToSubmit?.file) {
         formData.set("file", dataToSubmit?.file);
@@ -63,7 +57,7 @@ const Settings = () => {
       dispatch(authActions.login(data.data));
     } catch (error) {
       console.log(error);
-      toast.error(error?.response?.data);
+      toast.error(error?.response?.data.message);
     }
   };
 
@@ -72,7 +66,7 @@ const Settings = () => {
     try {
       const { data } = await customAxios.post(
         `/users/password/${user?.id}`,
-        password
+        password,
       );
       console.log(data);
       toast.success(data.message);
@@ -84,7 +78,7 @@ const Settings = () => {
       });
     } catch (error) {
       console.log(error);
-      toast.error(error?.response?.data);
+      toast.error(error?.response?.data.message);
     }
   };
 
@@ -100,7 +94,7 @@ const Settings = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const { data } = await customAxios.delete(`/users/${user?.id}`);
+          await customAxios.delete(`/users/${user?.id}`);
           dispatch(authActions.logout());
           Swal.fire({
             title: "Deleted!",
@@ -128,38 +122,23 @@ const Settings = () => {
     >
       <form
         onSubmit={(e) => submitInfohandler(e)}
-        className="my-10 rounded-xl border-2 border-buttonColor p-3 bg-white"
+        className="my-10 rounded-xl border-2 border-buttonColor bg-white p-3"
       >
         <p className="border-b border-buttonColor pb-1 font-bold">
           Account Settings
         </p>
-        <div className="flex  flex-col-reverse items-center justify-between gap-x-32 px-4 py-6 lg:flex-row">
+        <div className="flex flex-col-reverse items-center justify-between gap-x-32 px-4 py-6 lg:flex-row">
           <div className="flex w-full flex-col gap-3">
             <div className="flex flex-col gap-1">
-              <label htmlFor="firstName">FirstName: </label>
-              <input
-                className="w-full rounded-xl border-2  py-2 pl-3 pr-3  focus:outline-none"
-                type="text"
-                id="firstName"
-                onChange={(e) =>
-                  setdataToSubmit({
-                    ...dataToSubmit,
-                    firstName: e.target.value,
-                  })
-                }
-                placeholder={user?.firstName}
-              />
-            </div>
-            <div className="flex flex-col gap-1">
-              <label htmlFor="lastName">LastName:</label>
+              <label htmlFor="username">Username:</label>
               <input
                 className="w-full rounded-xl border-2 py-2 pl-3 pr-3 focus:outline-none"
                 type="text"
-                id="lastName"
+                id="username"
                 onChange={(e) =>
-                  setdataToSubmit({ ...dataToSubmit, lastName: e.target.value })
+                  setdataToSubmit({ ...dataToSubmit, username: e.target.value })
                 }
-                placeholder={user?.lastName}
+                placeholder={user?.username}
               />
             </div>
             {/* <div className="flex flex-col gap-1">
@@ -176,7 +155,7 @@ const Settings = () => {
             </div> */}
           </div>
           <div className="flex flex-col items-center justify-center gap-3">
-            <div className="rounded-full w-48 h-48 overflow-hidden">
+            <div className="h-48 w-48 overflow-hidden rounded-full">
               <img
                 src={
                   dataToSubmit?.file
@@ -190,9 +169,14 @@ const Settings = () => {
             <input
               type="file"
               id="image-change"
-              onChange={(e) =>
-                setdataToSubmit({ ...dataToSubmit, file: e?.target?.files[0] })
-              }
+              onChange={(e) => {
+                if (e.target.files != null) {
+                  setdataToSubmit({
+                    ...dataToSubmit,
+                    file: e?.target?.files[0],
+                  });
+                }
+              }}
               className="hidden"
             />
             <label
@@ -205,19 +189,15 @@ const Settings = () => {
         </div>
         <button
           type="submit"
-          disabled={
-            dataToSubmit?.firstName == "" &&
-            dataToSubmit?.lastName == "" &&
-            dataToSubmit?.file == null
-          }
-          className=" disabled:opacity-60 disabled:cursor-not-allowed fit-content mx-auto flex rounded-lg bg-buttonColor  px-4 py-2 text-white"
+          disabled={dataToSubmit?.username == "" && dataToSubmit?.file == null}
+          className="fit-content mx-auto flex rounded-lg bg-buttonColor px-4 py-2 text-white disabled:cursor-not-allowed disabled:opacity-60"
         >
           Save Changes
         </button>
       </form>
       <form
         onSubmit={(e) => changePasswordHanlder(e)}
-        className="my-10 rounded-xl border-2 border-buttonColor p-3 bg-white"
+        className="my-10 rounded-xl border-2 border-buttonColor bg-white p-3"
       >
         <p className="border-b border-buttonColor pb-1 font-bold">
           Change Password
@@ -276,7 +256,7 @@ const Settings = () => {
             password?.newPassword == "" ||
             password?.confirmNewPassword == ""
           }
-          className="disabled:opacity-60 disabled:cursor-not-allowed fit-content mx-auto flex rounded-xl bg-buttonColor  px-4 py-2 text-white"
+          className="fit-content mx-auto flex rounded-xl bg-buttonColor px-4 py-2 text-white disabled:cursor-not-allowed disabled:opacity-60"
         >
           Change Password
         </button>
@@ -284,7 +264,7 @@ const Settings = () => {
       <div className="flex items-center justify-between">
         <button
           onClick={() => deleteProfileHandler()}
-          className="flex items-center gap-4 rounded-xl bg-red-400 hover:scale-[1.02] duration-300 px-6 py-2    text-white"
+          className="flex items-center gap-4 rounded-xl bg-red-400 px-6 py-2 text-white duration-300 hover:scale-[1.02]"
         >
           Delete Account
           <span className="text-lg">
@@ -294,10 +274,10 @@ const Settings = () => {
         {user?.id == id && (
           <button
             onClick={(e) => logoutHandler(e)}
-            className="flex items-center logout-setting-button gap-4 rounded-xl bg-buttonColor px-6 py-2  hover:scale-[1.02] duration-300  text-white"
+            className="logout-setting-button flex items-center gap-4 rounded-xl bg-buttonColor px-6 py-2 text-white duration-300 hover:scale-[1.02]"
           >
             Logout
-            <span className="text-2xl animate-pulse ">
+            <span className="animate-pulse text-2xl">
               <FaPersonWalkingArrowRight />
             </span>
           </button>

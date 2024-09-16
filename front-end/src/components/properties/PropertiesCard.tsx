@@ -1,4 +1,4 @@
-import { FaHeart, FaStar } from "react-icons/fa6";
+import { FaHeart } from "react-icons/fa6";
 // this for static data
 // import { propertiesCardsData } from "../../utils/data";
 import { Link, useSearchParams } from "react-router-dom";
@@ -6,7 +6,6 @@ import customAxios from "../../utils/axios";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { BsHeart } from "react-icons/bs";
-import { getWilayaIdByName, getWilayaNameById } from "../../utils/data";
 import { useSelector } from "react-redux";
 import { IRootState } from "../../store/store";
 
@@ -36,9 +35,9 @@ const PropertiesCard = ({
       const { data } = await customAxios("/homes" + location.search);
 
       if (all == false) {
-        sethouses(data?.slice(0, 4));
+        sethouses(data.data?.slice(0, 4));
       } else {
-        sethouses(data);
+        sethouses(data.data);
       }
     } catch (error: any) {
       console.log(error);
@@ -76,93 +75,79 @@ const PropertiesCard = ({
     }
   };
 
+  useEffect(() => {
+    console.log(houses);
+  }, [houses]);
   return (
     <>
-      {houses?.length == 0 ? (
+      {houses?.length == 0 && all ? (
         <div
-          className="flex justify-center items-center w-full"
+          className="flex w-full items-center justify-center"
           style={{ height: "calc(100vh - 350px)" }}
         >
           <div className="flex flex-col items-center">
             <p className="font-bold">No Exact Much</p>
-            <p className="opacity-70 text-sm mt-1 mb-3 text-center">
+            <p className="mb-3 mt-1 text-center text-sm opacity-70">
               Try Changing Or Removing Some Of Your Filters
             </p>
             <div
-              className="border-2 font-bold border-black px-6 py-2 rounded-xl text-center cursor-pointer"
-              onClick={() => setfilter({ category: "", wilaya: "" })}
+              className="cursor-pointer rounded-xl border-2 border-black px-6 py-2 text-center font-bold"
+              onClick={() => setfilter({ category: "" })}
             >
               Remove All Filters
             </div>
           </div>
         </div>
-      ) : (
-        houses?.map((property: any) => {
-          return (
-            <>
-              <Link
-                to={`/properties/${property?.id}`}
-                style={{ boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 15px" }}
-                key={property?.id}
-                className="w-[240px] rounded-xl overflow-hidden bg-white property-card"
-              >
-                <div className="img relative">
-                  <div className=" img w-[240px] h-[160px] overflow-hidden">
-                    <img
-                      src={property?.Pictures[0]?.url}
-                      alt={property?.title}
-                      className="hover:scale-105 duration-300"
-                    />
-                  </div>
-                  {user && (
-                    <div
-                      className=""
-                      onClick={(e) => toggleWishlistHandler(e, property.id)}
-                    >
-                      <FaHeart
-                        className={`absolute top-[11px] right-3 text-xl ${
-                          wishlist?.find((ele) => ele?.homeId == property?.id)
-                            ? "text-buttonColor"
-                            : ""
-                        }`}
+      ) : houses?.length > 0 ? (
+        <>
+          {houses?.map((property: any) => {
+            return (
+              <>
+                <Link
+                  to={`/properties/${property?.id}`}
+                  style={{ boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 15px" }}
+                  key={property?.id}
+                  className="property-card w-[240px] overflow-hidden rounded-xl bg-white"
+                >
+                  <div className="img relative">
+                    <div className="img h-[160px] w-[240px] overflow-hidden">
+                      <img
+                        src={property?.Pictures[0]?.url}
+                        alt={property?.title}
+                        className="duration-300 hover:scale-105"
                       />
-                      <BsHeart className="absolute top-3 right-3 text-xl text-white" />
                     </div>
-                  )}
-                </div>
-                <div className="flex flex-col gap-2 px-3 py-4">
-                  <div className="flex items-center justify-between gap-2">
-                    <div>
-                      <p className="font-bold">{property.title}</p>
-                      <p>${property.price}/ Night</p>
-                    </div>
-                    <div>
-                      <p className="font-bold">
-                        {getWilayaNameById(property.wilaya)}
-                      </p>
+                    {user && (
+                      <div
+                        className=""
+                        onClick={(e) => toggleWishlistHandler(e, property.id)}
+                      >
+                        <FaHeart
+                          className={`absolute right-3 top-[11px] text-xl ${
+                            wishlist?.find((ele) => ele?.homeId == property?.id)
+                              ? "text-buttonColor"
+                              : ""
+                          }`}
+                        />
+                        <BsHeart className="absolute right-3 top-3 text-xl text-white" />
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex flex-col gap-2 px-3 py-4">
+                    <div className="flex items-center justify-between gap-2">
+                      <div>
+                        <p className="font-bold">{property.title}</p>
+                        <p>${property.price}/ Night</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Link>
-            </>
-          );
-        })
-      )}
+                </Link>
+              </>
+            );
+          })}
+        </>
+      ) : null}
     </>
   );
 };
 export default PropertiesCard;
-
-/* 
-
-
-
-
-
-
-
-
-
-
-
-*/

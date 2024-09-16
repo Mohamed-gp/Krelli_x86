@@ -3,10 +3,6 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 const talkToGemini = async (req, res) => {
   try {
     const { message, history } = req.body;
-    console.log(message);
-    console.log("history start")
-    console.log(history)
-    console.log("history end")
 
     // Check for empty message
     if (!message) {
@@ -58,9 +54,10 @@ const talkToGemini = async (req, res) => {
 
     return res.status(200).json({
       message: text,
+      data: null,
     });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };
 

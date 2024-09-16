@@ -1,7 +1,7 @@
 import { categories } from "../../utils/data";
 
 interface CategoriesInterface {
-  filter: { category: string; wilaya: string };
+  filter: { category: string };
   setfilter: (e: any) => any;
 }
 
@@ -14,7 +14,7 @@ const Categories = ({ filter, setfilter }: CategoriesInterface) => {
     setfilter({ ...filter, category: categoryLabel })
   }
   return (
-    <div className="container flex gap-6 overflow-x-auto  my-3 pb-7 justify-start lg:justify-center">
+    <div className="container flex gap-6 overflow-x-auto py-7  my-6 pb-7 justify-start lg:justify-center">
       {categories.map((category) => (
         <div
           onClick={() => setFilterHandler(category.label)}

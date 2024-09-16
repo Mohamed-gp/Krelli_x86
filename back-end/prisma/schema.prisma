@@ -9,114 +9,115 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
-
-model User {
-  id String @id @unique @default(uuid())
-
-  email        String        @unique
-  firstName    String
-  lastName     String
-  profileImage String?       @default("http://res.cloudinary.com/dyhllkjj1/image/upload/v1715439059/dblboyxypvtkaeebvpgr.jpg")
-  isSubscribed Boolean?      @default(false)
-  password     String
-  role         String        @default("user")
-  createdAT    DateTime      @default(now())
-  Home         Home[]
-  Favorite     Favorite[]
-  Reservation  Reservation[]
-  Review       Review[]
-  Chat         Chat[]
-  Message      Message[]
-}
-
-model Home {
-  id           Int           @id @default(autoincrement())
-  title        String
-  description  String?
-  guests       Int
-  bedrooms     Int
-  bathrooms    Int
-  price        Float
-  wilaya       Int
-  category     String?
-  rating       Float?
-  longitude    Float?
-  latitude     Float?
-  Favorite     Favorite[]
-  Reservations Reservation[]
-  listedAt     DateTime      @default(now())
-  User         User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId       String?
-  Review       Review[]
-  Pictures     Picture[]
-}
-
-model Favorite {
-  id String @id @default(uuid())
-
-  User   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String?
-  Home   Home?   @relation(fields: [homeId], references: [id], onDelete: Cascade)
-  homeId Int?
-
-  favoritedAt DateTime @default(now())
-}
-
-model Reservation {
-  id Int @id @default(autoincrement())
-
-  startDate DateTime
-  endDate   DateTime
-  createdAt DateTime @default(now())
-  status    String   @default("pending")
-
-  User   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String?
-  Home   Home?   @relation(fields: [homeId], references: [id], onDelete: Cascade)
-  homeId Int?
-}
-
-model Review {
-  id String @id @default(uuid())
-
-  comment   String?
-  rating    Float?
-  createdAt DateTime @default(now())
-
-  User   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String?
-  Home   Home?   @relation(fields: [homeId], references: [id], onDelete: Cascade)
-  homeId Int?
-}
-
-model Picture {
-  id String @id @default(uuid())
-
-  url       String
-  createdAt DateTime @default(now())
-
-  Home   Home? @relation(fields: [homeId], references: [id], onDelete: Cascade)
-  homeId Int?
-}
-
-model Chat {
-  id        String    @id @default(uuid())
-  createdAt DateTime  @default(now())
-  picture   String?
-  users     User[]
-  Messages  Message[]
-}
-
-model Message {
-  id        String   @id @default(uuid())
-  message   String
-  createdAt DateTime @default(now())
-  Chat      Chat?    @relation(fields: [chatId], references: [id], onDelete: Cascade)
-  chatId    String?
-  // added
-  User      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String?
-}
+  
+  model User {
+    id String @id @unique @default(uuid())
+    email        String        @unique
+    username    String
+    profileImage String?       @default("http://res.cloudinary.com/dyhllkjj1/image/upload/v1715439059/dblboyxypvtkaeebvpgr.jpg")
+    isSubscribed Boolean?      @default(false)
+    password     String
+    role         String        @default("user")
+    createdAT    DateTime      @default(now())
+    provider     String        @default("credentials")
+    Home         Home[]
+    Favorite     Favorite[]
+    Reservation  Reservation[]
+    Review       Review[]
+    Chat         Chat[]
+    Message      Message[]
+  }
+  
+  model Home {
+    id           Int           @id @default(autoincrement())
+    title        String
+    description  String?
+    guests       Int
+    bedrooms     Int
+    bathrooms    Int
+    price        Float
+    country      String?
+    category     String?
+    rating       Float?
+    longitude    Float
+    latitude     Float
+    Favorite     Favorite[]
+    Reservations Reservation[]
+    listedAt     DateTime      @default(now())
+    User         User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId       String?
+    Review       Review[]
+    Pictures     Picture[]
+  }
+  
+  model Favorite {
+    id String @id @default(uuid())
+  
+    User   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId String?
+    Home   Home?   @relation(fields: [homeId], references: [id], onDelete: Cascade)
+    homeId Int?
+  
+    favoritedAt DateTime @default(now())
+  }
+  
+  model Reservation {
+    id Int @id @default(autoincrement())
+  
+    startDate DateTime
+    endDate   DateTime
+    createdAt DateTime @default(now())
+    status    String   @default("pending")
+  
+    User   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId String?
+    Home   Home?   @relation(fields: [homeId], references: [id], onDelete: Cascade)
+    homeId Int?
+  }
+  
+  model Review {
+    id String @id @default(uuid())
+  
+    comment   String?
+    rating    Float?
+    createdAt DateTime @default(now())
+  
+    User   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId String?
+    Home   Home?   @relation(fields: [homeId], references: [id], onDelete: Cascade)
+    homeId Int?
+  }
+  
+  model Picture {
+    id String @id @default(uuid())
+  
+    url       String
+    createdAt DateTime @default(now())
+  
+    Home   Home? @relation(fields: [homeId], references: [id], onDelete: Cascade)
+    homeId Int?
+  }
+  
+  model Chat {
+    id        String    @id @default(uuid())
+    createdAt DateTime  @default(now())
+    picture   String?
+    users     User[]
+    Messages  Message[]
+  }
+  
+  model Message {
+    id        String   @id @default(uuid())
+    message   String
+    createdAt DateTime @default(now())
+    Chat      Chat?    @relation(fields: [chatId], references: [id], onDelete: Cascade)
+    chatId    String?
+    // added
+    User      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId    String?
+  }
+  

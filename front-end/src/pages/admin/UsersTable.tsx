@@ -28,7 +28,7 @@ const UsersTable = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const { data } = await customAxios.delete(`/users/${id}`);
+          await customAxios.delete(`/users/${id}`);
           Swal.fire({
             title: "Deleted!",
             text: "User Profile Deleted Successfuly",
@@ -54,10 +54,10 @@ const UsersTable = () => {
   return (
     <div className="flex" style={{ minHeight: "calc(100vh - (72px +  48px))" }}>
       <AdminSideBar />
-      <div className="flex flex-col justify-center w-full overflow-x-auto overflow-y-hidden ">
-        <p className="pl-4 mx-2 mt-[2.1rem] text-2xl">Users</p>
-        <div className="mx-6 w-[1000px] min-h-[330px] text-center my-2  ">
-          <table className="w-full h-full ">
+      <div className="flex w-full flex-col justify-center overflow-x-auto overflow-y-hidden">
+        <p className="mx-2 mt-[2.1rem] pl-4 text-2xl">Users</p>
+        <div className="mx-6 my-2 min-h-[330px] w-[1000px] text-center">
+          <table className="h-full w-full">
             <thead>
               <tr className="">
                 <th>Count</th>
@@ -71,25 +71,24 @@ const UsersTable = () => {
                 <tr key={user?.id}>
                   <td>{index + 1}</td>
                   <td>
-                    <div className="flex items-center-center justify-start pl-4 gap-2 img min-w-[260px]">
+                    <div className="items-center-center img flex min-w-[260px] justify-start gap-2 pl-4">
                       <img
-                        className="w-10 h-10 rounded-full"
+                        className="h-10 w-10 rounded-full"
                         src={user?.profileImage}
                       />
                       <div className="div flex flex-col items-start">
-                        <span>{user?.firstName}</span>
-                        <span>{user?.lastName}</span>
+                        <span>{user?.username}</span>
                       </div>
                     </div>
                   </td>
                   <td>{user?.email}</td>
                   <td>
-                    <div className="flex users-center justify-center gap-2 text-white w-[260px]">
-                      <button className="px-3 py-1 bg-green-400 rounded-xl">
+                    <div className="users-center flex w-[260px] justify-center gap-2 text-white">
+                      <button className="rounded-xl bg-green-400 px-3 py-1">
                         <Link to={`/profile/${user.id}`}>View Profile</Link>
                       </button>
                       <button
-                        className="px-3 py-1 bg-red-400 rounded-xl"
+                        className="rounded-xl bg-red-400 px-3 py-1"
                         onClick={() => removeHandler(user.id)}
                       >
                         Delete Profile

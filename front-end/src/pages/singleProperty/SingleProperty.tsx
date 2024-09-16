@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 // import { categories, propertiesCardshouse } from "../../utils/house";
 // import Categories from "../../components/categories/Categories";
-import { FaRegHeart } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main css file
@@ -11,7 +10,6 @@ import { LuUpload, LuGrip } from "react-icons/lu";
 import { FaStar, FaTrash, FaX } from "react-icons/fa6";
 import { Link, useParams } from "react-router-dom";
 import customAxios from "../../utils/axios";
-import { getWilayaNameById } from "../../utils/data";
 import { useSelector } from "react-redux";
 import { IRootState } from "../../store/store";
 import StarsReview from "../../components/starsReview/StarsReview";
@@ -190,12 +188,12 @@ const SingleProperty = () => {
   return (
     <>
       <div className="container my-12">
-        <div className="flex justify-between ">
-          <p className="font-bold text-2xl">{house?.title}</p>
-          <div className="flex gap-6 items-center">
+        <div className="flex justify-between">
+          <p className="text-2xl font-bold">{house?.title}</p>
+          <div className="flex items-center gap-6">
             <div
               onClick={() => copy()}
-              className="flex gap-2 items-center cursor-pointer hover:opacity-75"
+              className="flex cursor-pointer items-center gap-2 hover:opacity-75"
             >
               <LuUpload />
               <p className="underline">Share</p>
@@ -206,21 +204,18 @@ const SingleProperty = () => {
           </div>
         </div>
 
-        <div className="relative rounded-2xl flex gap-x-2 items-center  justify-center my-4">
-          <div className="relative w-[50%] h-[348px] rounded-l-xl overflow-hidden">
+        <div className="relative my-4 flex items-center justify-center gap-x-2 rounded-2xl">
+          <div className="relative h-[348px] w-[50%] overflow-hidden rounded-l-xl">
             {house?.Pictures[0]?.url ? (
               <img
                 src={house?.Pictures[0]?.url}
                 alt=""
-                className="w-full object-cover h-full"
+                className="h-full w-full object-cover"
               />
             ) : null}
-            <div className="absolute bg-black opacity-0 duration-300 hover:opacity-15 left-0 top-0 w-full h-full"></div>
+            <div className="absolute left-0 top-0 h-full w-full bg-black opacity-0 duration-300 hover:opacity-15"></div>
           </div>
-          <div
-            className="flex flex-col gap-y-2
-        "
-          >
+          <div className="flex flex-col gap-y-2">
             {emptyArray?.map((ele, index) => (
               <>
                 {index <= 1 && (
@@ -228,9 +223,9 @@ const SingleProperty = () => {
                     <img
                       src={house?.Pictures[index + 1]?.url}
                       alt=""
-                      className="w-full object-cover h-full"
+                      className="h-full w-full object-cover"
                     />
-                    <div className="absolute bg-black opacity-0 duration-300 hover:opacity-15 left-0 top-0 w-full h-full"></div>
+                    <div className="absolute left-0 top-0 h-full w-full bg-black opacity-0 duration-300 hover:opacity-15"></div>
                   </div>
                 )}
               </>
@@ -244,9 +239,9 @@ const SingleProperty = () => {
                     <img
                       src={house?.Pictures[index + 1]?.url}
                       alt=""
-                      className="w-full object-cover h-full"
+                      className="h-full w-full object-cover"
                     />
-                    <div className="absolute bg-black opacity-0 duration-300 hover:opacity-15 left-0 top-0 w-full h-full"></div>
+                    <div className="absolute left-0 top-0 h-full w-full bg-black opacity-0 duration-300 hover:opacity-15"></div>
                   </div>
                 )}
               </>
@@ -254,35 +249,32 @@ const SingleProperty = () => {
           </div>
           <Link
             to={`/properties/${id}/photos`}
-            className="absolute -bottom-12 md:right-0 right-1/2 translate-x-1/2 md:translate-x-0 flex bg-white items-center gap-2 px-6 py-2 rounded-xl cursor-pointer"
+            className="absolute -bottom-12 right-1/2 flex translate-x-1/2 cursor-pointer items-center gap-2 rounded-xl bg-white px-6 py-2 md:right-0 md:translate-x-0"
           >
             <LuGrip />
             <p>Show all photos</p>
           </Link>
         </div>
         {/*  */}
-        <div className="flex flex-wrap md:flex-nowrap  gap-8 pt-12 ">
-          <div className="flex flex-col flex-1 col-span-8">
-            <p className="text-2xl font-bold">
-              {house?.title}, {getWilayaNameById(house?.wilaya)}
-            </p>
-            <div className="flex gap-2 items-center">
+        <div className="flex flex-wrap gap-8 pt-12 md:flex-nowrap">
+          <div className="col-span-8 flex flex-1 flex-col">
+            <div className="flex items-center gap-2">
               <p className="opacity-50">{house?.guests} guests</p>
-              <p className="w-[4px] h-[4px] bg-black rounded-full"></p>
+              <p className="h-[4px] w-[4px] rounded-full bg-black"></p>
               <p className="opacity-50">{house?.bedrooms} bedrooms</p>
-              <p className="w-[4px] h-[4px] bg-black rounded-full"></p>
+              <p className="h-[4px] w-[4px] rounded-full bg-black"></p>
               <p className="opacity-50">{house?.bathrooms} bathrooms</p>
             </div>
 
-            <div className="flex items-center gap-4  my-3 flex-wrap justify-center sm:justify-normal ">
-              <div className="size-10 rounded-full overflow-hidden">
+            <div className="my-3 flex flex-wrap items-center justify-center gap-4 sm:justify-normal">
+              <div className="size-10 overflow-hidden rounded-full">
                 <img src={propertyOwner?.profileImage} alt="" />
               </div>
-              <div className="flex flex-col  opacity-90 flex-1">
-                <p className="text-center sm:text-left ">
+              <div className="flex flex-1 flex-col opacity-90">
+                <p className="text-center sm:text-left">
                   Hosted by{" "}
-                  <span className="font-bold text-center">
-                    {propertyOwner?.firstName}
+                  <span className="text-center font-bold">
+                    {propertyOwner?.username}
                   </span>
                 </p>
                 <p className="text-center sm:text-left">
@@ -295,7 +287,7 @@ const SingleProperty = () => {
               {propertyOwner?.id != user?.id && user && (
                 <button
                   onClick={() => messageHouseHandler()}
-                  className="text-white bg-buttonColor rounded-xl px-6 py-2"
+                  className="rounded-xl bg-buttonColor px-6 py-2 text-white"
                 >
                   Message Host
                 </button>
@@ -304,31 +296,31 @@ const SingleProperty = () => {
                 <Link
                   to="/login"
                   // onClick={() => messageHouseHandler()}
-                  className="text-white bg-buttonColor rounded-xl px-6 py-2"
+                  className="rounded-xl bg-buttonColor px-6 py-2 text-white"
                 >
                   Login First
                 </Link>
               )}
             </div>
-            <p className="my-4 py-12 border-y-2 border-y-[#4561ec53] ">
+            <p className="my-4 border-y-2 border-y-[#4561ec53] py-12">
               {house?.description}
             </p>
             <div className="reviews flex flex-col">
-              <div className="flex justify-between items-center">
+              <div className="flex items-center justify-between">
                 <p className="text-3xl font-bold">Reviews</p>
                 <span className="text-xl">{reviews?.length}</span>
               </div>
 
               {propertyOwner?.id != user?.id && user && (
                 <>
-                  <div className="py-2 my-8 px-4 mb-4 bg-white rounded-lg rounded-t-lg border ">
+                  <div className="my-8 mb-4 rounded-lg rounded-t-lg border bg-white px-4 py-2">
                     <textarea
                       id="comment"
                       value={review?.comment}
                       onChange={(e) =>
                         setreview({ ...review, comment: e.target.value })
                       }
-                      className="px-0 w-full text-sm   border-0 focus:ring-0 focus:outline-none "
+                      className="w-full border-0 px-0 text-sm focus:outline-none focus:ring-0"
                       placeholder="Write a review..."
                       required
                     ></textarea>
@@ -341,9 +333,9 @@ const SingleProperty = () => {
                         }
                         className={`${
                           review.rating < index + 2
-                            ? "text-yellow-500 opacity-100 "
-                            : "text-yellow-200  "
-                        } w-6 h-6 mx-2 peer peer-hover:text-yellow-500 hover:text-yellow-500  `}
+                            ? "text-yellow-500 opacity-100"
+                            : "text-yellow-200"
+                        } peer mx-2 h-6 w-6 hover:text-yellow-500 peer-hover:text-yellow-500`}
                       />
                     ))}
                     <span>{6 - review.rating}/5</span>
@@ -352,7 +344,7 @@ const SingleProperty = () => {
                     type="submit"
                     disabled={review.comment.trim() == ""}
                     onClick={() => addReviewHandler()}
-                    className="flex disabled:opacity-50 disabled:cursor-not-allowed justify-center items-center py-2.5 px-4 text-xs font-medium  text-white bg-buttonColor text-center"
+                    className="flex items-center justify-center bg-buttonColor px-4 py-2.5 text-center text-xs font-medium text-white disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     Post comment
                   </button>
@@ -360,14 +352,14 @@ const SingleProperty = () => {
               )}
               <>
                 {reviews?.map((review) => (
-                  <div className="flex flex-col  border-y border-y-[#4561ec26] py-4  my-4    ">
-                    <div className="flex items-center gap-2 my-3">
-                      <div className="size-10 rounded-full overflow-hidden">
+                  <div className="my-4 flex flex-col border-y border-y-[#4561ec26] py-4">
+                    <div className="my-3 flex items-center gap-2">
+                      <div className="size-10 overflow-hidden rounded-full">
                         <img src={review?.User?.profileImage} alt="" />
                       </div>
-                      <div className="flex flex-1 flex-col gap2 opacity-90">
+                      <div className="gap2 flex flex-1 flex-col opacity-90">
                         <Rating rating={review?.rating} />
-                        <p>{review?.User?.firstName}</p>
+                        <p>{review?.User?.username}</p>
                       </div>
                       {review?.User?.id == user?.id && (
                         <FaTrash
@@ -376,7 +368,7 @@ const SingleProperty = () => {
                         />
                       )}
                     </div>
-                    <p className="bg-white p-2 rounded-xl break-words ">
+                    <p className="break-words rounded-xl bg-white p-2">
                       {review?.comment}
                     </p>
                   </div>
@@ -386,7 +378,7 @@ const SingleProperty = () => {
           </div>
           {propertyOwner?.id != user?.id && (
             <>
-              <div className="flex flex-col bg-white p-6 rounded-xl h-fit col-span-4">
+              <div className="col-span-4 flex h-fit flex-col rounded-xl bg-white p-6">
                 <p className="my-2">
                   <span className="text-2xl">${house?.price} </span> night
                 </p>
@@ -398,17 +390,17 @@ const SingleProperty = () => {
                 />
                 <button
                   onClick={() => reserveHandler()}
-                  className="cursor-pointer mx-auto w-full   text-white px-6 py-1 rounded-xl bg-[#3d91ff] duration-300 hover:scale-105 justify-center my-2 flex items-center gap-2"
+                  className="mx-auto my-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#3d91ff] px-6 py-1 text-white duration-300 hover:scale-105"
                 >
                   Reserve
                 </button>
-                <div className="flex justify-between my-2 text-2xl">
-                  <p className="font-bold text-lg">Nights</p>
+                <div className="my-2 flex justify-between text-2xl">
+                  <p className="text-lg font-bold">Nights</p>
                   <p>
                     {daysCount} * ${house?.price}
                   </p>
                 </div>
-                <div className="flex justify-between my-2 text-2xl">
+                <div className="my-2 flex justify-between text-2xl">
                   <p className="font-bold">Total</p>
                   <p>{daysCount * house?.price}$</p>
                 </div>

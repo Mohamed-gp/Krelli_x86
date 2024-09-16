@@ -19,7 +19,6 @@ import MessagesRouter from "./routes/messages.js";
 import ReservationRouter from "./routes/reservation.js";
 import AdminRouter from "./routes/admin.js";
 import chargilyRouter from "./routes/chargily.js";
-
 // import verifyRoles from "./middleware/roleChecker.js";
 import cors from "cors";
 import usersRouter from "./routes/users.js";
@@ -27,12 +26,26 @@ import hpp from "hpp";
 import helmet from "helmet";
 import xss from "xss-clean";
 import rateLimiting from "express-rate-limit";
+import cloudinary from "cloudinary";
+import { errorHandler, notFound } from "./middleware/error.js";
 dotenv.config();
 
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
 const app = express();
-// app.use(cors({ credentials: true, origin: "https://krelli-86x.netlify.app" }));
-// app.use(cors({ credentials: true, origin: "http://localhost:3500" }));
-app.use(cors({ credentials: true, origin: "https://krelli-x86.netlify.app" }));
+app.use(
+  cors({
+    credentials: true,
+    origin:
+      process.env.NODE_ENV == "development"
+        ? "http://localhost:3500"
+        : "someurl",
+  })
+);
 
 const server = createServer(app);
 
@@ -60,10 +73,12 @@ app.use(helmet());
 
 app.use(xss());
 
-app.use(rateLimiting({
-    windowMs : 10 * 60 * 1000 ,
-    max : 200,
-}))
+app.use(
+  rateLimiting({
+    windowMs: 10 * 60 * 1000,
+    max: 200,
+  })
+);
 
 app.get("/", (req, res) => {
   res.json("Hello World");
@@ -92,7 +107,12 @@ app.use("/reservations", jwtVerify, ReservationRouter);
 
 app.use("/admin", jwtVerify, jwtVerifyAdmin, AdminRouter);
 
+app.use(notFound);
+app.use(errorHandler);
+
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+app.use(notFound);
+app.use(errorHandler);

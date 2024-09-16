@@ -126,7 +126,7 @@ td {
   background: #2b4eff;
 }
 
-@media (min-width: 1024px) {
+/* @media (min-width: 1024px) {
   nav {
     clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%) !important;
   }
@@ -243,8 +243,7 @@ table div {
   scale: 1.05;
   transition-duration: 0.3s;
 }
-
-.logout-setting-button:hover span {
+*/ .logout-setting-button:hover span {
   transform: translateX(2px);
   -webkit-transform: translateX(2px);
   -moz-transform: translateX(2px);
