@@ -135,11 +135,13 @@ const googleSignInController = async (req, res, next) => {
         Math.random().toString(36).slice(-8) +
         Math.random().toString(36).slice(-8);
       user = await prisma.user.create({
-        email: email,
-        photoUrl,
-        username,
-        password: await bcrypt.hash(generatedPassword, 10),
-        provider: "google",
+        data: {
+          email,
+          profileImage: photoUrl,
+          username,
+          password: await bcrypt.hash(generatedPassword, 10),
+          provider: "google",
+        },
       });
       const token = jwt.sign(
         { userId: user._id, role: user.role },
@@ -285,7 +287,7 @@ const registerAndAddHomeController = async (req, res) => {
     })
     .json({
       data: { user, home },
-      message: null,
+      message: "account created and property added successfully",
     });
 };
 

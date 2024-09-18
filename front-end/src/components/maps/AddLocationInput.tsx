@@ -50,12 +50,12 @@ const AddLocationInput = ({
     return null;
   };
 
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      console.log([position.coords.latitude, position.coords.longitude]);
-      console.log("test");
-    });
-  }, []);
+  // useEffect(() => {
+  //   navigator.geolocation.getCurrentPosition((position) => {
+  //     console.log([position.coords.latitude, position.coords.longitude]);
+  //     console.log("test");
+  //   });
+  // }, []);
 
   return (
     <>
@@ -67,7 +67,7 @@ const AddLocationInput = ({
           Location
         </label>
 
-        <p className="peer w-full rounded-md border-2 bg-[#f9f9f9] px-3  py-2.5 text-xs focus:outline-none">
+        <p className="peer w-full cursor-pointer rounded-md border-2 bg-[#f9f9f9] px-3 py-2.5 text-xs focus:outline-none">
           {isMapOpen
             ? `${dataToSubmit.latitude} ${dataToSubmit.longitude}`
             : "Add The Location Of Your House"}

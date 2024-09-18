@@ -1,20 +1,19 @@
 import { FaMap } from "react-icons/fa6";
 
-interface ShowMapPropertiesButtonProps {
+interface ShowListPropertiesButtonProps {
   setViewType: (viewType: string) => void;
 }
-
-const ShowMapPropertiesButton = ({
+const ShowListPropertiesButton = ({
   setViewType,
-}: ShowMapPropertiesButtonProps) => {
+}: ShowListPropertiesButtonProps) => {
   return (
     <button
-      onClick={() => setViewType("map")}
+      onClick={() => setViewType("list")}
       className="fixed bottom-12 left-1/2 z-[10102129090912910920190921] mx-auto flex -translate-x-1/2 items-center gap-2 text-wrap rounded-xl bg-buttonColor px-6 py-2 text-white"
     >
       <FaMap />
-      <span className="">Show Map</span>
+      <span className="">Show List</span>
     </button>
   );
 };
-export default ShowMapPropertiesButton;
+export default ShowListPropertiesButton;

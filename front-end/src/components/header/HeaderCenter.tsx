@@ -35,12 +35,12 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
           ? { clipPath: "polygon(0 0, 100% 0%, 100% 100%, 0% 100%)" }
           : { clipPath: "polygon(0 0, 100% 0%, 100% 0, 0 0)" }
       }
-      className="lg:relative  absolute right-8 lg:right-auto lg:w-auto w-[200px] lg:p-0 p-4 lg:top-auto rounded-2xl top-[100px] duration-300 z-50 bg-white text-center"
+      className="absolute right-8 top-[100px] z-[999999999999] w-[200px] rounded-2xl bg-white p-4 text-center duration-300 lg:relative lg:right-auto lg:top-auto lg:w-auto lg:p-0"
     >
-      <ul className="flex flex-1  lg:flex-row flex-col items-center gap-x-10  gap-y-6 ">
+      <ul className="flex flex-1 flex-col items-center gap-x-10 gap-y-6 lg:flex-row">
         <li className="">
           <NavLink
-            className="cursor-pointer navigation-header-link hover:text-navActiveColor duration-300"
+            className="navigation-header-link hover:text-navActiveColor cursor-pointer hover:text-buttonColor duration-300"
             to="/"
           >
             Home
@@ -49,7 +49,7 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
         {user?.role == "admin" && (
           <li>
             <NavLink
-              className="cursor-pointer navigation-header-link hover:text-navActiveColor duration-300"
+              className="navigation-header-link hover:text-navActiveColor cursor-pointer hover:text-buttonColor duration-300"
               to="/admin-dashboard"
             >
               Admin
@@ -61,7 +61,7 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
           <>
             <li>
               <NavLink
-                className="cursor-pointer navigation-header-link hover:text-navActiveColor duration-300"
+                className="navigation-header-link hover:text-navActiveColor cursor-pointer hover:text-buttonColor duration-300"
                 to={`/profile/${user?.id}`}
               >
                 Profile
@@ -69,7 +69,7 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
             </li>
             <li>
               <NavLink
-                className="cursor-pointer navigation-header-link hover:text-navActiveColor duration-300"
+                className="navigation-header-link hover:text-navActiveColor cursor-pointer duration-300 hover:text-buttonColor "
                 to={`/wishlist/${user?.id}`}
               >
                 Wishlist
@@ -77,7 +77,7 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
             </li>
             <li>
               <NavLink
-                className="cursor-pointer navigation-header-link hover:text-navActiveColor duration-300"
+                className="navigation-header-link hover:text-navActiveColor cursor-pointer hover:text-buttonColor duration-300"
                 to="/profile/chat/"
               >
                 Chat
@@ -87,7 +87,7 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
         )}
         <li>
           <NavLink
-            className="cursor-pointer navigation-header-link hover:text-buttonColor duration-300"
+            className="navigation-header-link cursor-pointer duration-300 hover:text-buttonColor"
             to="/properties"
           >
             Find
@@ -95,7 +95,7 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
         </li>
         <li>
           <NavLink
-            className="cursor-pointer navigation-header-link hover:text-buttonColor duration-300"
+            className="navigation-header-link cursor-pointer duration-300 hover:text-buttonColor"
             to="/aboutus"
           >
             About
@@ -106,7 +106,7 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
           <>
             <li className="sm:hidden">
               <NavLink
-                className="cursor-pointer navigation-header-link"
+                className="navigation-header-link cursor-pointer duration-300 hover:text-buttonColor"
                 to={`/settings/${user?.id}`}
               >
                 Settings
@@ -114,7 +114,7 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
             </li>
             <li className="lg:hidden">
               <span
-                className="cursor-pointer navigation-header-link"
+                className="navigation-header-link cursor-pointer duration-300 hover:text-buttonColor"
                 onClick={(e) => logoutHandler(e)}
               >
                 Logout
@@ -126,7 +126,7 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
           <>
             <li className="lg:hidden">
               <NavLink
-                className="cursor-pointer navigation-header-link hover:text-buttonColor"
+                className="navigation-header-link cursor-pointer hover:text-buttonColor"
                 to="/login"
               >
                 Login
@@ -134,7 +134,7 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
             </li>
             <li className="lg:hidden">
               <NavLink
-                className="cursor-pointer navigation-header-link hover:text-buttonColor"
+                className="navigation-header-link cursor-pointer hover:text-buttonColor"
                 to="/register"
               >
                 Register

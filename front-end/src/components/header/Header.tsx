@@ -5,13 +5,11 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import CloseMenu from "../closeMenu/CloseMenu";
 import BurgerMenu from "./BurgerMenu";
-import { useSelector } from "react-redux";
-import { IRootState } from "../../store/store";
+
 
 const Header = () => {
   const [open, setopen] = useState(false);
-  const user = useSelector((state:IRootState) => state.auth.user)
-  let location = useLocation();
+  const location = useLocation();
   useEffect(() => {
     setopen(false);
   }, [location]);
@@ -19,14 +17,14 @@ const Header = () => {
   return (
     <>
       <header className="bg-white">
-        <div className="relative container flex items-end lg:items-end justify-between py-6">
+        <div className="container relative flex items-center justify-between py-6">
           <HeaderLeft />
           <HeaderCenter open={open} setopen={setopen} />
           <HeaderRight />
-          <BurgerMenu open={open} setopen={setopen}/>
+          <BurgerMenu open={open} setopen={setopen} />
         </div>
       </header>
-        <CloseMenu open={open} setopen={setopen}/>
+      <CloseMenu open={open} setopen={setopen} />
     </>
   );
 };

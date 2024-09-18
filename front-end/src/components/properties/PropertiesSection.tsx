@@ -1,11 +1,8 @@
 import { Link } from "react-router-dom";
 import TitleHeading from "../title-heading/TitleHeading";
 import PropertiesCard from "./PropertiesCard";
-import { useState } from "react";
 
 const PropertiesSection = () => {
-  const [houses, sethouses] = useState([]);
-
   return (
     <section>
       <div className="container flex flex-col py-12">
@@ -18,14 +15,8 @@ const PropertiesSection = () => {
             View all properties
           </Link>
         </div>
-        <div className="my-6 flex flex-wrap items-center justify-center gap-3 sm:justify-between">
-          <PropertiesCard
-            all={false}
-            houses={houses}
-            sethouses={sethouses}
-            filter={null}
-            setfilter={null}
-          />
+        <div className="my-6 flex flex-wrap items-center justify-center gap-12">
+          <PropertiesCard all={false} filter={null} setfilter={null} />
         </div>
       </div>
     </section>

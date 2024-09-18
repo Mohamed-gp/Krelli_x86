@@ -3,7 +3,7 @@ import joi from "joi";
 const verifyAddProperty = (object) => {
   const schema = joi
     .object({
-      title: joi.string().required().trim().min(5).max(30),
+      title: joi.string().required().trim().min(5).max(50),
       price: joi.number().required().min(5),
       bathrooms: joi.number().required().min(1).max(50),
       bedrooms: joi.number().required().min(1).max(50),

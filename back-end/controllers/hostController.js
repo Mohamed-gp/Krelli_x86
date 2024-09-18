@@ -157,7 +157,7 @@ const addHome = async (req, res) => {
     },
   });
 
-  res.json(home);
+  res.json({ data: home, message: "Home added successfully" });
 };
 
 const acceptReservation = async (req, res) => {
@@ -185,12 +185,10 @@ const acceptReservation = async (req, res) => {
     },
   });
   if (host.userId !== userId) {
-    return res
-      .status(403)
-      .json({
-        message: "You are not authorized to accept this reservation",
-        data: null,
-      });
+    return res.status(403).json({
+      message: "You are not authorized to accept this reservation",
+      data: null,
+    });
   }
   await prisma.reservation.update({
     where: {

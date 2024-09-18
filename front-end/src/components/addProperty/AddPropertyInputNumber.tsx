@@ -2,18 +2,22 @@ interface AddPropertyInputNumberProps {
   dataToSubmit: any;
   setDataToSubmit: (a: any) => any;
   inputLabel: string;
+  min: number;
+  max: number;
 }
 
 const AddPropertyInputNumber = ({
   dataToSubmit,
   setDataToSubmit,
   inputLabel,
+  min,
+  max,
 }: AddPropertyInputNumberProps) => {
   return (
     <div className={`name-input w-[100%] lg:w-[30%]`}>
       <label htmlFor={inputLabel} className="font-bold">
         {inputLabel.charAt(0).toUpperCase() + inputLabel.slice(1)}
-        {inputLabel == "price" && " In USD"} 
+        {inputLabel == "price" && " In USD"}
       </label>
       <div className="relative">
         <input
@@ -22,6 +26,8 @@ const AddPropertyInputNumber = ({
           onChange={(e) =>
             setDataToSubmit({ ...dataToSubmit, [inputLabel]: e.target.value })
           }
+          min={min}
+          max={max}
           name={inputLabel}
           id={inputLabel}
           className="peer w-full rounded-md border-2 bg-[#f9f9f9] px-3 pb-2 pt-4 text-xs focus:outline-none"

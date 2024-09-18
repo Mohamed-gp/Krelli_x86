@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { IRootState } from "../../store/store";
 import Swal from "sweetalert2";
+import ChangePasswordForm from "../changePasswordForm/ChangePasswordForm";
 
 const Settings = () => {
   const dispatch = useDispatch();
@@ -37,11 +38,7 @@ const Settings = () => {
     // email: "",
     file: null,
   });
-  const [password, setpassword] = useState({
-    currentPassword: "",
-    newPassword: "",
-    confirmNewPassword: "",
-  });
+
   const formData = new FormData();
   const submitInfohandler = async (e) => {
     e.preventDefault();
@@ -55,27 +52,6 @@ const Settings = () => {
       const { data } = await customAxios.post(`/users/${user?.id}`, formData);
       toast.success(data.message);
       dispatch(authActions.login(data.data));
-    } catch (error) {
-      console.log(error);
-      toast.error(error?.response?.data.message);
-    }
-  };
-
-  const changePasswordHanlder = async (e) => {
-    e.preventDefault();
-    try {
-      const { data } = await customAxios.post(
-        `/users/password/${user?.id}`,
-        password,
-      );
-      console.log(data);
-      toast.success(data.message);
-      dispatch(authActions.login(data.data));
-      setpassword({
-        currentPassword: "",
-        newPassword: "",
-        confirmNewPassword: "",
-      });
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data.message);
@@ -127,9 +103,9 @@ const Settings = () => {
         <p className="border-b border-buttonColor pb-1 font-bold">
           Account Settings
         </p>
-        <div className="flex flex-col-reverse items-center justify-between gap-x-32 px-4 py-6 lg:flex-row">
-          <div className="flex w-full flex-col gap-3">
-            <div className="flex flex-col gap-1">
+        <div className="flex flex-col-reverse items-center justify-between gap-x-32 gap-y-4 px-4 py-6 lg:flex-row">
+          <div className="flex w-full flex-col">
+            <div className="my-2 flex flex-col">
               <label htmlFor="username">Username:</label>
               <input
                 className="w-full rounded-xl border-2 py-2 pl-3 pr-3 focus:outline-none"
@@ -141,21 +117,9 @@ const Settings = () => {
                 placeholder={user?.username}
               />
             </div>
-            {/* <div className="flex flex-col gap-1">
-              <label htmlFor="email">Email:</label>
-              <input
-                className="w-full rounded-xl border-2 py-2 pl-3 pr-3 focus:outline-none"
-                id="email"
-                onChange={(e) =>
-                  setdataToSubmit({ ...dataToSubmit, email: e.target.value })
-                }
-                type="email"
-                placeholder={user?.email}
-              />
-            </div> */}
           </div>
           <div className="flex flex-col items-center justify-center gap-3">
-            <div className="h-48 w-48 overflow-hidden rounded-full">
+            <div className="flex h-32 w-32 overflow-hidden rounded-full sm:h-48 sm:w-48">
               <img
                 src={
                   dataToSubmit?.file
@@ -195,72 +159,7 @@ const Settings = () => {
           Save Changes
         </button>
       </form>
-      <form
-        onSubmit={(e) => changePasswordHanlder(e)}
-        className="my-10 rounded-xl border-2 border-buttonColor bg-white p-3"
-      >
-        <p className="border-b border-buttonColor pb-1 font-bold">
-          Change Password
-        </p>
-        <div className="flex flex-col-reverse items-center justify-between gap-x-32 px-4 py-6 sm:flex-row">
-          <div className="flex w-full flex-col gap-3">
-            <div className="flex flex-col gap-1">
-              <label htmlFor="current-password">Current Password: </label>
-              <input
-                className="w-full rounded-xl border-2 py-2 pl-3 pr-3 focus:outline-none"
-                id="current-password"
-                value={password.currentPassword}
-                onChange={(e) =>
-                  setpassword({ ...password, currentPassword: e.target.value })
-                }
-                type="password"
-                placeholder="Current Password"
-              />
-            </div>
-            <div className="flex flex-col gap-1">
-              <label htmlFor="email">New Password:</label>
-              <input
-                className="password-icon w-full rounded-xl border-2 py-2 pl-3 pr-3 focus:outline-none"
-                id="new-password"
-                type="password"
-                value={password.newPassword}
-                onChange={(e) =>
-                  setpassword({ ...password, newPassword: e.target.value })
-                }
-                placeholder="New Password"
-              />
-            </div>
-            <div className="flex flex-col gap-1">
-              <label htmlFor="Confirm-new-password">
-                Confirm New Password:
-              </label>
-              <input
-                className="password-icon w-full rounded-xl border-2 py-2 pl-3 pr-3 focus:outline-none"
-                id="confirm-new-password"
-                value={password.confirmNewPassword}
-                onChange={(e) =>
-                  setpassword({
-                    ...password,
-                    confirmNewPassword: e.target.value,
-                  })
-                }
-                type="password"
-                placeholder="New Password"
-              />
-            </div>
-          </div>
-        </div>
-        <button
-          disabled={
-            password?.currentPassword == "" ||
-            password?.newPassword == "" ||
-            password?.confirmNewPassword == ""
-          }
-          className="fit-content mx-auto flex rounded-xl bg-buttonColor px-4 py-2 text-white disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          Change Password
-        </button>
-      </form>
+      {user.provider == "credentials" && <ChangePasswordForm />}
       <div className="flex items-center justify-between">
         <button
           onClick={() => deleteProfileHandler()}

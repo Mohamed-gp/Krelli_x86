@@ -9,18 +9,17 @@ const usersCount = async (req, res) => {
     return res.sendStatus(403);
   }
   const usersCount = await prisma.user.count();
-  res.json(usersCount);
+  res.json({ data: usersCount, message: "users count fetched successfully" });
 };
 
 const singleUser = async (req, res) => {
-  console.log(req.body);
   const id = req.params.id;
   const user = await prisma.user.findUnique({
     where: {
       id,
     },
   });
-  res.json(user);
+  res.json({ data: user, message: null });
 };
 const updateProfile = async (req, res) => {
   let { username } = req.body;
@@ -159,7 +158,7 @@ const toggleWishlist = async (req, res) => {
     },
   });
 
-  return res.json({ data: wishlist, message: null });
+  return res.json({ data: wishlist, message: "wishlist toggled successfuly" });
 };
 
 export {

@@ -24,7 +24,7 @@ const HeaderRight = () => {
     }
   };
   return (
-    <div className="lg:flex hidden items-center gap-2 w-[126px] justify-end ">
+    <div className="xl:flex hidden items-center gap-2 w-[126px] justify-end ">
       {!user && (
         <>
           <Link

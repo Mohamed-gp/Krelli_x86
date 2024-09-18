@@ -20,10 +20,8 @@ const AddPropertyCategory = ({
   const getIconByCategory = (category: string) => {
     let result = null;
     categories.forEach((cat) => {
-      console.log("test");
       if (cat.label === category) {
-        console.log("test");
-        result = <cat.icon size={30} />;
+        result = <cat.icon size={25} />;
       }
     });
     return result;
@@ -37,7 +35,7 @@ const AddPropertyCategory = ({
         <button
           id="dropdown-phone-button"
           data-dropdown-toggle="dropdown-phone"
-          className={`z-10 inline-flex w-full flex-shrink-0 py-2.5 items-center rounded-lg border ${
+          className={`z-10 inline-flex w-full flex-shrink-0 items-center rounded-lg border py-2 ${
             isDropdownOpen
               ? "border-blue-500 bg-blue-100"
               : "border-gray-300 bg-gray-100"
@@ -88,8 +86,11 @@ const AddPropertyCategory = ({
                 aria-orientation="vertical"
                 aria-labelledby="options-menu"
               >
-                {categories.map((category) => (
-                  <div className="flex items-center px-2 py-1 text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                {categories.map((category, ind) => (
+                  <div
+                    key={categories + "category" + ind}
+                    className="flex items-center px-2 py-1 text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                  >
                     <category.icon size={30} />
                     <button
                       key={category.name}

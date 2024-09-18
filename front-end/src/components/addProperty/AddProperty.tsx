@@ -1,6 +1,6 @@
 import { useState } from "react";
 import AddPropertyInput from "./AddPropertyInput";
-import AddProperyPhoto from "./AddProperyPhoto";
+import AddPropertyImages from "./AddPropertyImages";
 import AddPropertySubmit from "./AddPropertySubmit";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../store/store";
@@ -10,6 +10,7 @@ import { authActions } from "../../store/slices/authSlice";
 import AddPropertyCategory from "./AddPropertyCategory";
 import AddLocationInput from "../maps/AddLocationInput";
 import AddPropertyInputNumber from "./AddPropertyInputNumber";
+import AddPropertyTextArea from "./AddPropertyTextArea";
 
 const AddProperty = () => {
   const dispatch = useDispatch();
@@ -35,14 +36,14 @@ const AddProperty = () => {
     if (dataToSubmit.price < 10 || dataToSubmit.price > 10000) {
       return toast.error("price must be greater than $10 and less than $10000");
     }
-    if (dataToSubmit.guests < 1) {
-      return toast.error("guests must be greater than 0");
+    if (dataToSubmit.guests < 1 || dataToSubmit.guests > 100) {
+      return toast.error("guests must be greater than 0 and less than 100");
     }
-    if (dataToSubmit.bathrooms < 1) {
-      return toast.error("bathrooms must be greater than 0");
+    if (dataToSubmit.bathrooms < 1 || dataToSubmit.bathrooms > 100) {
+      return toast.error("bathrooms must be greater than 0 and less than 100");
     }
-    if (dataToSubmit.bedrooms < 1) {
-      return toast.error("bedrooms must be greater than 0");
+    if (dataToSubmit.bedrooms < 1 || dataToSubmit.bedrooms > 100) {
+      return toast.error("bedrooms must be greater than 0 and less than 100");
     }
     if (
       dataToSubmit.title == "" ||
@@ -91,14 +92,12 @@ const AddProperty = () => {
 
       if (url == "/auth/addHome") {
         dispatch(authActions.login({ ...data.user }));
-        toast.success("account created and property added successfully");
         scrollTo(0, 0);
-      } else {
-        toast.success("property created successfuly");
       }
+      toast.success(data.message);
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -152,30 +151,13 @@ const AddProperty = () => {
             setDataToSubmit={setDataToSubmit}
             inputLabel="location"
           />
-          {user && (
-            <AddPropertyInputNumber
-              dataToSubmit={dataToSubmit}
-              setDataToSubmit={setDataToSubmit}
-              inputLabel="guests"
-            />
-          )}
-        </div>
-        <div className="flex flex-wrap justify-between gap-6">
-          <AddPropertyInputNumber
-            dataToSubmit={dataToSubmit}
-            setDataToSubmit={setDataToSubmit}
-            inputLabel="price"
-          />
-          <AddPropertyInputNumber
-            dataToSubmit={dataToSubmit}
-            setDataToSubmit={setDataToSubmit}
-            inputLabel="bathrooms"
-          />
 
           <AddPropertyInputNumber
             dataToSubmit={dataToSubmit}
             setDataToSubmit={setDataToSubmit}
-            inputLabel="bedrooms"
+            inputLabel="price"
+            max={10000}
+            min={10}
           />
         </div>
         <div className="flex flex-wrap justify-between gap-6">
@@ -184,22 +166,42 @@ const AddProperty = () => {
               dataToSubmit={dataToSubmit}
               setDataToSubmit={setDataToSubmit}
               inputLabel="guests"
+              min={1}
+              max={100}
             />
           )}
-          <AddPropertyInput
+          <AddPropertyInputNumber
+            dataToSubmit={dataToSubmit}
+            setDataToSubmit={setDataToSubmit}
+            inputLabel="bathrooms"
+            min={1}
+            max={100}
+          />
+          {user && (
+            <AddPropertyInputNumber
+              dataToSubmit={dataToSubmit}
+              setDataToSubmit={setDataToSubmit}
+              inputLabel="guests"
+              min={1}
+              max={100}
+            />
+          )}
+          <AddPropertyInputNumber
+            dataToSubmit={dataToSubmit}
+            setDataToSubmit={setDataToSubmit}
+            inputLabel="bedrooms"
+            min={1}
+            max={100}
+          />
+        </div>
+        <div className="flex flex-wrap justify-between gap-6">
+          <AddPropertyTextArea
             dataToSubmit={dataToSubmit}
             setDataToSubmit={setDataToSubmit}
             inputLabel="description"
           />
-          <div className="invisible w-[100%] md:w-[30%]">
-            <AddPropertyInput
-              dataToSubmit={dataToSubmit}
-              setDataToSubmit={setDataToSubmit}
-              inputLabel="description"
-            />
-          </div>
         </div>
-        <AddProperyPhoto
+        <AddPropertyImages
           dataToSubmit={dataToSubmit}
           setDataToSubmit={setDataToSubmit}
         />

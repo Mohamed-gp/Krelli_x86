@@ -4,23 +4,26 @@ import { app } from "../../utils/fireBase";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../store/slices/authSlice";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const GoogleSignIn = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleGoogleSignIn = async () => {
     try {
       const provider = new GoogleAuthProvider();
       const auth = getAuth(app);
       const result = await signInWithPopup(auth, provider);
-      console.log(result);
       const { displayName, email, photoURL } = result.user;
       const { data } = await customAxios.post("/auth/google", {
         username: displayName,
         email,
         photoUrl: photoURL,
       });
+      console.log(data);
       toast.success(data.message);
       dispatch(authActions.login(data.data));
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
