@@ -6,7 +6,7 @@ const authSlice = createSlice({
     user:
       localStorage.getItem("user") == null
         ? null
-        : JSON.parse(localStorage.getItem("user") as string) , // just a dummy data
+        : JSON.parse(localStorage.getItem("user") as string), // just a dummy data
   },
   reducers: {
     login(state, action) {
@@ -16,6 +16,10 @@ const authSlice = createSlice({
     logout(state) {
       state.user = null;
       localStorage.removeItem("user");
+    },
+    setWishlist(state, action) {
+      state.user.Favorite = action.payload;
+      localStorage.setItem("user", JSON.stringify(state.user));
     },
   },
 });

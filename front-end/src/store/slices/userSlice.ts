@@ -6,6 +6,7 @@ const userSlice = createSlice({
     history: localStorage.getItem("history")
       ? JSON.parse(localStorage.getItem("history") as string)
       : [],
+
   },
   reducers: {
     appendHistory(state, action) {

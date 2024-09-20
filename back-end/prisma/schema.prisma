@@ -12,12 +12,13 @@ model User {
   id           String        @id @unique @default(uuid())
   email        String        @unique
   createdAT    DateTime      @default(now())
-  isSubscribed Boolean?      @default(false)
+  isSubscribed Boolean      @default(false)
   password     String
   profileImage String?       @default("http://res.cloudinary.com/dyhllkjj1/image/upload/v1715439059/dblboyxypvtkaeebvpgr.jpg")
   role         String        @default("user")
   provider     String        @default("credentials")
   username     String
+  isSubscribe Boolean?      @default(false)
   Favorite     Favorite[]
   Home         Home[]
   Message      Message[]
@@ -39,7 +40,7 @@ model Home {
   longitude    Float
   latitude     Float
   listedAt     DateTime      @default(now())
-  userId       String?
+  userId       String
   country      String?
   Favorite     Favorite[]
   User         User?         @relation(fields: [userId], references: [id], onDelete: Cascade)

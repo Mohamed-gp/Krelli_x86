@@ -31,24 +31,7 @@ const myHomesReservations = async (req, res) => {
   res.json(homes);
 };
 
-const myHomes = async (req, res) => {
-  const userId = req.user.userId;
 
-  const homes = await prisma.home.findMany({
-    where: {
-      userId,
-    },
-    include: {
-      Pictures: true,
-    },
-  });
-  if (!homes) {
-    return res
-      .status(404)
-      .json({ message: "You have not created any homes yet", data: null });
-  }
-  res.json(homes);
-};
 
 const singleHomeReservation = async (req, res) => {
   const userId = req.user.userId;
@@ -110,6 +93,7 @@ const addHome = async (req, res) => {
       .json({ message: error.details[0].message, data: null });
   }
   const userId = req.user.userId;
+  console.log(userId)
 
   if (
     !title ||
@@ -133,6 +117,7 @@ const addHome = async (req, res) => {
     pictures.map((picture) => cloudinary.uploader.upload(picture))
   );
   const pictureUrls = uploadedPictures.map((picture) => picture.url);
+  console.log(userId, "this is ussfasfjkajfkdjkfjkajfkdjakfjer id");
   const home = await prisma.home.create({
     data: {
       title,
@@ -203,7 +188,6 @@ const acceptReservation = async (req, res) => {
 
 export {
   addHome,
-  myHomes,
   myHomesReservations,
   singleHomeReservation,
   acceptReservation,

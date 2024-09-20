@@ -33,7 +33,6 @@ interface AddLocationInputProps {
 const AddLocationInput = ({
   dataToSubmit,
   setDataToSubmit,
-  inputLabel,
 }: AddLocationInputProps) => {
   const [isMapOpen, setIsMapOpen] = useState(false);
 
@@ -49,13 +48,6 @@ const AddLocationInput = ({
     });
     return null;
   };
-
-  // useEffect(() => {
-  //   navigator.geolocation.getCurrentPosition((position) => {
-  //     console.log([position.coords.latitude, position.coords.longitude]);
-  //     console.log("test");
-  //   });
-  // }, []);
 
   return (
     <>

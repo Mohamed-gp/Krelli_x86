@@ -1,22 +1,21 @@
 import { useEffect, useState } from "react";
-// import { categories, propertiesCardshouse } from "../../utils/house";
-// import Categories from "../../components/categories/Categories";
 import toast from "react-hot-toast";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
-
 import { LuUpload, LuGrip } from "react-icons/lu";
-import { FaStar, FaTrash, FaX } from "react-icons/fa6";
+import { FaHeart, FaStar, FaTrash } from "react-icons/fa6";
 import { Link, useParams } from "react-router-dom";
 import customAxios from "../../utils/axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../store/store";
-import StarsReview from "../../components/starsReview/StarsReview";
 import Rating from "../../components/rating/Rating";
 import Swal from "sweetalert2";
+import { BsHeart } from "react-icons/bs";
+import { authActions } from "../../store/slices/authSlice";
 
 const SingleProperty = () => {
+  const dispatch = useDispatch();
   const user = useSelector((state: IRootState) => state.auth.user);
   const { id } = useParams();
 
@@ -28,11 +27,7 @@ const SingleProperty = () => {
   const getHouseById = async () => {
     try {
       const { data } = await customAxios(`/homes/${id}`);
-      console.log(data);
-      console.log(data?.Pictures[0]?.url);
-      sethouse(data);
-      console.log("this is hous");
-      console.log(house?.Pictures[0]?.url);
+      sethouse(data.data);
     } catch (error) {
       console.log(error);
     }
@@ -40,8 +35,7 @@ const SingleProperty = () => {
   const getPropertyOwnerById = async (id: string) => {
     try {
       const { data } = await customAxios(`/users/${id}`);
-      console.log(data, "property owner");
-      setpropertyOwner(data);
+      setpropertyOwner(data.data);
     } catch (error) {
       console.log(error);
     }
@@ -49,13 +43,11 @@ const SingleProperty = () => {
   const [reviews, setreviews] = useState([]);
   const getHouseReviews = async () => {
     try {
-      const { data } = await customAxios(`/homes/${id}/reviews `);
-      console.log("this is reviews");
-      console.log(data);
-      setreviews(data);
-    } catch (error: any) {
+      const { data } = await customAxios(`/homes/${id}/reviews`);
+      setreviews(data.data);
+    } catch (error) {
       console.log(error);
-      toast.error(error.response.data);
+      toast.error(error.response.data.message);
     }
   };
   const [review, setreview] = useState({
@@ -69,12 +61,11 @@ const SingleProperty = () => {
 
   useEffect(() => {
     getPropertyOwnerById(house?.userId);
-    console.log(house?.userId);
   }, [house]);
   const [state, setState] = useState([
     {
       startDate: new Date(),
-      endDate: null,
+      endDate: new Date(),
       key: "selection",
     },
   ]);
@@ -87,9 +78,6 @@ const SingleProperty = () => {
       setdaysCount(dif / 1000 / 3600 / 24);
     }
   }, [state]);
-
-  // const all
-
   const copy = () => {
     const input = document.createElement("input");
     input.setAttribute("value", location.href);
@@ -103,29 +91,23 @@ const SingleProperty = () => {
   const messageHouseHandler = async () => {
     try {
       const { data } = await customAxios.post(`/homes/${house?.id}/chat`);
-      console.log(data);
-      toast.success("Chat Created Succefuly");
-    } catch (error: any) {
+      toast.success(data.message);
+    } catch (error) {
       console.log(error);
-      toast.error(error.response.data);
+      toast.error(error.response.data.message);
     }
   };
   const reserveHandler = async () => {
     try {
-      console.log({
-        checkIn: new Date(state[0]?.startDate).toISOString().slice(0, 10),
-        checkOut: new Date(state[0]?.endDate).toISOString().slice(0, 10),
-      });
       const { data } = await customAxios.post(`/homes/${house?.id}/reserve`, {
         checkIn: new Date(state[0]?.startDate).toISOString().slice(0, 10),
         checkOut: new Date(state[0]?.endDate).toISOString().slice(0, 10),
       });
-      console.log(data);
       toast.success(data.message);
       window.open(data.url, "_blank");
-    } catch (error: any) {
+    } catch (error) {
       console.log(error);
-      toast.error(error.response.data);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -143,12 +125,22 @@ const SingleProperty = () => {
         comment: review.comment,
       });
       getHouseReviews();
-      console.log(data);
 
-      toast.success("Review Add Succefuly");
-    } catch (error: any) {
+      toast.success(data.message);
+    } catch (error) {
       console.log(error);
-      toast.error(error.response.data);
+      toast.error(error.response.data.message);
+    }
+  };
+  const toggleWishlistHandler = async (e, id) => {
+    e.preventDefault();
+    try {
+      const { data } = await customAxios.post(`/users/wishlist/${id}`);
+      dispatch(authActions.setWishlist(data.data));
+      toast.success(data.message);
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -166,7 +158,7 @@ const SingleProperty = () => {
         try {
           const { data } = await customAxios.delete(`/homes/${id}/review`);
           getHouseReviews();
-          toast.success(data);
+          toast.success(data.message);
           Swal.fire({
             title: "Deleted!",
             text: "Review Deleted Successfuly",
@@ -174,7 +166,7 @@ const SingleProperty = () => {
           });
         } catch (error) {
           console.log(error);
-          toast.error(error?.response?.data);
+          toast.error(error?.response?.data.message);
         }
       } else {
         Swal.fire({
@@ -198,9 +190,23 @@ const SingleProperty = () => {
               <LuUpload />
               <p className="underline">Share</p>
             </div>
-            {/* <div className="flex gap-1 items-center">
-              <FaRegHeart />
-            </div> */}
+            {user && (
+              <div
+                className="cursor-pointer"
+                onClick={(e) => toggleWishlistHandler(e, house.id)}
+              >
+                <div className="flex items-center gap-1">
+                  <FaHeart
+                    className={`absolute z-50 text-[19px] duration-300 hover:text-buttonColor ${
+                      user?.Favorite?.find((ele) => ele?.homeId == house?.id)
+                        ? "text-buttonColor"
+                        : ""
+                    }`}
+                  />
+                  <BsHeart className="absolute text-[22px] text-white" />
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -298,7 +304,7 @@ const SingleProperty = () => {
                   // onClick={() => messageHouseHandler()}
                   className="rounded-xl bg-buttonColor px-6 py-2 text-white"
                 >
-                  Login First
+                  Login First To Be Able To Message The Owner and reserve
                 </Link>
               )}
             </div>
@@ -376,7 +382,7 @@ const SingleProperty = () => {
               </>
             </div>
           </div>
-          {propertyOwner?.id != user?.id && (
+          {(propertyOwner?.id != user?.id || !user) && (
             <>
               <div className="col-span-4 flex h-fit flex-col rounded-xl bg-white p-6">
                 <p className="my-2">
@@ -390,7 +396,8 @@ const SingleProperty = () => {
                 />
                 <button
                   onClick={() => reserveHandler()}
-                  className="mx-auto my-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#3d91ff] px-6 py-1 text-white duration-300 hover:scale-105"
+                  disabled={daysCount == 0}
+                  className="mx-auto my-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#3d91ff] px-6 py-1 text-white duration-300 hover:scale-105 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Reserve
                 </button>

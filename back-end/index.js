@@ -76,7 +76,7 @@ app.use(xss());
 app.use(
   rateLimiting({
     windowMs: 10 * 60 * 1000,
-    max: 200,
+    max: 500,
   })
 );
 
@@ -84,10 +84,10 @@ app.get("/", (req, res) => {
   res.json("Hello World");
 });
 
-app.use("/subscribe", subscribeRouter);
-app.use("/gemini", geminiRouter);
-app.use("/auth", authRouter);
-app.use("/chargily", chargilyRouter);
+app.use("/api/subscribe", subscribeRouter);
+app.use("/api/gemini", geminiRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/chargily", chargilyRouter);
 
 // app.use(jwtVerify);
 
@@ -96,16 +96,16 @@ app.use((req, res, next) => {
   res.io = io;
   next();
 });
-app.use("/users", usersRouter);
-app.use("/host", jwtVerify, HostRouter);
+app.use("/api/users", usersRouter);
+app.use("/api/host", jwtVerify, HostRouter);
 
-app.use("/homes", HomesRouter);
+app.use("/api/homes", HomesRouter);
 
-app.use("/messages", jwtVerify, MessagesRouter);
+app.use("/api/messages", jwtVerify, MessagesRouter);
 
-app.use("/reservations", jwtVerify, ReservationRouter);
+app.use("/api/reservations", jwtVerify, ReservationRouter);
 
-app.use("/admin", jwtVerify, jwtVerifyAdmin, AdminRouter);
+app.use("/api/admin", jwtVerify, jwtVerifyAdmin, AdminRouter);
 
 app.use(notFound);
 app.use(errorHandler);

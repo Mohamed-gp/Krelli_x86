@@ -17,25 +17,25 @@ const HeaderRight = () => {
       dispatch(authActions.logout());
       const { data } = await customAxios.get("/auth/logout");
       navigate("/");
-      toast.success(data);
-    } catch (error: any) {
-      toast.error(error.message);
-      console.log(error.message);
+      toast.success(data.message);
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.log(error);
     }
   };
   return (
-    <div className="xl:flex hidden items-center gap-2 w-[126px] justify-end ">
+    <div className="hidden w-[126px] items-center justify-end gap-2 xl:flex">
       {!user && (
         <>
           <Link
             to="/login"
-            className="cursor-pointer  text-white px-6 py-1  bg-[#4561EC] duration-300 hover:scale-105 "
+            className="cursor-pointer bg-[#4561EC] px-6 py-1 text-white duration-300 hover:scale-105"
           >
             Login
           </Link>
           <Link
             to="/register"
-            className="cursor-pointer   text-white px-6 py-1  bg-[#4561EC] duration-300 hover:scale-105 "
+            className="cursor-pointer bg-[#4561EC] px-6 py-1 text-white duration-300 hover:scale-105"
           >
             Register
           </Link>
@@ -45,15 +45,15 @@ const HeaderRight = () => {
         <div className="flex items-center gap-3">
           <Link
             to={`/settings/${user?.id}`}
-            className="md:text-xl  text-buttonColor"
+            className="text-buttonColor md:text-xl"
           >
             {/* <FaUser /> */}
-            <FaGear className="hover:rotate-180 duration-1000 hover:scale-110" />
+            <FaGear className="duration-1000 hover:rotate-180 hover:scale-110" />
           </Link>
-          <p className="w-[2px] h-6 bg-buttonColor"></p>
+          <p className="h-6 w-[2px] bg-buttonColor"></p>
           <div
             onClick={(e) => logoutHandler(e)}
-            className="cursor-pointer flex gap-4 items-center text-white px-6 py-2  bg-[#4561EC] duration-300 hover:scale-[1.03] "
+            className="flex cursor-pointer items-center gap-4 bg-[#4561EC] px-6 py-2 text-white duration-300 hover:scale-[1.03]"
           >
             <span>Logout</span>
             <TbLogout />

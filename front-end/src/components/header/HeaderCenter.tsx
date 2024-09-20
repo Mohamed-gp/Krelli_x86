@@ -16,16 +16,14 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
   const logoutHandler = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await customAxios.get("/auth/logout", {
-        withCredentials: true,
-      });
+      const { data } = await customAxios.get("/auth/logout");
       navigate("/");
-      toast.success(data);
+      toast.success(data.message);
       dispatch(authActions.logout());
       setopen(false);
-    } catch (error: any) {
-      toast.error(error.message);
-      console.log(error.message);
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.log(error);
     }
   };
   return (
@@ -35,12 +33,12 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
           ? { clipPath: "polygon(0 0, 100% 0%, 100% 100%, 0% 100%)" }
           : { clipPath: "polygon(0 0, 100% 0%, 100% 0, 0 0)" }
       }
-      className="absolute right-8 top-[100px] z-[999999999999] w-[200px] rounded-2xl bg-white p-4 text-center duration-300 lg:relative lg:right-auto lg:top-auto lg:w-auto lg:p-0"
+      className="absolute right-8 top-[100px] z-[51] w-[200px] rounded-2xl bg-white p-4 text-center duration-300 lg:relative lg:right-auto lg:top-auto lg:w-auto lg:p-0"
     >
       <ul className="flex flex-1 flex-col items-center gap-x-10 gap-y-6 lg:flex-row">
         <li className="">
           <NavLink
-            className="navigation-header-link hover:text-navActiveColor cursor-pointer hover:text-buttonColor duration-300"
+            className="navigation-header-link hover:text-navActiveColor cursor-pointer duration-300 hover:text-buttonColor"
             to="/"
           >
             Home
@@ -49,7 +47,7 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
         {user?.role == "admin" && (
           <li>
             <NavLink
-              className="navigation-header-link hover:text-navActiveColor cursor-pointer hover:text-buttonColor duration-300"
+              className="navigation-header-link hover:text-navActiveColor cursor-pointer duration-300 hover:text-buttonColor"
               to="/admin-dashboard"
             >
               Admin
@@ -61,7 +59,7 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
           <>
             <li>
               <NavLink
-                className="navigation-header-link hover:text-navActiveColor cursor-pointer hover:text-buttonColor duration-300"
+                className="navigation-header-link hover:text-navActiveColor cursor-pointer duration-300 hover:text-buttonColor"
                 to={`/profile/${user?.id}`}
               >
                 Profile
@@ -69,7 +67,7 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
             </li>
             <li>
               <NavLink
-                className="navigation-header-link hover:text-navActiveColor cursor-pointer duration-300 hover:text-buttonColor "
+                className="navigation-header-link hover:text-navActiveColor cursor-pointer duration-300 hover:text-buttonColor"
                 to={`/wishlist/${user?.id}`}
               >
                 Wishlist
@@ -77,7 +75,15 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
             </li>
             <li>
               <NavLink
-                className="navigation-header-link hover:text-navActiveColor cursor-pointer hover:text-buttonColor duration-300"
+                className="navigation-header-link hover:text-navActiveColor cursor-pointer duration-300 hover:text-buttonColor"
+                to="/profile/chat/"
+              >
+                Chat
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                className="navigation-header-link hover:text-navActiveColor cursor-pointer duration-300 hover:text-buttonColor"
                 to="/profile/chat/"
               >
                 Chat
@@ -104,7 +110,7 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
 
         {user && (
           <>
-            <li className="sm:hidden">
+            <li className="">
               <NavLink
                 className="navigation-header-link cursor-pointer duration-300 hover:text-buttonColor"
                 to={`/settings/${user?.id}`}

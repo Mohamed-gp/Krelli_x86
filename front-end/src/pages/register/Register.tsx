@@ -30,12 +30,12 @@ const Register = () => {
     }
     try {
       const { data } = await customAxios.post("/auth/register", dataToSubmit);
-      dispatch(authActions.login({ ...data, password: "" }));
+      dispatch(authActions.login({ ...data.data, password: "" }));
       navigate("/");
       return toast.success("Account Created Succefully");
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data);
+      toast.error(error.response.data.message);
     }
   };
 

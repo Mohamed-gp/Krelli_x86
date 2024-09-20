@@ -3,29 +3,24 @@ import { Server } from "socket.io";
 let onlineUsers = {};
 
 const socketServer = (server) => {
-    const io = new Server(server, {
-        cors: {
-            origin: "*",
-        },
+  const io = new Server(server, {
+    cors: {
+      origin: "*",
+    },
+  });
+  io.on("connection", (socket) => {
+    const userId = socket.handshake.query.userId;
+    if (userId) {
+      onlineUsers[userId] = socket.id;
+    }
+    io.emit("onlineUsers", onlineUsers);
+    socket.on("disconnect", () => {
+      delete onlineUsers[userId];
+      io.emit("onlineUsers", onlineUsers);
     });
-    io.on("connection", (socket) => {
-        console.log("User connected", socket.id);
-        const userId = socket.handshake.query.userId;
-        console.log(socket.handshake)
-        console.log("this is user id", userId);
-        if(userId){
-            onlineUsers[userId] = socket.id;
-        };
-        console.log(onlineUsers);
-        io.emit("onlineUsers", onlineUsers);
-        socket.on("disconnect", () => {
-            console.log("User disconnected", socket.id);
-            delete onlineUsers[userId];
-            io.emit("onlineUsers", onlineUsers);
-        });
-    });
+  });
 
-    return io;
-}
+  return io;
+};
 
-export {socketServer , onlineUsers};
+export { socketServer, onlineUsers };

@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaTrash } from "react-icons/fa6";
 import { IoMdSend } from "react-icons/io";
-
 import LeftSideNav from "../../components/leftSideNav/LeftSideNav";
 import customAxios from "../../utils/axios";
 import { Link } from "react-router-dom";
@@ -18,7 +16,7 @@ const Chat = () => {
   const getChats = async () => {
     try {
       const { data } = await customAxios.get("/messages");
-      setinbox(data);
+      setinbox(data.data);
     } catch (error) {
       console.log(error);
     }
@@ -29,13 +27,13 @@ const Chat = () => {
       const { data } = await customAxios.get(
         `/messages/${inbox[activeInboxIndex]?.id}`,
       );
-
-      setsingleMessages(data);
-    } catch (error: any) {
-      toast.error(error.resonse.data);
+      setsingleMessages(data.data);
+    } catch (error) {
+      toast.error(error.response.data.message);
     }
   };
-  const createMessage = async () => {
+  const createMessage = async (e) => {
+    e.preventDefault();
     try {
       const { data } = await customAxios.post(
         `/messages/${inbox[activeInboxIndex]?.id}/messages`,
@@ -44,34 +42,28 @@ const Chat = () => {
         },
       );
       setmessageInput("");
-    } catch (error: any) {
-      toast.error(error.resonse.data);
+    } catch (error) {
+      toast.error(error.resonse.data.message);
     }
   };
   useEffect(() => {
     getChats();
   }, []);
-
   useEffect(() => {
     getSingleMessages();
   }, [activeInboxIndex, inbox]);
 
   useEffect(() => {
-    const socket = io("https://krelli-x86.onrender.com", {
-      query: {
-        userId: user?.id,
+    const socket = io(
+      import.meta.env.VITE_ENV == "development"
+        ? "http://localhost:3000"
+        : "https://krelli-x86.onrender.com",
+      {
+        query: {
+          userId: user?.id,
+        },
       },
-    }); // Replace with your server URL
-
-    // socket.on("message", (messages) => {
-    //   if (singleMessages?.Messages?.length == 0) {
-    //     setsingleMessages({
-    //       Messages: [messages],
-    //     });
-    //   } else {
-    //     setsingleMessages((prev) => prev?.Messages?.push(messages));
-    //   }
-    // });
+    );
 
     socket.on("message", (message) => {
       setsingleMessages((prevMessages) => {
@@ -127,7 +119,7 @@ const Chat = () => {
                     </div>
                   ) : (
                     <>
-                      {inbox.map((host, index) => (
+                      {inbox?.map((host, index) => (
                         // i neeed to fix the view of the hoster
                         <div
                           onClick={() => setactiveInboxIndex(index)}
@@ -139,13 +131,17 @@ const Chat = () => {
                         >
                           <div>
                             <img
-                              src={host?.users[0]?.profileImage}
+                              src={
+                                host?.users[0]?.id == user?.id
+                                  ? host?.users[1]?.profileImage
+                                  : host?.users[0]?.profileImage
+                              }
                               alt="avatar"
                               className="h-12 w-12 rounded-full object-cover"
                             />
                           </div>
                           <div className="flex flex-col">
-                            {host?.users[0]?.username == user?.username ? (
+                            {host?.users[0]?.id == user?.id ? (
                               <>
                                 <p className="text-sm">
                                   {host?.users[1]?.username.slice(0, 11)}...
@@ -179,7 +175,9 @@ const Chat = () => {
               <div className="mx-4 flex max-w-[700px] flex-1 flex-col gap-6 rounded-xl bg-white px-6 py-6">
                 <div className="flex justify-between border-b-2">
                   <p className="">
-                    {inbox[activeInboxIndex]?.users[1]?.username}
+                    {inbox[activeInboxIndex]?.users[1].id == user?.id
+                      ? inbox[activeInboxIndex]?.users[0]?.username
+                      : inbox[activeInboxIndex]?.users[1]?.username}
                   </p>
                   {/* <FaTrash /> */}
                 </div>
@@ -199,9 +197,16 @@ const Chat = () => {
                         </div>
                       )}
                       {message?.userId != user?.id && (
-                        <div className="flex w-full items-end gap-2">
+                        <div className="flex items-end gap-2">
                           <img
-                            src="/profile.jpg"
+                            src={
+                              user?.id ==
+                              inbox[activeInboxIndex]?.users[0]?.profileImage
+                                ? inbox[activeInboxIndex]?.users[0]
+                                    ?.profileImage
+                                : inbox[activeInboxIndex]?.users[1]
+                                    ?.profileImage
+                            }
                             alt=""
                             className="h-12 w-12 rounded-full object-cover"
                           />
@@ -213,7 +218,10 @@ const Chat = () => {
                     </>
                   ))}
                 </div>
-                <div className="flex items-center justify-between">
+                <form
+                  onSubmit={(e) => createMessage(e)}
+                  className="flex items-center justify-between"
+                >
                   <input
                     type="text"
                     placeholder="Write Message"
@@ -222,7 +230,8 @@ const Chat = () => {
                     className="w-full border-t-2 py-6 focus:outline-none"
                   />
                   <button
-                    onClick={() => createMessage()}
+                    type="submit"
+                    // onClick={() => createMessage()}
                     className={`flex items-center gap-2 rounded-xl bg-[#4880FF] px-6 py-2 font-bold text-white disabled:opacity-50 ${
                       messageInput.length < 1
                         ? "cursor-not-allowed opacity-50"
@@ -233,7 +242,7 @@ const Chat = () => {
                     <p>Send</p>
                     <IoMdSend />
                   </button>
-                </div>
+                </form>
               </div>
             )}
           </div>

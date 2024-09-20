@@ -13,15 +13,18 @@ export const getChats = async (req, res) => {
     select: {
       id: true,
       picture: true,
+      
       users: {
         select: {
           username: true,
+          id: true,
           profileImage: true,
+        
         },
       },
     },
   });
-  res.json(chats);
+  res.status(200).json({ data: chats, message: null });
 };
 
 export const getChat = async (req, res) => {
@@ -39,7 +42,7 @@ export const getChat = async (req, res) => {
       users: true,
     },
   });
-  res.json(chat);
+  res.status(200).json({ data: chat, message: null });
 };
 
 export const createMessage = async (req, res) => {
@@ -77,5 +80,7 @@ export const createMessage = async (req, res) => {
     }
   });
 
-  res.json(message);
+  res
+    .status(201)
+    .json({ data: message, message: "Message created successfully" });
 };

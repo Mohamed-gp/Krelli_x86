@@ -18,6 +18,17 @@ const singleUser = async (req, res) => {
     where: {
       id,
     },
+    include: {
+      Home: {
+        include: {
+          Pictures: {
+            select: {
+              url: true,
+            },
+          },
+        },
+      },
+    },
   });
   res.json({ data: user, message: null });
 };
@@ -50,6 +61,10 @@ const updateProfile = async (req, res) => {
       username,
       profileImage: pictureUrl,
     },
+    include: {
+      Home: true,
+      Favorite: true,
+    },
   });
 
   updatedUser.password = "";
@@ -74,6 +89,10 @@ const changePassword = async (req, res) => {
     where: {
       id: req.user.userId,
     },
+    include: {
+      Home: true,
+      Favorite: true,
+    },
   });
   const validPassword = bcrypt.compare(currentPassword, user?.password);
   if (!validPassword) {
@@ -93,6 +112,10 @@ const changePassword = async (req, res) => {
     data: {
       password: await bcrypt.hash(newPassword, 10),
     },
+    include: {
+      Home: true,
+      Favorite: true,
+    },
   });
 
   updatedUser.password = "";
@@ -103,6 +126,10 @@ const deleteUser = async (req, res) => {
   const oldUser = await prisma.user.findUnique({
     where: {
       id: req.params.id,
+    },
+    include: {
+      Home: true,
+      Favorite: true,
     },
   });
   if (!oldUser) {
@@ -122,6 +149,17 @@ const getWishlist = async (req, res) => {
     where: {
       userId: userId,
     },
+    include: {
+      Home: {
+        include: {
+          Pictures: {
+            select: {
+              url: true,
+            },
+          },
+        },
+      },
+    },
   });
 
   return res.json({ data: wishlist, message: null });
@@ -134,6 +172,17 @@ const toggleWishlist = async (req, res) => {
     where: {
       userId: userId,
       homeId: homeId,
+    },
+    include: {
+      Home: {
+        include: {
+          Pictures: {
+            select: {
+              url: true,
+            },
+          },
+        },
+      },
     },
   });
 
@@ -156,9 +205,45 @@ const toggleWishlist = async (req, res) => {
     where: {
       userId: userId,
     },
+    include: {
+      Home: {
+        include: {
+          Pictures: {
+            select: {
+              url: true,
+            },
+          },
+        },
+      },
+    },
   });
 
   return res.json({ data: wishlist, message: "wishlist toggled successfuly" });
+};
+
+/**
+ *
+ * @METHOD POST
+ * @ROUTE /api/auth/addHome
+ * @DESC create account and add home
+ * @ACCESS Public
+ */
+const getUserProperties = async (req, res) => {
+  const userId = req.params.id;
+  const homes = await prisma.home.findMany({
+    where: {
+      userId,
+    },
+    include: {
+      Pictures: {
+        select: {
+          url: true,
+        },
+      },
+    },
+  });
+
+  return res.json({ data: homes, message: "Homes fetched successfully" });
 };
 
 export {
@@ -169,4 +254,5 @@ export {
   deleteUser,
   toggleWishlist,
   getWishlist,
+  getUserProperties,
 };

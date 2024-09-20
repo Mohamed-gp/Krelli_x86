@@ -25,11 +25,11 @@ const Settings = () => {
     try {
       dispatch(authActions.logout());
       const { data } = await customAxios.get("/auth/logout");
-      toast.success(data);
+      toast.success(data.message);
       navigate("/");
     } catch (error) {
-      toast.error(error.message);
-      console.log(error.message);
+      toast.error(error.response.data.message);
+      console.log(error);
     }
   };
 
@@ -159,7 +159,7 @@ const Settings = () => {
           Save Changes
         </button>
       </form>
-      {user.provider == "credentials" && <ChangePasswordForm />}
+      {user?.provider == "credentials" && <ChangePasswordForm />}
       <div className="flex items-center justify-between">
         <button
           onClick={() => deleteProfileHandler()}

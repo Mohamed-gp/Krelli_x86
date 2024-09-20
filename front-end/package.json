@@ -20,6 +20,7 @@
     "firebase": "^10.13.1",
     "framer-motion": "^11.1.5",
     "leaflet": "^1.9.4",
+    "leaflet.markercluster": "^1.5.3",
     "react": "^18.2.0",
     "react-date-range": "^2.0.1",
     "react-dom": "^18.2.0",
@@ -36,6 +37,7 @@
   },
   "devDependencies": {
     "@types/leaflet": "^1.9.12",
+    "@types/leaflet.markercluster": "^1.5.4",
     "@types/react": "^18.2.55",
     "@types/react-date-range": "^1.4.9",
     "@types/react-dom": "^18.2.19",

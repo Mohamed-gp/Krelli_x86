@@ -5,6 +5,7 @@ import {
   loginController,
   registerAndAddHomeController,
   registerController,
+  logoutController,
 } from "../controllers/authController.js";
 
 const storage = multer({ dest: "uploads/" });
@@ -16,8 +17,6 @@ router.post("/login", loginController);
 router.post("/register", registerController);
 router.post("/google", googleSignInController);
 
-router.get("/logout", (req, res) => {
-  res.clearCookie("authorization").json("Logged out");
-});
+router.get("/logout", logoutController);
 
 export default router;

@@ -1,40 +1,16 @@
-import { useSearchParams } from "react-router-dom";
-import customAxios from "../../utils/axios";
-import toast from "react-hot-toast";
-import { useEffect, useState } from "react";
 import PropertyCard from "./PropertyCard";
 
 interface PropertiesCardProps {
-  all: boolean;
-  filter: any;
-  setfilter: any;
+  properties: any;
+  all?: boolean;
+  setFilter?: any;
 }
 
-const PropertiesCard = ({ all, filter, setfilter }: PropertiesCardProps) => {
-  const [properties, setProperties] = useState([]);
-
-  const [SearchParams] = useSearchParams();
-  const getHouses = async () => {
-    try {
-      if (all == false) {
-        location.search == "";
-      }
-      const { data } = await customAxios.get("/homes" + location.search);
-      if (all == false) {
-        setProperties(data.data?.slice(0, 4));
-      } else {
-        setProperties(data.data);
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error(error.response.data);
-    }
-  };
-
-  useEffect(() => {
-    getHouses();
-  }, [SearchParams]);
-
+const PropertiesCard = ({
+  properties,
+  all,
+  setFilter,
+}: PropertiesCardProps) => {
   return (
     <>
       {properties?.length == 0 && all ? (
@@ -49,7 +25,7 @@ const PropertiesCard = ({ all, filter, setfilter }: PropertiesCardProps) => {
             </p>
             <div
               className="cursor-pointer rounded-xl border-2 border-black px-6 py-2 text-center font-bold"
-              onClick={() => setfilter({ category: "" })}
+              onClick={() => setFilter({ category: "" })}
             >
               Remove All Filters
             </div>
@@ -57,7 +33,21 @@ const PropertiesCard = ({ all, filter, setfilter }: PropertiesCardProps) => {
         </div>
       ) : properties?.length > 0 ? (
         <>
-          {properties?.map((property) => <PropertyCard property={property} />)}
+          {all ? (
+            <>
+              {properties?.map((property) => (
+                <PropertyCard property={property} key={property.id} />
+              ))}
+            </>
+          ) : (
+            <>
+              {properties
+                .slice(0, 3)
+                ?.map((property) => (
+                  <PropertyCard property={property} key={property.id} />
+                ))}
+            </>
+          )}
         </>
       ) : null}
     </>

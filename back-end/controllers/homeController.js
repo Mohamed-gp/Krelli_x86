@@ -25,7 +25,7 @@ const singleHome = async (req, res) => {
     return res.status(404).json({ message: "Home not found", data: null });
   }
 
-  res.json(home);
+  res.status(200).json({ data: home, message: null });
 };
 
 // const addReservation = async (req, res) => {
@@ -132,7 +132,6 @@ const addReservation = async (req, res) => {
         },
       },
     });
-    console.log(hasReserved);
     if (hasReserved) {
       return res.status(400).json({
         message: "This home is already reserved in this date",
@@ -156,6 +155,7 @@ const addReservation = async (req, res) => {
       },
     });
     // calculate how many days the user will stay
+    // we should get the data from the backend to prevent inject fake price from the frontend
     const days = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
     const newCheckout = await client.createCheckout({
       amount: home.price * days,
@@ -165,7 +165,7 @@ const addReservation = async (req, res) => {
       metadata: [{ reservationId: reservation.id }],
     });
 
-    res.json({
+    res.status(200).json({
       message: "Reservation successfully created",
       url: newCheckout.checkout_url,
     });
@@ -224,7 +224,7 @@ const createChat = async (req, res) => {
     },
   });
 
-  res.json(chat);
+  res.status(200).json({ data: chat, message: "chat Created" });
 };
 
 const searchHomes = async (req, res) => {
@@ -259,7 +259,7 @@ const searchHomes = async (req, res) => {
       },
     },
   });
-  res.json({ data: homes, message: "fetched successfully" });
+  res.status(200).json({ data: homes, message: "fetched successfully" });
 };
 
 const homePictures = async (req, res) => {
@@ -275,7 +275,7 @@ const homePictures = async (req, res) => {
   if (!home) {
     return res.status(404).json({ message: "Home not found", data: null });
   }
-  res.json(home.Pictures);
+  res.status(200).json({ data: home.Pictures, message: null });
 };
 
 const deleteReview = async (req, res) => {
@@ -316,7 +316,6 @@ const addReview = async (req, res) => {
     homeId: parseInt(homeId),
     status: "paid",
   });
-  console.log(hasReserved);
   if (!hasReserved) {
     return res
       .status(400)
@@ -347,7 +346,7 @@ const addReview = async (req, res) => {
     },
   });
 
-  res.json(review);
+  res.status(200).json({ data: review, message: "review Added Successfully" });
 };
 
 const allReviews = async (req, res) => {
@@ -371,7 +370,7 @@ const allReviews = async (req, res) => {
     },
   });
 
-  res.json(reviews);
+  res.status(200).json({ data: reviews, message: null });
 };
 
 export {

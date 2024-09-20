@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import customAxios from "../../utils/axios";
 import { Link, useParams } from "react-router-dom";
-import { FaArrowLeft } from "react-icons/fa";
 import { FaArrowLeftLong } from "react-icons/fa6";
 
 const PhotosModel = () => {
@@ -10,9 +9,7 @@ const PhotosModel = () => {
   const getHousePhotosById = async () => {
     try {
       const { data } = await customAxios.get(`/homes/${id}/pictures`);
-      setimages(data);
-      // console.log("this is hous");
-      // console.log(images);
+      setimages(data.data);
     } catch (error) {
       console.log(error);
     }
@@ -22,12 +19,15 @@ const PhotosModel = () => {
     getHousePhotosById();
   }, []);
   return (
-    <div className="container  flex justify-center items-center mt-6  ">
-      <Link to={`/properties/${id}`} className="flex gap-2  left-1/2 -translate-x-1/2 sm:translate-x-0 sm:left-12 top-24 absolute  items-center bg-buttonColor rounded-xl text-white px-2 hover:scale-105 duration-300">
-        <FaArrowLeftLong className="text-xl cursor-pointer  w-8 h-8 p-2 rounded-lg  " />
+    <div className="container mt-6 flex items-center justify-center">
+      <Link
+        to={`/properties/${id}`}
+        className="absolute left-1/2 top-24 flex -translate-x-1/2 items-center gap-2 rounded-xl bg-buttonColor px-2 text-white duration-300 hover:scale-105 sm:left-12 sm:translate-x-0"
+      >
+        <FaArrowLeftLong className="h-8 w-8 cursor-pointer rounded-lg p-2 text-xl" />
         <p className="text-sm">Back To The Property Page</p>
       </Link>
-      <div className="flex flex-col gap-5 w-[50%] justify-center items-center mt-12">
+      <div className="mt-12 flex w-[50%] flex-col items-center justify-center gap-5">
         {images.map((image) => (
           <img src={image?.url} alt={image?.url} className="rounded-2xl" />
         ))}

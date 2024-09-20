@@ -20,15 +20,13 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(dataToSubmit);
     try {
       const { data } = await customAxios.post("/auth/login", dataToSubmit);
-      console.log(data);
-      dispatch(authActions.login({ ...data, password: "" }));
-      toast.success("login Successful");
+      dispatch(authActions.login({ ...data.data, password: "" }));
+      toast.success(data.message);
       navigate("/");
     } catch (error: any) {
-      toast.error(error.response.data);
+      toast.error(error.response.data.message);
       console.log(error);
     }
   };

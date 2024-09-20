@@ -24,6 +24,30 @@ const loginController = async (req, res) => {
     where: {
       email,
     },
+    include: {
+      Home: {
+        include: {
+          Pictures: {
+            select: {
+              url: true,
+            },
+          },
+        },
+      },
+      Favorite: {
+        include: {
+          Home: {
+            include: {
+              Pictures: {
+                select: {
+                  url: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   });
   if (!user) {
     return res
@@ -113,7 +137,33 @@ const registerController = async (req, res) => {
 const googleSignInController = async (req, res, next) => {
   const { username, email, photoUrl } = req.body;
   try {
-    let user = await prisma.user.findUnique({ where: { email } });
+    let user = await prisma.user.findUnique({
+      where: { email },
+      include: {
+        Home: {
+          include: {
+            Pictures: {
+              select: {
+                url: true,
+              },
+            },
+          },
+        },
+        Favorite: {
+          include: {
+            Home: {
+              include: {
+                Pictures: {
+                  select: {
+                    url: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
 
     if (user) {
       const token = jwt.sign(
@@ -143,8 +193,11 @@ const googleSignInController = async (req, res, next) => {
           provider: "google",
         },
       });
+
+
+
       const token = jwt.sign(
-        { userId: user._id, role: user.role },
+        { userId: user.id, role: user.role },
         process.env.JWT_SECRET,
         {
           expiresIn: "30d",
@@ -191,6 +244,30 @@ const registerAndAddHomeController = async (req, res) => {
   const alreadyExists = await prisma.user.findFirst({
     where: {
       email,
+    },
+    include: {
+      Home: {
+        include: {
+          Pictures: {
+            select: {
+              url: true,
+            },
+          },
+        },
+      },
+      Favorite: {
+        include: {
+          Home: {
+            include: {
+              Pictures: {
+                select: {
+                  url: true,
+                },
+              },
+            },
+          },
+        },
+      },
     },
   });
 
@@ -291,9 +368,16 @@ const registerAndAddHomeController = async (req, res) => {
     });
 };
 
+const logoutController = (req, res) => {
+  res
+    .clearCookie("authorization")
+    .json({ data: null, message: "Logged out successfully" });
+};
+
 export {
   googleSignInController,
   registerAndAddHomeController,
   loginController,
   registerController,
+  logoutController,
 };

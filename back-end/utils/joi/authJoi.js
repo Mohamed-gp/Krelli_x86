@@ -6,7 +6,8 @@ const verifySignUp = (object) => {
     .object({
       username: joi.string().required().trim().min(5).max(20),
       email: joi.string().required().trim().min(5).max(50).email(),
-      password: joiPasswordComplexity(),
+      password: joi.string().required().min(8),
+      // password: joiPasswordComplexity(),
     })
     .unknown(true);
 

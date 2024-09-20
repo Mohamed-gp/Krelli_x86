@@ -8,7 +8,7 @@ import customAxios from "../../utils/axios";
 import toast from "react-hot-toast";
 import { authActions } from "../../store/slices/authSlice";
 import AddPropertyCategory from "./AddPropertyCategory";
-import AddLocationInput from "../maps/AddLocationInput";
+import AddLocationInput from "../map/AddLocationInput";
 import AddPropertyInputNumber from "./AddPropertyInputNumber";
 import AddPropertyTextArea from "./AddPropertyTextArea";
 
@@ -24,57 +24,63 @@ const AddProperty = () => {
     longitude: 2.87,
     category: "",
     price: 10,
-    bathrooms: 0,
-    bedrooms: 0,
-    guests: 0,
+    bathrooms: 1,
+    bedrooms: 1,
+    guests: 1,
     description: "",
     files: [],
+    loading: false,
   });
   const formData = new FormData();
   const submitHandler = async (e) => {
-    e.preventDefault();
-    if (dataToSubmit.price < 10 || dataToSubmit.price > 10000) {
-      return toast.error("price must be greater than $10 and less than $10000");
-    }
-    if (dataToSubmit.guests < 1 || dataToSubmit.guests > 100) {
-      return toast.error("guests must be greater than 0 and less than 100");
-    }
-    if (dataToSubmit.bathrooms < 1 || dataToSubmit.bathrooms > 100) {
-      return toast.error("bathrooms must be greater than 0 and less than 100");
-    }
-    if (dataToSubmit.bedrooms < 1 || dataToSubmit.bedrooms > 100) {
-      return toast.error("bedrooms must be greater than 0 and less than 100");
-    }
-    if (
-      dataToSubmit.title == "" ||
-      dataToSubmit.category == "" ||
-      dataToSubmit.description == "" ||
-      !dataToSubmit.latitude ||
-      !dataToSubmit.longitude
-    ) {
-      return toast.error("all Fields Are Required");
-    }
-    if (dataToSubmit.files.length < 5) {
-      return toast.error("you must enter more than 4 images of the house");
-    }
-
-    formData.set("username", dataToSubmit?.username);
-    formData.set("email", dataToSubmit?.email);
-    formData.set("password", dataToSubmit?.password);
-    formData.set("title", dataToSubmit?.title);
-    formData.set("price", String(dataToSubmit?.price));
-    formData.set("bathrooms", String(dataToSubmit?.bathrooms));
-    formData.set("bedrooms", String(dataToSubmit?.bedrooms));
-    formData.set("latitude", String(dataToSubmit?.latitude));
-    formData.set("longitude", String(dataToSubmit?.longitude));
-    formData.set("guests", String(dataToSubmit?.guests));
-    formData.set("description", dataToSubmit?.description);
-    formData.set("category", dataToSubmit?.category);
-    for (let i = 0; i < dataToSubmit.files.length; i++) {
-      formData.append("files", dataToSubmit.files[i]);
-    }
-
     try {
+      setDataToSubmit({ ...dataToSubmit, loading: true });
+      e.preventDefault();
+      if (dataToSubmit.price < 10 || dataToSubmit.price > 10000) {
+        return toast.error(
+          "price must be greater than $10 and less than $10000",
+        );
+      }
+      if (dataToSubmit.guests < 1 || dataToSubmit.guests > 100) {
+        return toast.error("guests must be greater than 0 and less than 100");
+      }
+      if (dataToSubmit.bathrooms < 1 || dataToSubmit.bathrooms > 100) {
+        return toast.error(
+          "bathrooms must be greater than 0 and less than 100",
+        );
+      }
+      if (dataToSubmit.bedrooms < 1 || dataToSubmit.bedrooms > 100) {
+        return toast.error("bedrooms must be greater than 0 and less than 100");
+      }
+      if (
+        dataToSubmit.title == "" ||
+        dataToSubmit.category == "" ||
+        dataToSubmit.description == "" ||
+        !dataToSubmit.latitude ||
+        !dataToSubmit.longitude
+      ) {
+        return toast.error("all Fields Are Required");
+      }
+      if (dataToSubmit.files.length < 5) {
+        return toast.error("you must enter more than 4 images of the house");
+      }
+
+      formData.set("username", dataToSubmit?.username);
+      formData.set("email", dataToSubmit?.email);
+      formData.set("password", dataToSubmit?.password);
+      formData.set("title", dataToSubmit?.title);
+      formData.set("price", String(dataToSubmit?.price));
+      formData.set("bathrooms", String(dataToSubmit?.bathrooms));
+      formData.set("bedrooms", String(dataToSubmit?.bedrooms));
+      formData.set("latitude", String(dataToSubmit?.latitude));
+      formData.set("longitude", String(dataToSubmit?.longitude));
+      formData.set("guests", String(dataToSubmit?.guests));
+      formData.set("description", dataToSubmit?.description);
+      formData.set("category", dataToSubmit?.category);
+      for (let i = 0; i < dataToSubmit.files.length; i++) {
+        formData.append("files", dataToSubmit.files[i]);
+      }
+
       const url = user ? "/host/homes" : "/auth/addHome";
 
       if (
@@ -95,9 +101,27 @@ const AddProperty = () => {
         scrollTo(0, 0);
       }
       toast.success(data.message);
+      setDataToSubmit({
+        username: "",
+        email: "",
+        password: "",
+        title: "",
+        latitude: 36.66,
+        longitude: 2.87,
+        category: "",
+        price: 10,
+        bathrooms: 1,
+        bedrooms: 1,
+        guests: 1,
+        description: "",
+        files: [],
+        loading: false,
+      });
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
+    } finally {
+      setDataToSubmit({ ...dataToSubmit, loading: false });
     }
   };
 
@@ -205,7 +229,7 @@ const AddProperty = () => {
           dataToSubmit={dataToSubmit}
           setDataToSubmit={setDataToSubmit}
         />
-        <AddPropertySubmit />
+        <AddPropertySubmit dataToSubmit={dataToSubmit} />
       </form>
     </div>
   );
