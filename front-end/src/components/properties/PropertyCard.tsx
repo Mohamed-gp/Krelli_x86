@@ -15,7 +15,7 @@ interface PropertyCardProps {
 const PropertyCard = ({ property }: PropertyCardProps) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: IRootState) => state.auth);
-  const [slideIndex, setslideIndex] = useState<number>(1);
+  const [slideIndex, setslideIndex] = useState<number>(0);
 
   const toggleWishlistHandler = async (e, id) => {
     e.preventDefault();

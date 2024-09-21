@@ -14,18 +14,18 @@ import { useSelector } from "react-redux";
 import { IRootState } from "./store/store";
 import AdminDashboard from "./pages/admin/AdminDashboard.tsx";
 import UsersTable from "./pages/admin/UsersTable.tsx";
-import CommentsTable from "./pages/admin/CommentsTable.tsx";
+import ReviewsTable from "./pages/admin/ReviewsTable.tsx";
 import PostsTable from "./pages/admin/PostsTable.tsx";
-import CategoriesTable from "./pages/admin/CategoriesTable.tsx";
+// import CategoriesTable from "./pages/admin/CategoriesTable.tsx";
 import Profile from "./pages/profile/Profile.tsx";
 import NotFound from "./pages/notFound/NotFound.tsx";
 import PhotosModel from "./components/photosModel/PhotosModel.tsx";
 import Settings from "./components/settings/Settings.tsx";
-import { useEffect } from "react";
+import InProgressApp from "./components/inProgressApp/InProgressApp.tsx";
+// import { useEffect } from "react";
 
 function App() {
   const user = useSelector((state: IRootState) => state.auth.user);
-  
 
   return (
     <>
@@ -37,6 +37,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/properties" element={<Properties />} />
           <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="/inProgressApp" element={<InProgressApp />} />
           <Route path="/properties/:id" element={<SingleProperty />} />
           <Route path="/properties/:id/photos" element={<PhotosModel />} />
           <Route path={`/settings/:id`} element={<Settings />} />
@@ -57,12 +58,12 @@ function App() {
                 user?.role != "admin" ? <Navigate to="/" /> : <UsersTable />
               }
             />
-            {/* <Route
-              path="comments-table"
+            <Route
+              path="reviews-table"
               element={
-                user?.role != "admin" ? <Navigate to="/" /> : <CommentsTable />
+                user?.role != "admin" ? <Navigate to="/" /> : <ReviewsTable />
               }
-            /> */}
+            />
             <Route
               path="homes-table"
               element={

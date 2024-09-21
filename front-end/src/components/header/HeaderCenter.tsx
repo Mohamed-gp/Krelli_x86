@@ -81,14 +81,7 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
                 Chat
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                className="navigation-header-link hover:text-navActiveColor cursor-pointer duration-300 hover:text-buttonColor"
-                to="/profile/chat/"
-              >
-                Chat
-              </NavLink>
-            </li>
+            
           </>
         )}
         <li>

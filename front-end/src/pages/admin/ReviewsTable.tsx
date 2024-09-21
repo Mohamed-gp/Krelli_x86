@@ -1,24 +1,26 @@
-import Swal from "sweetalert2";
 import AdminSideBar from "./AdminSideBar";
-import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import customAxios from "../../utils/axios";
 import toast from "react-hot-toast";
 
-const UsersTable = () => {
-  const [users, setusers] = useState<any[]>([]);
-  const [remove, setremove] = useState(0);
-  const getAllUsersHandler = async () => {
+const ReviewsTable = () => {
+  const [reviews, setReviews] = useState<any[]>([]);
+  const getAllReviewsHandler = async () => {
     try {
-      const { data } = await customAxios.get("/admin/users");
-      setusers(data.data);
+      const { data } = await customAxios.get("/admin/reviews");
+      setReviews(data.data);
     } catch (error) {
       console.log(error);
     }
   };
-  const removeHandler = (id) => {
+  useEffect(() => {
+    getAllReviewsHandler();
+  }, []);
+
+  const removeHandler = (commentId) => {
     Swal.fire({
-      title: "Are you sure to remove this user?",
+      title: "Are you sure to remove this review?",
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
@@ -28,36 +30,37 @@ const UsersTable = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await customAxios.delete(`/admin/users/${id}`);
+          const { data } = await customAxios.delete(
+            `/admin/homes/${commentId}/review`,
+            
+          );
+          toast.success(data.message);
+          getAllReviewsHandler();
           Swal.fire({
             title: "Deleted!",
-            text: "User Profile Deleted Successfuly",
+            text: "Review Deleted Successfuly",
             icon: "success",
           });
-          setremove((prev) => prev + 1);
         } catch (error) {
           console.log(error);
           toast.error(error?.response?.data.message);
         }
       } else {
         Swal.fire({
-          title: "your profile is safe!",
+          title: "the user comment is safe!",
           text: "something went wrong",
           icon: "error",
         });
       }
     });
   };
-  useEffect(() => {
-    getAllUsersHandler();
-  }, [remove]);
   return (
     <div className="flex" style={{ minHeight: "calc(100vh - (72px +  48px))" }}>
       <AdminSideBar />
       <div className="flex w-full flex-col justify-center overflow-x-auto overflow-y-hidden">
-        <p className="mx-2 mt-[2.1rem] pl-4 text-2xl">Users</p>
+        <p className="mx-2 mt-[2.1rem] pl-4 text-2xl">Reviews</p>
         <div className="mx-6 my-2 min-h-[50px] min-w-[1000px] text-center">
-          {users?.length === 0 ? (
+          {reviews?.length === 0 ? (
             <p style={{ minHeight: "calc(100vh - 84.14px)" }}>
               No Reviews Found
             </p>
@@ -67,37 +70,38 @@ const UsersTable = () => {
                 <tr className="">
                   <th>Count</th>
                   <th>User</th>
-                  <th>Email</th>
+                  <th>Comment</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                {users?.map((user, index) => (
-                  <tr key={user?.id}>
+                {reviews?.map((review, index) => (
+                  <tr key={review?._id + review.id + "review-table-row"}>
                     <td>{index + 1}</td>
                     <td>
-                      <div className="items-center-center img flex min-w-[260px] justify-start gap-2 pl-4">
+                      <div className="img flex min-w-[260px] items-center justify-start gap-2 pl-4">
                         <img
-                          className="h-10 w-10 rounded-full"
-                          src={user?.profileImage}
+                          className="w-10 rounded-full"
+                          src={review?.User?.profileImage}
                         />
-                        <div className="div flex flex-col items-start">
-                          <span>{user?.username}</span>
-                        </div>
+                        {/* {console.log(review)} */}
+                        <span>{review?.User.username}</span>
                       </div>
                     </td>
-                    <td>{user?.email}</td>
                     <td>
-                      <div className="users-center flex w-[260px] justify-center gap-2 text-white">
-                        <button className="rounded-xl bg-green-400 px-3 py-1">
-                          <Link to={`/profile/${user.id}`}>View Profile</Link>
-                        </button>
-                        <button
-                          className="rounded-xl bg-red-400 px-3 py-1"
-                          onClick={() => removeHandler(user.id)}
-                        >
-                          Delete Profile
-                        </button>
+                      {" "}
+                      <span>{review?.comment}</span>
+                    </td>
+                    <td>
+                      <div className="flex items-center justify-center gap-2 text-white">
+                        <div className="mx-auto flex items-center justify-center gap-2 text-white">
+                          <button
+                            className="rounded-xl bg-red-400 px-3 py-1"
+                            onClick={() => removeHandler(review.id)}
+                          >
+                            Delete Comment
+                          </button>
+                        </div>
                       </div>
                     </td>
                   </tr>
@@ -110,4 +114,4 @@ const UsersTable = () => {
     </div>
   );
 };
-export default UsersTable;
+export default ReviewsTable;

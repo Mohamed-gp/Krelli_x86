@@ -103,7 +103,7 @@ header {
   color: white;
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 1024px) {
   nav {
     clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%) !important;
   }
@@ -219,7 +219,7 @@ table thead tr th {
 }
 table tr:hover {
   /* background-color: #868686; */
-  background-color: #4561ec;
+  background-color: #a1b1ff;
   color: white;
   transition-duration: 0.3s;
 }
@@ -256,3 +256,4 @@ table div {
   -ms-transform: translateX(2px);
   -o-transform: translateX(2px);
 }
+

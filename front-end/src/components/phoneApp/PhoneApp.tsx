@@ -14,10 +14,10 @@ const PhoneApp = () => {
         <p className="text-center text-3xl font-bold">
           GET THE MOBILE APP NOW!
         </p>
-        <div className="flex justify-center gap-2">
+        <div className="flex justify-center gap-2 flex-wrap">
           <div className="flex flex-col items-center justify-center">
-            <div>
-              <img src="/image 1.png" alt="" />
+            <div className="w-[200px]">
+              <img src="/appQRCODE.png" alt="" />
             </div>
             <div className="-mt-6">
               <img
@@ -28,8 +28,8 @@ const PhoneApp = () => {
             </div>
           </div>
           <div className="flex flex-col items-center justify-center">
-            <div>
-              <img src="/image 1.png" alt="" />
+            <div className="w-[200px]">
+              <img src="/appQRCODE.png" alt="" />
             </div>
             <div className="-mt-6">
               <img

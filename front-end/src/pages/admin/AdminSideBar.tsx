@@ -27,12 +27,12 @@ const AdminSideBar = () => {
                         Categories
                     </p>
                 </NavLink> */}
-                {/* <NavLink to="/admin-dashboard/comments-table"  className="flex items-center gap-2 py-2 pl-2 text-xl duration-500 rounded-xl admin-link">
+                <NavLink to="/admin-dashboard/reviews-table"  className="flex items-center gap-2 py-2 pl-2 text-xl duration-500 rounded-xl admin-link">
                     <BsChatRightTextFill />
                     <p>
                         Reviews
                     </p>
-                </NavLink> */}
+                </NavLink>
                 
 
             </div>

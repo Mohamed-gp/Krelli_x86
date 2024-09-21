@@ -7,7 +7,7 @@ const allHomes = async (req, res) => {
         Pictures: true,
       },
     });
-    return res.json(homes);
+    return res.status(200).json({ data: homes, message: null });
   }
 };
 const homesCount = async (req, res) => {
@@ -16,14 +16,14 @@ const homesCount = async (req, res) => {
   }
   const homesCount = await prisma.home.count();
 
-  return res.json(homesCount);
+  return res.status(200).json({ data: homesCount, message: null });
 };
 const usersCount = async (req, res) => {
   if (req.user.role !== "admin") {
     return res.sendStatus(403);
   }
   const usersCount = await prisma.user.count();
-  res.json(usersCount);
+  res.status(200).json({ data: usersCount, message: null });
 };
 const allUsers = async (req, res) => {
   if (req.user.role === "admin") {
@@ -34,9 +34,10 @@ const allUsers = async (req, res) => {
         profileImage: true,
         email: true,
         role: true,
+        password: false,
       },
     });
-    return res.json(users);
+    return res.status(200).json({ data: users, message: null });
   }
 };
 
@@ -55,7 +56,7 @@ const singleUser = async (req, res) => {
   if (!user) {
     return res.status(404).json({ message: "User not found", data: null });
   }
-  res.json(user);
+  res.status(200).json({ data: user, message: null });
 };
 
 const deleteUser = async (req, res) => {
@@ -78,7 +79,7 @@ const deleteUser = async (req, res) => {
       id,
     },
   });
-  res.json("User deleted successfully");
+  res.status(200).json({ message: "User deleted successfully", data: null });
 };
 const reviewsCount = async (req, res) => {
   if (req.user.role !== "admin") {
@@ -87,7 +88,7 @@ const reviewsCount = async (req, res) => {
       .json({ message: "You are not authorized to delete this", data: null });
   }
   const reviewsCount = await prisma.review.count();
-  return res.json(reviewsCount);
+  return res.status(200).json({ data: reviewsCount, message: null });
 };
 const allReviews = async (req, res) => {
   if (req.user.role !== "admin") {
@@ -95,9 +96,14 @@ const allReviews = async (req, res) => {
       .status(403)
       .json({ message: "You are not authorized to delete this", data: null });
   }
-  const reviews = await prisma.review.findMany();
+  const reviews = await prisma.review.findMany({
+    include: {
+      Home: true,
+      User: true,
+    },
+  });
 
-  res.json(reviews);
+  res.status(200).json({ data: reviews, message: null });
 };
 
 const removeHome = async (req, res) => {
@@ -114,22 +120,36 @@ const removeHome = async (req, res) => {
     },
   });
   if (!home) {
-    return res.status(404).json({ message: "User not found", data: null });
+    return res.status(404).json({ message: "Home not found", data: null });
   }
   await prisma.home.delete({
     where: {
       id,
     },
   });
-  res.json("User deleted successfully");
+  res.status(200).json({ data: null, message: "Home deleted successfully" });
 };
 
+const deleteReview = async (req, res) => {
+  const review = await prisma.review.delete({
+    where: {
+      id: req.params.id,
+    },
+  });
+  if (!review) {
+    return res
+      .status(404)
+      .json({ message: "Review Does Not Exist", data: null });
+  }
+  return res.status(200).json({ message: "Deleted Successfully", data: null });
+};
 export {
   allHomes,
   allUsers,
   singleUser,
   deleteUser,
   usersCount,
+  deleteReview,
   homesCount,
   reviewsCount,
   allReviews,

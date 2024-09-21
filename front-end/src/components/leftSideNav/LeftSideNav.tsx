@@ -1,21 +1,16 @@
 import { FaHeart } from "react-icons/fa6";
 import { IoMdChatbubbles } from "react-icons/io";
-import { MdWindow } from "react-icons/md";
 import { NavLink } from "react-router-dom";
-import { LuChevronsLeftRight } from "react-icons/lu";
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { IRootState } from "../../store/store";
 
 const LeftSideNav = () => {
-  const user = useSelector((state:IRootState) => state.auth.user)
-  const [open, setopen] = useState(false);
+  const user = useSelector((state: IRootState) => state.auth.user);
 
   return (
-    <div  className={` bg-white  px-2 py-4 gap-6  rounded-xl md:px-6 relative`}>
+    <div className={`relative gap-6 rounded-xl bg-white px-2 py-4 md:px-6`}>
       <div
-        
-        className={` relative flex flex-col   px-2 py-4 gap-6  md:min-w-[160px] duration-300`}
+        className={`relative flex flex-col gap-6 px-2 py-4 duration-300 md:min-w-[160px]`}
       >
         {/* <NavLink
           to="/profile/dashboard/:id"
@@ -26,20 +21,20 @@ const LeftSideNav = () => {
         </NavLink> */}
         <NavLink
           to={`/wishlist/${user?.id}`}
-          className=" flex gap-2 items-center md:py-1 md:pl-3 p-2 rounded-xl left-nav-link"
+          className="left-nav-link flex items-center gap-2 rounded-xl p-2 md:py-1 md:pl-3"
         >
           <FaHeart />
-          <p className="md:block hidden">Wishlist</p>
+          <p className="hidden md:block">Wishlist</p>
         </NavLink>
         <NavLink
           to="/profile/chat"
-          className=" flex gap-2 items-center md:py-1 md:pl-3 p-2 rounded-xl left-nav-link"
+          className="left-nav-link flex items-center gap-2 rounded-xl p-2 md:py-1 md:pl-3"
         >
           <IoMdChatbubbles />
-          <p className="md:block hidden">Chat</p>
+          <p className="hidden md:block">Chat</p>
         </NavLink>
       </div>
-        {/* <div onClick={() => {setopen(prev => !prev)}} className="absolute md:-right-[22px] text-xl -right-4 p-2 rounded-full md:text-3xl top-56 font-bold bg-white cursor-pointer">
+      {/* <div onClick={() => {setopen(prev => !prev)}} className="absolute md:-right-[22px] text-xl -right-4 p-2 rounded-full md:text-3xl top-56 font-bold bg-white cursor-pointer">
           <LuChevronsLeftRight />
         </div> */}
     </div>

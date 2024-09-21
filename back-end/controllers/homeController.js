@@ -1,12 +1,12 @@
 import prisma from "../prisma/client.js";
 import Chargily from "@chargily/chargily-pay";
-import { configDotenv } from "dotenv";
-configDotenv();
 
-const apiSecretKey = process.env.CHARGILY_SECRET_KEY;
+import Stripe from "stripe";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const client = new Chargily.ChargilyClient({
-  api_key: apiSecretKey,
+  api_key: process.env.CHARGILY_SECRET_KEY,
   mode: "test",
 });
 
@@ -28,67 +28,14 @@ const singleHome = async (req, res) => {
   res.status(200).json({ data: home, message: null });
 };
 
-// const addReservation = async (req, res) => {
-//   const userId = req.user.userId;
-//   const homeId = req.params.id;
-
-//   let { checkIn, checkOut } = req.body;
-//   checkIn = new Date(checkIn);
-//   checkOut = new Date(checkOut);
-
-//   if (checkIn > checkOut) {
-//     return res
-//       .status(400)
-//       .send("Check out date must be greater than check in date");
-//   }
-//   if (checkIn < new Date()) {
-//     return res.status(400).send("Check in date must be greater than today");
-//   }
-
-//   const home = await prisma.home.findUnique({
-//     where: {
-//       id: parseInt(homeId),
-//     },
-//   });
-
-//   if (!home) {
-//     return res.status(404).send("Home not found");
-//   }
-//   //check if the there is a reservation with the sattus accepted in the same date
-//   const hasReserved = await prisma.reservation.findFirst({
-//     where: {
-//       homeId: parseInt(homeId),
-//       status: "accepted",
-//       startDate: {
-//         lte: checkOut,
-//       },
-//       endDate: {
-//         gte: checkIn,
-//       },
-//     },
-//   });
-//   if (hasReserved) {
-//     return res.status(400).send("This home is already reserved in this date");
-//   }
-//   const reservation = await prisma.reservation.create({
-//     data: {
-//       startDate: new Date(checkIn),
-//       endDate: new Date(checkOut),
-//       User: {
-//         connect: {
-//           id: userId,
-//         },
-//       },
-//       Home: {
-//         connect: {
-//           id: parseInt(homeId),
-//         },
-//       },
-//     },
-//   });
-//   res.json(reservation);
-// };
-const addReservation = async (req, res) => {
+/**
+ * @description Add a reservation to a home with chargily
+ * @route POST /api/homes/:id/reservation/chargily
+ * @access Private
+ * @param {object} req - The request object
+ * @method POSTs
+ */
+const addReservationWithChargily = async (req, res) => {
   try {
     const userId = req.user.userId;
     const homeId = req.params.id;
@@ -166,11 +113,122 @@ const addReservation = async (req, res) => {
     });
 
     res.status(200).json({
-      message: "Reservation successfully created",
+      message: "You just need to pay to complete your reservation",
       url: newCheckout.checkout_url,
     });
   } catch (error) {
-    res.status(400).json({ data: null, message: "Internal Server Error" });
+    res.status(500).json({ data: null, message: "Internal Server Error" });
+  }
+};
+
+/**
+ * @description Add a reservation to a home with chargily
+ * @route POST /api/homes/:id/reservation/chargily
+ * @access Private
+ * @param {object} req - The request object
+ * @method POSTs
+ */
+const addReservationWithStripe = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const homeId = req.params.id;
+
+    let { checkIn, checkOut } = req.body;
+    checkIn = new Date(checkIn);
+    checkOut = new Date(checkOut);
+
+    if (checkIn > checkOut) {
+      return res.status(400).json({
+        data: null,
+        message: "Check out date must be greater than check in date",
+      });
+    }
+    if (checkIn < new Date()) {
+      return res.status(400).json({
+        message: "Check in date must be greater than today",
+        data: null,
+      });
+    }
+
+    const home = await prisma.home.findUnique({
+      where: {
+        id: parseInt(homeId),
+      },
+    });
+
+    if (!home) {
+      return res.status(404).json({ message: "Home not found", data: null });
+    }
+    //check if the there is a reservation with the sattus accepted in the same date
+    const hasReserved = await prisma.reservation.findFirst({
+      where: {
+        homeId: parseInt(homeId),
+        status: "paid",
+        startDate: {
+          lte: checkOut,
+        },
+        endDate: {
+          gte: checkIn,
+        },
+      },
+    });
+    if (hasReserved) {
+      return res.status(400).json({
+        message: "This home is already reserved in this date",
+        data: null,
+      });
+    }
+    const reservation = await prisma.reservation.create({
+      data: {
+        startDate: checkIn,
+        endDate: checkOut,
+        User: {
+          connect: {
+            id: userId,
+          },
+        },
+        Home: {
+          connect: {
+            id: parseInt(homeId),
+          },
+        },
+      },
+    });
+    // calculate how many days the user will stay
+    // we should get the data from the backend to prevent inject fake price from the frontend
+    const days = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      mode: "payment", // mode payment or subscription or a setup
+      success_url:
+        process.env.NODE_ENV == "production"
+          ? process.env.SUCCESS_FRONT_URL
+          : "http://localhost:3500/order/success",
+      cancel_url:
+        process.env.NODE_ENV == "production"
+          ? process.env.CANCEL_FRONT_URL
+          : "http://localhost:3500/cart",
+      line_items: [
+        {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: `${home.title} - (${days}day * ${home.price})`,
+            },
+            unit_amount: home.price * days * 100, // Stripe expects the amount in cents
+          },
+          quantity: 1,
+        },
+      ],
+    });
+
+    res.status(200).json({
+      message: "You just need to pay to complete your reservation",
+      url: session.url,
+    });
+  } catch (error) {
+    res.status(500).json({ data: null, message: "Internal Server Error" });
   }
 };
 
@@ -311,11 +369,7 @@ const addReview = async (req, res) => {
       status: "paid",
     },
   });
-  console.log({
-    userId,
-    homeId: parseInt(homeId),
-    status: "paid",
-  });
+
   if (!hasReserved) {
     return res
       .status(400)
@@ -365,6 +419,7 @@ const allReviews = async (req, res) => {
           username: true,
           createdAT: true,
           id: true,
+          password: false,
         },
       },
     },
@@ -376,7 +431,8 @@ const allReviews = async (req, res) => {
 export {
   singleHome,
   searchHomes,
-  addReservation,
+  addReservationWithChargily,
+  addReservationWithStripe,
   homePictures,
   addReview,
   allReviews,

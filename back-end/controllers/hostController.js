@@ -2,10 +2,8 @@ import prisma from "../prisma/client.js";
 import fs from "fs";
 import path from "path";
 import { v2 as cloudinary } from "cloudinary";
-import dotenv from "dotenv";
 import { verifyAddProperty } from "../utils/joi/addProperty.js";
 
-dotenv.config();
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -93,7 +91,6 @@ const addHome = async (req, res) => {
       .json({ message: error.details[0].message, data: null });
   }
   const userId = req.user.userId;
-  console.log(userId)
 
   if (
     !title ||
@@ -117,7 +114,6 @@ const addHome = async (req, res) => {
     pictures.map((picture) => cloudinary.uploader.upload(picture))
   );
   const pictureUrls = uploadedPictures.map((picture) => picture.url);
-  console.log(userId, "this is ussfasfjkajfkdjkfjkajfkdjakfjer id");
   const home = await prisma.home.create({
     data: {
       title,
@@ -167,6 +163,7 @@ const acceptReservation = async (req, res) => {
     },
     select: {
       userId: true,
+      
     },
   });
   if (host.userId !== userId) {

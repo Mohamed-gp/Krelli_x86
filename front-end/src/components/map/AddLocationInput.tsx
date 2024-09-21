@@ -8,7 +8,6 @@ import {
   TileLayer,
   useMapEvents,
 } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
 // Import the images
@@ -101,7 +100,7 @@ const AddLocationInput = ({
             </LayersControl.BaseLayer>
           </LayersControl>
           <Marker position={[dataToSubmit.latitude, dataToSubmit.longitude]}>
-            <Popup>Suppose To Be Your House Location</Popup>
+            <Popup>House Location</Popup>
           </Marker>
         </MapContainer>
       )}

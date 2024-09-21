@@ -19,6 +19,7 @@ import MessagesRouter from "./routes/messages.js";
 import ReservationRouter from "./routes/reservation.js";
 import AdminRouter from "./routes/admin.js";
 import chargilyRouter from "./routes/chargily.js";
+import stripeRouter from "./routes/stripe.js";
 // import verifyRoles from "./middleware/roleChecker.js";
 import cors from "cors";
 import usersRouter from "./routes/users.js";
@@ -88,6 +89,7 @@ app.use("/api/subscribe", subscribeRouter);
 app.use("/api/gemini", geminiRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/chargily", chargilyRouter);
+app.use("/api/stripe", stripeRouter);
 
 // app.use(jwtVerify);
 

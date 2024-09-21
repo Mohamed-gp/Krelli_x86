@@ -19,6 +19,7 @@ export const getChats = async (req, res) => {
           username: true,
           id: true,
           profileImage: true,
+          password: false,
         
         },
       },

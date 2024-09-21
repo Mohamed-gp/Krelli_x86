@@ -25,6 +25,7 @@ const deleteReservation = async (req, res) => {
     },
     select: {
       userId: true,
+      
     },
   });
   if (host.userId !== userId && req.user.role !== "admin") {

@@ -1,16 +1,12 @@
 import prisma from "../prisma/client.js";
-
 import crypto from "crypto";
-import { configDotenv } from "dotenv";
-configDotenv();
+
 
 const webhook = async (req, res) => {
   // Extracting the 'signature' header from the HTTP request
   const signature = req.get("signature");
-  console.log(signature);
   // Getting the raw payload from the request body
   const payload = JSON.stringify(req.body);
-  console.log(payload);
 
   // If there is no signature, ignore the request
   if (!signature) {
@@ -27,7 +23,6 @@ const webhook = async (req, res) => {
   // if (computedSignature !== signature) {
   //   return res.sendStatus(403);
   // }
-  console.log("signature is correct");
   // If the signatures match, proceed to decode the JSON payload
   const event = req.body;
 
@@ -35,7 +30,6 @@ const webhook = async (req, res) => {
   switch (event.type) {
     case "checkout.paid":
       const checkout = event.data;
-      console.log("im here");
       const reservationId = checkout.metadata[0].reservationId;
 
       const updatedreservation = await prisma.reservation.update({

@@ -3,19 +3,13 @@ import Categories from "../../components/categories/Categories";
 import PropertiesCard from "../../components/properties/PropertiesCard";
 import { useSearchParams } from "react-router-dom";
 import ShowMapPropertiesButton from "../../components/showMapPropertiesButton/ShowMapPropertiesButton";
-import {
-  LayerGroup,
-  LayersControl,
-  MapContainer,
-  TileLayer,
-} from "react-leaflet";
+
 import ShowListPropertiesButton from "../../components/showListPropertiesButton/ShowListPropertiesButton";
 import { IRootState } from "../../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { propertiesActions } from "../../store/slices/propertiesSlice";
 import customAxios from "../../utils/axios";
-import Markers from "../../components/map/Markers";
 import Map from "../../components/map/Map";
 
 const Properties = () => {

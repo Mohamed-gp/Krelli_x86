@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddPropertyInput from "./AddPropertyInput";
 import AddPropertyImages from "./AddPropertyImages";
 import AddPropertySubmit from "./AddPropertySubmit";
@@ -31,6 +31,7 @@ const AddProperty = () => {
     files: [],
     loading: false,
   });
+
   const formData = new FormData();
   const submitHandler = async (e) => {
     try {
@@ -101,6 +102,10 @@ const AddProperty = () => {
         scrollTo(0, 0);
       }
       toast.success(data.message);
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    } finally {
       setDataToSubmit({
         username: "",
         email: "",
@@ -117,11 +122,6 @@ const AddProperty = () => {
         files: [],
         loading: false,
       });
-    } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message);
-    } finally {
-      setDataToSubmit({ ...dataToSubmit, loading: false });
     }
   };
 

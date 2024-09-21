@@ -5,7 +5,7 @@ import { TbLogout } from "react-icons/tb";
 import { IRootState } from "../../store/store";
 import customAxios from "../../utils/axios";
 import toast from "react-hot-toast";
-import { FaGear, FaUser } from "react-icons/fa6";
+import { FaGear } from "react-icons/fa6";
 
 const HeaderRight = () => {
   const user = useSelector((state: IRootState) => state.auth.user);
@@ -24,7 +24,7 @@ const HeaderRight = () => {
     }
   };
   return (
-    <div className="hidden w-[126px] items-center justify-end gap-2 xl:flex">
+    <div className="hidden w-[126px] items-center justify-end gap-2 lg:flex">
       {!user && (
         <>
           <Link
@@ -45,7 +45,7 @@ const HeaderRight = () => {
         <div className="flex items-center gap-3">
           <Link
             to={`/settings/${user?.id}`}
-            className="text-buttonColor md:text-xl"
+            className="text-buttonColor lg:text-xl"
           >
             {/* <FaUser /> */}
             <FaGear className="duration-1000 hover:rotate-180 hover:scale-110" />

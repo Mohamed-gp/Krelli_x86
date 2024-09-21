@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import "./index.css";
 import { Provider } from "react-redux";
 import store from "./store/store.ts";
+import "leaflet/dist/leaflet.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
