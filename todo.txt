@@ -2,6 +2,7 @@ add selecte payement  -> done there is only need webhook adjustement
 map marker  -> done
 add category -> 
 add review 
+complete webhook for chargily and  stripe
 deploy
 
 // there is a stupid problem iam sending some password in the response am gonna because i forget to do passowrd : false

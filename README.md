@@ -1,4 +1,4 @@
-# Krelli - Algeria
+# Krelli - House Rentals
 
 ## Overview
 
@@ -92,7 +92,6 @@ Here are some of the key API endpoints used in the app:
 - `DELETE /api/properties/:id`: Delete a property by ID
 - `POST /api/auth/register`: Register a new user
 - `POST /api/auth/login`: Login a user
-
 
 ## Contributing
 
