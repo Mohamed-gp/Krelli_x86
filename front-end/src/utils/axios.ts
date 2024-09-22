@@ -4,7 +4,7 @@ const customAxios = axios.create({
   baseURL:
     import.meta.env.VITE_ENV == "development"
       ? "http://localhost:3000/api"
-      : "https://krelli-x86.onrender.com/",
+      : "https://krelli.production-server.tech/api",
   // baseURL: "http://localhost:3000/",
   withCredentials: true,
 });

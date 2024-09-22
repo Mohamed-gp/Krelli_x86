@@ -44,7 +44,7 @@ app.use(
     origin:
       process.env.NODE_ENV == "development"
         ? "http://localhost:3500"
-        : "someurl",
+        : "https://krelli-x86.netlify.app",
   })
 );
 
