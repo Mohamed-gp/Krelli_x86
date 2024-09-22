@@ -103,7 +103,7 @@ header {
   color: white;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1280px) {
   nav {
     clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%) !important;
   }

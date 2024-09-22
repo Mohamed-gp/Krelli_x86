@@ -59,7 +59,7 @@ const Chat = () => {
         ? "http://localhost:3001"
         : "https://krelli1.production-server.tech",
       {
-        query: {  
+        query: {    
           userId: user?.id,
         },
       },
@@ -67,7 +67,7 @@ const Chat = () => {
 
     socket.on("message", (message) => {
       setsingleMessages((prevMessages) => {
-        if (prevMessages.Messages?.length === 0) {
+        if (prevMessages?.Messages?.length === 0) {
           return { Messages: [message] };
         } else {
           return { Messages: [...prevMessages.Messages, message] };
@@ -190,7 +190,9 @@ const Chat = () => {
                             {message?.message}
                           </p>
                           <img
-                            src={user.profileImage}
+                            src={
+                              user?.profileImage
+                            }
                             alt=""
                             className="h-12 w-12 rounded-full object-cover"
                           />
@@ -201,10 +203,10 @@ const Chat = () => {
                           <img
                             src={
                               user?.id ==
-                              inbox[activeInboxIndex]?.users[0]?.profileImage
-                                ? inbox[activeInboxIndex]?.users[0]
+                              inbox[activeInboxIndex]?.users[0]?.id
+                                ? inbox[activeInboxIndex]?.users[1]
                                     ?.profileImage
-                                : inbox[activeInboxIndex]?.users[1]
+                                : inbox[activeInboxIndex]?.users[0]
                                     ?.profileImage
                             }
                             alt=""

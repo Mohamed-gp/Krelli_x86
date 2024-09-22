@@ -33,9 +33,9 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
           ? { clipPath: "polygon(0 0, 100% 0%, 100% 100%, 0% 100%)" }
           : { clipPath: "polygon(0 0, 100% 0%, 100% 0, 0 0)" }
       }
-      className="absolute right-8 top-[100px] z-[51] w-[200px] rounded-2xl bg-white p-4 text-center duration-300 lg:relative lg:right-auto lg:top-auto lg:w-auto lg:p-0"
+      className="absolute right-8 top-[100px] z-[51] w-[200px] rounded-2xl bg-white p-4 text-center duration-300 xl:relative xl:right-auto xl:top-auto xl:w-auto xl:p-0"
     >
-      <ul className="flex flex-1 flex-col items-center gap-x-10 gap-y-6 lg:flex-row">
+      <ul className="flex flex-1 flex-col items-center gap-x-10 gap-y-6 xl:flex-row">
         <li className="">
           <NavLink
             className="navigation-header-link hover:text-navActiveColor cursor-pointer duration-300 hover:text-buttonColor"
@@ -111,7 +111,7 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
                 Settings
               </NavLink>
             </li>
-            <li className="lg:hidden">
+            <li className="xl:hidden">
               <span
                 className="navigation-header-link cursor-pointer duration-300 hover:text-buttonColor"
                 onClick={(e) => logoutHandler(e)}
@@ -123,7 +123,7 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
         )}
         {!user ? (
           <>
-            <li className="lg:hidden">
+            <li className="xl:hidden">
               <NavLink
                 className="navigation-header-link cursor-pointer hover:text-buttonColor"
                 to="/login"
@@ -131,7 +131,7 @@ const HeaderCenter = ({ open, setopen }: HeaderCenterProps) => {
                 Login
               </NavLink>
             </li>
-            <li className="lg:hidden">
+            <li className="xl:hidden">
               <NavLink
                 className="navigation-header-link cursor-pointer hover:text-buttonColor"
                 to="/register"

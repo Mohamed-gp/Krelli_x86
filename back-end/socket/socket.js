@@ -5,8 +5,11 @@ let onlineUsers = {};
 const socketServer = (server) => {
   const io = new Server(server, {
     cors: {
-      origin: "*",
-    },
+      origin:
+        process.env.NODE_ENV == "development"
+          ? "http://localhost:5001"
+          : "https://krelli.production-server.tech",
+    },  
   });
   io.on("connection", (socket) => {
     const userId = socket.handshake.query.userId;

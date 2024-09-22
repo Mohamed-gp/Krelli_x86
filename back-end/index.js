@@ -81,9 +81,7 @@ app.use(
   })
 );
 
-app.get("/", (req, res) => {
-  res.json("Hello World");
-});
+
 
 app.use("/api/subscribe", subscribeRouter);
 app.use("/api/gemini", geminiRouter);

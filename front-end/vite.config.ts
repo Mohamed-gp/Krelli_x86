@@ -11,7 +11,12 @@ export default defineConfig({
   server: {
     port: 5001,
     host: true,
+    hmr: {
+      protocol: "ws",
+      host: process.env.NODE_ENV == "development" ? "localhost" : "krelli.production-server.tech",
+    }
   },
+  
 
   css: {
     devSourcemap: process.env.NODE_ENV == "development",
