@@ -68,7 +68,7 @@ const loginController = async (req, res) => {
   res
     .cookie("authorization", token, {
       httpOnly: true,
-      sameSite: "None",
+      sameSite: "Lax",
       secure: process.env.NODE_ENV === "development" ? false : true,
     })
     .json({ data: user, message: "login successfully" });
@@ -120,7 +120,7 @@ const registerController = async (req, res) => {
   res
     .cookie("authorization", token, {
       httpOnly: true,
-      sameSite: "None",
+      sameSite: "Lax",
       secure: process.env.NODE_ENV === "development" ? false : true,
     })
     .json({ data: user, message: "user created successfully" })
@@ -175,7 +175,7 @@ const googleSignInController = async (req, res, next) => {
       return res
         .cookie("authorization", token, {
           httpOnly: true,
-          sameSite: "None",
+          sameSite: "Lax",
           secure: process.env.NODE_ENV === "development" ? false : true,
         })
         .json({ data: user, message: "login successfully" })
@@ -194,8 +194,6 @@ const googleSignInController = async (req, res, next) => {
         },
       });
 
-
-
       const token = jwt.sign(
         { userId: user.id, role: user.role },
         process.env.JWT_SECRET,
@@ -207,7 +205,7 @@ const googleSignInController = async (req, res, next) => {
       return res
         .cookie("authorization", token, {
           httpOnly: true,
-          sameSite: "None",
+          sameSite: "Lax",
           secure: process.env.NODE_ENV === "development" ? false : true,
         })
         .json({ data: user, message: "user created successfully" })
@@ -370,7 +368,11 @@ const registerAndAddHomeController = async (req, res) => {
 
 const logoutController = (req, res) => {
   res
-    .clearCookie("authorization")
+    .clearCookie("authorization", {
+      httpOnly: true,
+      sameSite: "Lax",
+      secure: process.env.NODE_ENV !== "development",
+    })
     .json({ data: null, message: "Logged out successfully" });
 };
 
