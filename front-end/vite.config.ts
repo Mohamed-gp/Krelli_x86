@@ -18,7 +18,7 @@ export default defineConfig({
     port: 5001,
     host: true,
     hmr: {
-      protocol: "ws",
+      protocol: "wss", // wss not wss for sucurity
       host:
         process.env.VITE_ENV == "development"
           ? "localhost"
