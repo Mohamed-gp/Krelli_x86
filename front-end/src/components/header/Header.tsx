@@ -6,7 +6,6 @@ import { useLocation } from "react-router-dom";
 import CloseMenu from "../closeMenu/CloseMenu";
 import BurgerMenu from "./BurgerMenu";
 
-
 const Header = () => {
   const [open, setopen] = useState(false);
   const location = useLocation();
