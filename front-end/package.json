@@ -16,6 +16,7 @@
     "@reduxjs/toolkit": "^2.2.3",
     "@types/dom-speech-recognition": "^0.0.4",
     "axios": "^1.6.7",
+    "dotenv": "^16.4.5",
     "firebase": "^10.13.1",
     "framer-motion": "^11.1.5",
     "leaflet": "^1.9.4",

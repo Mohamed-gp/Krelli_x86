@@ -1,8 +1,14 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import * as dotenv from "dotenv";
+
+dotenv.config({ path: ".env" });
+
 // import eslint from "vite-plugin-eslint";
 
 // https://vitejs.dev/config/
+// console.log(process.env.VITE_GOOGLE_KEY);
+
 export default defineConfig({
   plugins: [
     react(),
@@ -13,12 +19,14 @@ export default defineConfig({
     host: true,
     hmr: {
       protocol: "ws",
-      host: process.env.NODE_ENV == "development" ? "localhost" : "krelli.production-server.tech",
-    }
+      host:
+        process.env.VITE_ENV == "development"
+          ? "localhost"
+          : "krelli1.production-server.tech",
+    },
   },
-  
 
   css: {
-    devSourcemap: process.env.NODE_ENV == "development",
+    devSourcemap: process.env.VITE_ENV != "development",
   },
 });
