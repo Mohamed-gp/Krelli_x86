@@ -10,7 +10,9 @@ export default defineConfig({
   ],
   server: {
     port: 5001,
+    
   },
+  
   css: {
     devSourcemap: process.env.NODE_ENV == "development",
   },

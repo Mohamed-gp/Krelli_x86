@@ -68,7 +68,7 @@ const loginController = async (req, res) => {
   res
     .cookie("authorization", token, {
       httpOnly: true,
-      sameSite: "Lax",
+      sameSite: "None",
       secure: process.env.NODE_ENV === "development" ? false : true,
     })
     .json({ data: user, message: "login successfully" });
@@ -120,7 +120,7 @@ const registerController = async (req, res) => {
   res
     .cookie("authorization", token, {
       httpOnly: true,
-      sameSite: "Lax",
+      sameSite: "None",
       secure: process.env.NODE_ENV === "development" ? false : true,
     })
     .json({ data: user, message: "user created successfully" })
@@ -175,7 +175,7 @@ const googleSignInController = async (req, res, next) => {
       return res
         .cookie("authorization", token, {
           httpOnly: true,
-          sameSite: "Lax",
+          sameSite: "None",
           secure: process.env.NODE_ENV === "development" ? false : true,
         })
         .json({ data: user, message: "login successfully" })
@@ -205,7 +205,7 @@ const googleSignInController = async (req, res, next) => {
       return res
         .cookie("authorization", token, {
           httpOnly: true,
-          sameSite: "Lax",
+          sameSite: "None",
           secure: process.env.NODE_ENV === "development" ? false : true,
         })
         .json({ data: user, message: "user created successfully" })
@@ -370,7 +370,7 @@ const logoutController = (req, res) => {
   res
     .clearCookie("authorization", {
       httpOnly: true,
-      sameSite: "Lax",
+      sameSite: "None",
       secure: process.env.NODE_ENV !== "development",
     })
     .json({ data: null, message: "Logged out successfully" });
