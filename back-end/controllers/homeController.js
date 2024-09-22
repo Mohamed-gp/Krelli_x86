@@ -107,8 +107,8 @@ const addReservationWithChargily = async (req, res) => {
     const newCheckout = await client.createCheckout({
       amount: home.price * days,
       currency: "dzd",
-      success_url: "https://krelli.onrender.com/chargily/success",
-      failure_url: "https://krelli.onrender.com/chargily/failure",
+      success_url: "https://krelli.production-server.tech/chargily/success",
+      failure_url: "https://krelli.production-server.tech/chargily/failure",
       metadata: [{ reservationId: reservation.id }],
     });
 
@@ -203,12 +203,12 @@ const addReservationWithStripe = async (req, res) => {
       mode: "payment", // mode payment or subscription or a setup
       success_url:
         process.env.NODE_ENV == "production"
-          ? process.env.SUCCESS_FRONT_URL
-          : "http://localhost:3500/order/success",
+          ? `https://krelli-x86.netlify.app/properties/${home.id}`
+          : `http://localhost:5001/properties/${home.id}`,
       cancel_url:
         process.env.NODE_ENV == "production"
-          ? process.env.CANCEL_FRONT_URL
-          : "http://localhost:3500/cart",
+          ? `https://krelli-x86.netlify.app/properties/${home.id}`
+          : `http://localhost:5001/properties/${home.id}`,
       line_items: [
         {
           price_data: {

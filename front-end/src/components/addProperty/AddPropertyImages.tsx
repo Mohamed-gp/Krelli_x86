@@ -43,10 +43,18 @@ const AddProperyPhoto = ({
                 multiple
                 onChange={(e) => {
                   if (e.target.files != null) {
-                    setDataToSubmit({ ...dataToSubmit, files: e.target.files });
+                    const filesArray = Array.from(e.target.files);
+                    setDataToSubmit((dataToSubmit) => {
+                      if (dataToSubmit.files == null) {
+                        return { ...dataToSubmit, files: filesArray };
+                      }
+                      const tmpFiles = [...dataToSubmit.files, ...filesArray];
+                      return { ...dataToSubmit, files: tmpFiles };
+                    });
                   }
                 }}
               />
+
               <div className="justify-content my-1 flex cursor-pointer flex-col items-center rounded-xl border-2 border-dashed border-[#4561EC] py-6 text-center">
                 <p className="font-bold">
                   Drag your images here, or <span>browse</span>

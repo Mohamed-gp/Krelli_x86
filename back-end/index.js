@@ -43,8 +43,8 @@ app.use(
     credentials: true,
     origin:
       process.env.NODE_ENV == "development"
-        ? "http://localhost:3500"
-        : "https://krelli-x86.netlify.app",
+        ? "http://localhost:5001"
+        : "https://krelli.production-server.tech",
   })
 );
 
@@ -112,7 +112,7 @@ app.use("/api/admin", jwtVerify, jwtVerifyAdmin, AdminRouter);
 app.use(notFound);
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

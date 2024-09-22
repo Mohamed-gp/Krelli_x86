@@ -56,10 +56,10 @@ const Chat = () => {
   useEffect(() => {
     const socket = io(
       import.meta.env.VITE_ENV == "development"
-        ? "http://localhost:3000"
-        : "https://krelli-x86.onrender.com",
+        ? "http://localhost:3001"
+        : "https://krelli1.production-server.tech",
       {
-        query: {
+        query: {  
           userId: user?.id,
         },
       },

@@ -17,3 +17,11 @@ admin
 username : admin demo
 email : admin@admin.com
 password : admin@admin.com
+
+
+
+// deploy all others and setup domain and move to local storage with creating and completing mobile and demo users
+
+
+important 
+remove all passwords old api keys
