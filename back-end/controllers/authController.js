@@ -70,7 +70,7 @@ const loginController = async (req, res) => {
       httpOnly: true,
       sameSite: "None",
       secure: process.env.NODE_ENV === "development" ? false : true,
-      domain: "krelli.production-server.tech",
+      domain: "production-server.tech",
     })
     .json({ data: user, message: "login successfully" });
 };
@@ -123,7 +123,7 @@ const registerController = async (req, res) => {
       httpOnly: true,
       sameSite: "None",
       secure: process.env.NODE_ENV === "development" ? false : true,
-      domain: "krelli.production-server.tech",
+      domain: "production-server.tech",
     })
     .json({ data: user, message: "user created successfully" })
     .status(201);
@@ -179,7 +179,7 @@ const googleSignInController = async (req, res, next) => {
           httpOnly: true,
           sameSite: "None",
           secure: process.env.NODE_ENV === "development" ? false : true,
-          domain: "krelli.production-server.tech",
+          domain: "production-server.tech",
         })
         .json({ data: user, message: "login successfully" })
         .status(200);
@@ -210,7 +210,7 @@ const googleSignInController = async (req, res, next) => {
           httpOnly: true,
           sameSite: "None",
           secure: process.env.NODE_ENV === "development" ? false : true,
-          domain: "krelli.production-server.tech",
+          domain: "production-server.tech",
         })
         .json({ data: user, message: "user created successfully" })
         .status(201);
@@ -363,7 +363,7 @@ const registerAndAddHomeController = async (req, res) => {
       httpOnly: true,
       sameSite: "strict",
       secure: process.env.NODE_ENV === "development" ? false : true,
-      domain: "krelli.production-server.tech",
+      domain: "production-server.tech",
     })
     .json({
       data: { user, home },
