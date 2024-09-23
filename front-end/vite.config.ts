@@ -22,7 +22,7 @@ export default defineConfig({
       host:
         process.env.VITE_ENV == "development"
           ? "localhost"
-          : "krelli1.production-server.tech",
+          : "krelli.production-server.tech",
     },
   },
 

@@ -14,16 +14,16 @@ const InProgressApp = () => {
       <div className="absolute left-0 top-0 h-full w-full"></div>
       <div className="container relative flex h-full items-center justify-between">
         <div className="flex flex-col gap-2">
-          <p className="w-full text-center text-2xl !leading-snug sm:text-left md:text-5xl">
-            I didn't deploy app in playstore and app store yet
+          <p className="w-full text-center text-2xl !leading-snug md:text-5xl lg:text-left">
+            I haven't deployed the app to the Play Store and App Store yet.
           </p>
-          <p className="md:text-1xl w-full text-center text-lg !leading-snug opacity-50 sm:w-1/2 sm:text-left">
-            when i deploy it this link goona take to playstore or appstore
-            depend on your mbile
+          <p className="md:text-1xl w-full text-center text-lg !leading-snug opacity-50 lg:w-1/2 lg:text-left">
+            When I deploy it, this link will take you to the Play Store or App
+            Store, depending on your mobile device.
           </p>
           <Link
             to="/"
-            className="my-2 flex w-full cursor-pointer items-center justify-center gap-2 bg-[#4561EC] px-6 py-1 text-center text-white duration-300 hover:scale-[1.03] sm:w-fit sm:text-left"
+            className="my-2 flex w-full cursor-pointer items-center justify-center gap-2 bg-[#4561EC] px-6 py-1 text-center text-white duration-300 hover:scale-[1.03] lg:w-fit lg:text-left"
           >
             <span>Go To Home Page</span>
             <FaArrowRight />

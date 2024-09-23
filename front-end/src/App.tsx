@@ -21,7 +21,7 @@ import Profile from "./pages/profile/Profile.tsx";
 import NotFound from "./pages/notFound/NotFound.tsx";
 import PhotosModel from "./components/photosModel/PhotosModel.tsx";
 import Settings from "./components/settings/Settings.tsx";
-import InProgressApp from "./components/inProgressApp/InProgressApp.tsx";
+import InProgressApp from "./pages/inProgressApp/InProgressApp.tsx";
 // import { useEffect } from "react";
 
 function App() {

@@ -68,7 +68,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
       <div className="flex flex-col gap-2 px-3 py-4">
         <div className="flex items-center justify-between gap-2">
           <div>
-            <p className="font-bold">{property.title}</p>
+            <p className="font-bold line-clamp-1">{property.title}</p>
             <p className="">
               {property?.Review?.rating
                 ? property?.Review?.rating
